@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.admins.hotelhunter.DangKyFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="120dp"
+        android:id="@+id/rl_dk"
+
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:id="@+id/et_emailDK"/>
+        <EditText
+            android:layout_below="@+id/et_emailDK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:id="@+id/et_passDK"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Xác nhận lại mật khẩu"
+            android:id="@+id/et_confirmPassDK"
+            android:inputType="textPassword"
+            android:layout_below="@+id/et_passDK"/>
+    </RelativeLayout>
+
+    <Button
+        android:layout_margin="20dp"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/rl_dk"
+        android:text="Đăng KÝ"
+        android:layout_centerInParent="true"/>
+
+
+
+
+</RelativeLayout>
