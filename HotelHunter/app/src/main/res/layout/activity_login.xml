@@ -95,7 +95,7 @@
 
 
         <TextView
-            android:id="@+id/tv_register"
+            android:id="@+id/tv_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_login"
@@ -110,7 +110,8 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_register">
+            android:layout_below="@+id/tv_1"
+            android:id="@+id/rl_1">
 
             <com.facebook.login.widget.DeviceLoginButton
                 android:id="@+id/bt_logFb"
@@ -119,7 +120,16 @@
                 android:layout_marginTop="16dp" />
 
 
+
         </RelativeLayout>
+        <TextView
+            android:layout_marginTop="16dp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chưa có tài khoản? - Đăng ký"
+            android:id="@+id/tv_register"
+            android:layout_below="@+id/rl_1"/>
 
 
     </RelativeLayout>
