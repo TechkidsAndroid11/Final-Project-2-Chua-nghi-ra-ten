@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "854371674379",
+    "firebase_url": "https://hotelhunter-9b7b4.firebaseio.com",
+    "project_id": "hotelhunter-9b7b4",
+    "storage_bucket": "hotelhunter-9b7b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854371674379:android:e0622a408fde89f1",
+        "android_client_info": {
+          "package_name": "com.example.admins.hotelhunter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854371674379-21v4lstimn5l1gv219ar2jrng5qhmp7r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.admins.hotelhunter",
+            "certificate_hash": "438d6313eb49d6dc9e70cfbb4c0f529a5e6531c6"
+          }
+        },
+        {
+          "client_id": "854371674379-ekj1igpkbipfv882jjpk5pn970hgm5t1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAqqxI1cRLTTfmPUgC8vXdEac4gSjJnwA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854371674379-ekj1igpkbipfv882jjpk5pn970hgm5t1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
