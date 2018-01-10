@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HotelHunter.iml" filepath="$PROJECT_DIR$/HotelHunter.iml" />
+      <module fileurl="file://D:\1.LAP TRINH\Techkids\Hack\Hotel Hunter\HotelHunter\HotelHunter.iml" filepath="D:\1.LAP TRINH\Techkids\Hack\Hotel Hunter\HotelHunter\HotelHunter.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\1.LAP TRINH\Techkids\Hack\Hotel Hunter\HotelHunter\app\app.iml" filepath="D:\1.LAP TRINH\Techkids\Hack\Hotel Hunter\HotelHunter\app\app.iml" />
     </modules>
   </component>
 </project>
