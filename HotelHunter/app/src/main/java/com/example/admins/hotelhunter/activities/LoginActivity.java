@@ -1,4 +1,4 @@
-package com.example.admins.hotelhunter;
+package com.example.admins.hotelhunter.activities;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,11 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.admins.hotelhunter.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.login.Login;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -134,6 +134,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             String img_url = account.getPhotoUrl().toString();
             Log.e(TAG, "handleResult: "+name+email+img_url );
         }
+        else{
+            Log.d(TAG, "handleResult: " + result.getSignInAccount());
+        }
     }
     public void signIn()
     {
@@ -143,6 +146,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.d(TAG, "onConnectionFailed: ");
     }
 }
