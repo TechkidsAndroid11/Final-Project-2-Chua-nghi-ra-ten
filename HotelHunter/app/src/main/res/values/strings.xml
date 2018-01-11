@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">HotelHunter</string>
-
+    <string name="id_hotel_hunter">2001109140164177</string>
+    <string name="fb_hotel_hunter">fb2001109140164177</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

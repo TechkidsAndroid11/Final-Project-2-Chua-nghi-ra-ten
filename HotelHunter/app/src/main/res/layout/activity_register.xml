@@ -17,23 +17,78 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/et_name"
+            android:hint="Tên của bạn"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_checkName"
+            android:layout_below="@+id/et_name"
+            android:textStyle="italic"
+            android:visibility="gone"
+            android:textColor="#f00"
+            android:layout_marginLeft="5sp"
+            android:text="Mục này còn thiếu"/>
+        <EditText
+            android:layout_marginTop="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Email"
+            android:layout_below="@+id/et_name"
+            android:textStyle="normal"
+            android:textSize="14sp"
             android:inputType="textEmailAddress"
             android:id="@+id/et_emailDK"/>
-        <EditText
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_check_email"
+            android:textStyle="italic"
+            android:visibility="gone"
+            android:textColor="#f00"
+            android:layout_marginLeft="5sp"
             android:layout_below="@+id/et_emailDK"
+            android:text="Email đã được đăng ký"/>
+
+        <EditText
+            android:id="@+id/et_passDK"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tv_check_email"
+            android:hint="Mật khẩu"
             android:inputType="textPassword"
-            android:id="@+id/et_passDK"/>
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_checkPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+
+            android:layout_below="@+id/et_passDK"
+            android:text="Mật khẩu không nên dưới 6 kí tự"
+            android:textStyle="italic" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:hint="Xác nhận lại mật khẩu"
             android:id="@+id/et_confirmPassDK"
             android:inputType="textPassword"
+            android:textSize="14sp"
             android:layout_below="@+id/et_passDK"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_checkConPass"
+            android:textStyle="italic"
+            android:visibility="gone"
+            android:textColor="#f00"
+            android:layout_marginLeft="5sp"
+            android:text="Mật khẩu không trùng khớp"
+            android:layout_below="@+id/et_confirmPassDK"/>
     </RelativeLayout>
 
     <Button
@@ -42,6 +97,7 @@
         android:layout_height="60dp"
         android:layout_below="@+id/rl_dk"
         android:text="Đăng KÝ"
+        android:id="@+id/bt_register"
         android:layout_centerInParent="true"/>
 
 
