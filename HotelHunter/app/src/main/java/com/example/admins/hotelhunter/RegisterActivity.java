@@ -1,6 +1,8 @@
 package com.example.admins.hotelhunter;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
@@ -26,6 +32,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText etConfirmPass;
     FirebaseAuth firebaseAuth;
     TextView tvCheckEmail, tvCheckPass, tvCheckConPass, tvCheckName;
+    DatabaseReference databaseReference;
+    FirebaseDatabase firebaseDatabase;
+    UserModel userModel;
 
     Button btRegister;
 
@@ -44,10 +53,11 @@ public class RegisterActivity extends AppCompatActivity {
         btRegister = findViewById(R.id.bt_register);
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseApp.initializeApp(this);
-        tvCheckEmail = findViewById(R.id.tv_email);
+        tvCheckEmail = findViewById(R.id.tv_check_email);
         tvCheckName = findViewById(R.id.tv_checkName);
         tvCheckPass = findViewById(R.id.tv_checkPass);
         tvCheckConPass = findViewById(R.id.tv_checkConPass);
+
 //        if (etName.getText().toString().equals("")) {
 //            tvCheckName.setVisibility(View.VISIBLE);
 //            check = true;
@@ -88,8 +98,26 @@ public class RegisterActivity extends AppCompatActivity {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
                                                     Toast.makeText(RegisterActivity.this, "Xác thực tài khoản qua Email", Toast.LENGTH_SHORT).show();
-                                                    firebaseAuth.signOut();
-                                                    onBackPressed();
+                                                    firebaseDatabase = FirebaseDatabase.getInstance();
+                                                    databaseReference = firebaseDatabase.getReference("users");
+                                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                                                    final UserModel userModel = new UserModel(firebaseUser.getDisplayName());
+                                                    UserProfileChangeRequest user = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
+
+                                                    firebaseAuth.getCurrentUser().updateProfile(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if(task.isSuccessful()){
+                                                                Log.d(TAG, "onComplete: "+firebaseAuth.getCurrentUser().getDisplayName());
+                                                                databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
+                                                                Intent ii= new Intent(RegisterActivity.this,MainActivity.class);
+                                                                Log.d(TAG, "onComplete: "+firebaseAuth.getCurrentUser().getDisplayName());
+                                                                startActivity(ii);
+                                                            }
+                                                        }
+                                                    });
+
+
 
                                                 } else {
                                                     Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -98,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         });
 
                             } else {
+                                Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                             }
                         }

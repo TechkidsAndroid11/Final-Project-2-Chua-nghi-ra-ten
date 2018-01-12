@@ -6,15 +6,33 @@ package com.example.admins.hotelhunter;
 
 public class UserModel {
     private String name;
-    private String id;
-    private String password;
-    private String ConfirmPassword;
+    private String uid;
 
-    public UserModel(String name, String id, String password, String confirmPassword) {
+    private String uri;
+
+    public UserModel(String name, String uri) {
         this.name = name;
-        this.id = id;
-        this.password = password;
-        ConfirmPassword = confirmPassword;
+
+
+        this.uri = uri;
+
+    }
+
+    public UserModel() {
+    }
+
+    public UserModel(String name) {
+        this.name = name;
+
+
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getName() {
@@ -25,27 +43,12 @@ public class UserModel {
         this.name = name;
     }
 
-    public String getId() {
-        return id;
+
+    public String getUri() {
+        return uri;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return ConfirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        ConfirmPassword = confirmPassword;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }
