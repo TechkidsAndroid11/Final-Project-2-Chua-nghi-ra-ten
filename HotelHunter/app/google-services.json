@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "854371674379-lsp5enahvtr3hnoge125uipbemjut2q8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.admins.hotelhunter",
+            "certificate_hash": "abb927fd752566c782345cfddee3a67fbca89b4f"
+          }
+        },
+        {
+          "client_id": "854371674379-5847hqotoktbfon3iq0qn7hu5dufle40.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.admins.hotelhunter",
+            "certificate_hash": "556ae0f6207d992c587eeffd4a34a80c24aba62d"
+          }
+        },
+        {
           "client_id": "854371674379-21v4lstimn5l1gv219ar2jrng5qhmp7r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
