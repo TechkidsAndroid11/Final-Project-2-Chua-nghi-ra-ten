@@ -29,6 +29,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.admins.hotelhunter.database.DataHandle;
+import com.example.admins.hotelhunter.model.HotelModel;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,6 +44,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import com.example.admins.hotelhunter.R;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
@@ -176,7 +180,8 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         mMap.setMyLocationEnabled(true);
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(TurnOnGPSActivity.currentLocation, 20);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(TurnOnGPSActivity.currentLocation, 18);
         mMap.animateCamera(cameraUpdate);
+        DataHandle.hotelModels(mMap);
     }
 }

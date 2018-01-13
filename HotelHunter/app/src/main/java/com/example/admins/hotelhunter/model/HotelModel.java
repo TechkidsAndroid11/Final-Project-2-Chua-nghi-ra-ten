@@ -21,7 +21,10 @@ public class HotelModel {
     public boolean nongLanh;
     public boolean thangMay;
 
-    public HotelModel( String nameHotel, String address, String phone, double kinhDo, double viDo, int danhGiaTB, String gia, List<String> images, List<DanhGiaModel> danhGiaModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay) {
+    public HotelModel() {
+    }
+
+    public HotelModel(String nameHotel, String address, String phone, double kinhDo, double viDo, int danhGiaTB, String gia, List<String> images, List<DanhGiaModel> danhGiaModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay) {
         this.nameHotel = nameHotel;
         this.address = address;
         this.phone = phone;
@@ -35,5 +38,24 @@ public class HotelModel {
         this.dieuHoa = dieuHoa;
         this.nongLanh = nongLanh;
         this.thangMay = thangMay;
+    }
+
+    @Override
+    public String toString() {
+        return "HotelModel{" +
+                "nameHotel='" + nameHotel + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", kinhDo=" + kinhDo +
+                ", viDo=" + viDo +
+                ", danhGiaTB=" + danhGiaTB +
+                ", gia='" + gia + '\'' +
+                ", images=" + images +
+                ", danhGiaModels=" + danhGiaModels +
+                ", wifi=" + wifi +
+                ", dieuHoa=" + dieuHoa +
+                ", nongLanh=" + nongLanh +
+                ", thangMay=" + thangMay +
+                '}';
     }
 }
