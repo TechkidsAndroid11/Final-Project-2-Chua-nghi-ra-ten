@@ -8,9 +8,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.admins.hotelhunter.R;
+import com.example.admins.hotelhunter.model.DanhGiaModel;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class AddHotelActivity extends AppCompatActivity {
     EditText etTenNhaNghi;
@@ -21,6 +24,9 @@ public class AddHotelActivity extends AppCompatActivity {
     Button btAdd;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    EditText edt_kinhdo;
+    EditText edit_vido;
+    EditText edit_rate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,17 +36,16 @@ public class AddHotelActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 HotelModel hotelModel  = new HotelModel(etTenNhaNghi.getText().toString(), etDiaChi.getText().toString(), etSDT.getText().toString(),
-                        105.816179, 21.022494, 0, etGia.getText().toString(), null, null,
+                        Double.parseDouble(edt_kinhdo.getText().toString()), Double.parseDouble(edit_vido.getText().toString()), Integer.parseInt(edit_rate.getText().toString()),
+                        etGia.getText().toString(), new ArrayList<String>(), new ArrayList<DanhGiaModel>(),
                         cbWifi.isChecked(), cbDieuHoa.isChecked(), cbNongLanh.isChecked(),
                         cbThangMay.isChecked());
-
                 databaseReference.push().setValue(hotelModel);
-
             }
         });
     }
-
     private void setupUI() {
+
         etTenNhaNghi = findViewById(R.id.et_ten_nha_nghi);
         etDiaChi = findViewById(R.id.et_dia_chi);
         etSDT = findViewById(R.id.et_sdt);
@@ -50,6 +55,9 @@ public class AddHotelActivity extends AppCompatActivity {
         cbThangMay = findViewById(R.id.cb_thang_may);
         cbNongLanh = findViewById(R.id.cb_nong_lanh);
         btAdd = findViewById(R.id.bt_add);
+        edt_kinhdo = findViewById(R.id.edit_kinhdo);
+        edit_vido = findViewById(R.id.edit_vido);
+        edit_rate = findViewById(R.id.editrate);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
     }

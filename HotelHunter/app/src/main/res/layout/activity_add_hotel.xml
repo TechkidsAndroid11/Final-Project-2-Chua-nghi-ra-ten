@@ -77,7 +77,6 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,7 +93,6 @@
         android:layout_marginBottom="260dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -111,7 +109,6 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -149,10 +146,10 @@
         android:text="wifi"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.308"
+        app:layout_constraintHorizontal_bias="0.162"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_gia"
-        app:layout_constraintVertical_bias="0.195" />
+        app:layout_constraintVertical_bias="0.516" />
 
     <CheckBox
         android:id="@+id/cb_dieu_hoa"
@@ -165,26 +162,22 @@
         android:text="Dieu Hoa"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toEndOf="@+id/cb_wifi"
         app:layout_constraintTop_toBottomOf="@+id/et_gia"
-        app:layout_constraintVertical_bias="0.195" />
+        app:layout_constraintVertical_bias="0.46" />
 
     <CheckBox
         android:id="@+id/cb_nong_lanh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginTop="8dp"
         android:text="Nong lanh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/cb_thang_may"
-        app:layout_constraintTop_toBottomOf="@+id/cb_dieu_hoa"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/cb_dieu_hoa" />
 
     <CheckBox
         android:id="@+id/cb_thang_may"
@@ -197,10 +190,10 @@
         android:text="Thang may"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.273"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cb_wifi"
-        app:layout_constraintVertical_bias="0.241" />
+        app:layout_constraintVertical_bias="0.366" />
 
     <Button
         android:id="@+id/bt_add"
@@ -217,4 +210,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cb_thang_may"
         app:layout_constraintVertical_bias="0.566" />
+
+    <EditText
+        android:id="@+id/edit_kinhdo"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:hint="Kinh Do"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/cb_wifi"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/edit_vido"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Vi Do"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/cb_dieu_hoa"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editrate"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:hint="Rate"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/edit_kinhdo"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
