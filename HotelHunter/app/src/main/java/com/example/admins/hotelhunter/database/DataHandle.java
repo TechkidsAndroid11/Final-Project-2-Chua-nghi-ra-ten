@@ -1,6 +1,7 @@
 package com.example.admins.hotelhunter.database;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.RatingBar;
 
 import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.activities.AddHotelActivity;
+import com.example.admins.hotelhunter.activities.InformationOfHotelActivity;
 import com.example.admins.hotelhunter.activities.MainActivity;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +34,7 @@ import java.util.List;
 
 public class DataHandle {
     private static final String TAG = "DataHandle";
-    public static void hotelModels(final GoogleMap mMap, final Context context) {
+    public static List<HotelModel> hotelModels(final GoogleMap mMap, final Context context) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("hotels");
         final List<HotelModel> list = new ArrayList<>();
@@ -39,12 +43,18 @@ public class DataHandle {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: " + dataSnapshot);
                 for (DataSnapshot hotel : dataSnapshot.getChildren()) {
+<<<<<<< HEAD
                     HotelModel hotelModel = hotel.getValue(HotelModel.class);
                     Log.d(TAG, "onDataChange: ");
+=======
+                    final HotelModel hotelModel = hotel.getValue(HotelModel.class);
+
+                    Log.d(TAG, "onDataChange: " + hotelModel.kinhDo);
+>>>>>>> fd5544f85b8af278058b157cf559f2663e3d866b
                     list.add(hotelModel);
-                    LatLng sydney = new LatLng(hotelModel.kinhDo,hotelModel.viDo );
+                    LatLng sydney = new LatLng(hotelModel.viDo,hotelModel.kinhDo);
                     MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(sydney).title(hotelModel.gia).alpha(hotelModel.danhGiaTB);
+                    markerOptions.position(sydney).title(hotelModel.gia).snippet(String.valueOf(hotelModel.danhGiaTB));
                     CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(context);
                     mMap.setInfoWindowAdapter(adapter);
 
@@ -59,6 +69,6 @@ public class DataHandle {
             }
         });
 
-
+        return list;
     }
 }
