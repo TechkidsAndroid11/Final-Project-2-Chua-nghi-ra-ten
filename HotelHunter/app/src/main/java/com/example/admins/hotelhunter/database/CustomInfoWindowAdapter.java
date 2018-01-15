@@ -34,7 +34,7 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         RatingBar ratingBar = (RatingBar) view.findViewById(R.id.rb_rating);
 
         tvTitle.setText(marker.getTitle());
-        ratingBar.setRating(marker.getAlpha());
+        ratingBar.setRating(Float.parseFloat(marker.getSnippet()));
 
         return view;
     }

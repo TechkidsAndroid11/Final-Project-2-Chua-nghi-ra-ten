@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 
 import com.example.admins.hotelhunter.database.DataHandle;
+import com.example.admins.hotelhunter.database.OnClickWindowinfo;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.CameraUpdate;
@@ -38,12 +39,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import com.example.admins.hotelhunter.R;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -183,5 +187,20 @@ public class MainActivity extends AppCompatActivity
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(TurnOnGPSActivity.currentLocation, 18);
         mMap.animateCamera(cameraUpdate);
         DataHandle.hotelModels(mMap, this);
+        final List<HotelModel> list = DataHandle.hotelModels(mMap, this);
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                for (int i = 0; i < list.size(); i++){
+                    if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo){
+                        EventBus.getDefault().postSticky(new OnClickWindowinfo(list.get(i)));
+                        Log.d(TAG, "onInfoWindowClick: ");
+                    }
+                }
+                Log.d(TAG, "onInfoWindowClick: ");
+                Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
