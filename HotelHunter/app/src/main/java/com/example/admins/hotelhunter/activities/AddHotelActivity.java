@@ -22,8 +22,8 @@ public class AddHotelActivity extends AppCompatActivity {
     EditText etGia;
     CheckBox cbWifi, cbThangMay, cbNongLanh, cbDieuHoa;
     Button btAdd;
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+   public static FirebaseDatabase firebaseDatabase;
+   public  static DatabaseReference databaseReference;
     EditText edt_kinhdo;
     EditText edit_vido;
     EditText edit_rate;

@@ -49,7 +49,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterActivity" />
-        <activity android:name=".activities.AddHotelActivity" />
+        <activity android:name=".activities.AddHotelActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -73,6 +73,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.InformationOfHotelActivity"></activity>
     </application>
 
 </manifest>
