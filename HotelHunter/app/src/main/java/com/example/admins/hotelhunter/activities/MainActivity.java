@@ -182,6 +182,6 @@ public class MainActivity extends AppCompatActivity
         mMap.setMyLocationEnabled(true);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(TurnOnGPSActivity.currentLocation, 18);
         mMap.animateCamera(cameraUpdate);
-        DataHandle.hotelModels(mMap);
+        DataHandle.hotelModels(mMap, this);
     }
 }

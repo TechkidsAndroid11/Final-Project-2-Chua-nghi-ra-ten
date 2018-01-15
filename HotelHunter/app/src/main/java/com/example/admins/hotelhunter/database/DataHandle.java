@@ -1,11 +1,18 @@
 package com.example.admins.hotelhunter.database;
 
+import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.RatingBar;
 
+import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.activities.AddHotelActivity;
+import com.example.admins.hotelhunter.activities.MainActivity;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,8 +30,7 @@ import java.util.List;
 
 public class DataHandle {
     private static final String TAG = "DataHandle";
-
-    public static void hotelModels(final GoogleMap mMap) {
+    public static void hotelModels(final GoogleMap mMap, final Context context) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("hotels");
         final List<HotelModel> list = new ArrayList<>();
@@ -34,10 +40,16 @@ public class DataHandle {
                 Log.d(TAG, "onDataChange: " + dataSnapshot);
                 for (DataSnapshot hotel : dataSnapshot.getChildren()) {
                     HotelModel hotelModel = hotel.getValue(HotelModel.class);
+
                     Log.d(TAG, "onDataChange: ");
                     list.add(hotelModel);
                     LatLng sydney = new LatLng(hotelModel.kinhDo,hotelModel.viDo );
-                    mMap.addMarker(new MarkerOptions().position(sydney).title(hotelModel.nameHotel).snippet("đờ mờ"));
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(sydney).title(hotelModel.gia).alpha(hotelModel.danhGiaTB);
+                    CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(context);
+                    mMap.setInfoWindowAdapter(adapter);
+
+                    mMap.addMarker(markerOptions).showInfoWindow();
 
                 }
             }

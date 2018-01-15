@@ -9,9 +9,13 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.admins.hotelhunter.R;
 import com.google.android.gms.maps.model.LatLng;
@@ -19,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 public class TurnOnGPSActivity extends AppCompatActivity {
     private static final String TAG = "ABCXYZ";
     public static LatLng currentLocation;
+    AlertDialog alertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +38,29 @@ public class TurnOnGPSActivity extends AppCompatActivity {
     private void turnOnGPS() {
         String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
         if (!provider.contains("gps")) {
-            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            LayoutInflater layoutInflater = this.getLayoutInflater();
+            View dialogView = layoutInflater.inflate(R.layout.turn_on_gps, null);
+            builder.setView(dialogView);
+            alertDialog = builder.create();
+            Button btYes = dialogView.findViewById(R.id.bt_yes);
+            Button btNo = dialogView.findViewById(R.id.bt_no);
+            alertDialog.show();
+
+            btYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+
+                }
+            });
+
+            btNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
         }
     }
 
