@@ -40,7 +40,6 @@ public class DataHandle {
                 Log.d(TAG, "onDataChange: " + dataSnapshot);
                 for (DataSnapshot hotel : dataSnapshot.getChildren()) {
                     HotelModel hotelModel = hotel.getValue(HotelModel.class);
-
                     Log.d(TAG, "onDataChange: ");
                     list.add(hotelModel);
                     LatLng sydney = new LatLng(hotelModel.kinhDo,hotelModel.viDo );
