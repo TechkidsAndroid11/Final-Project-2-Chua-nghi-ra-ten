@@ -43,26 +43,17 @@ public class DataHandle {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: " + dataSnapshot);
                 for (DataSnapshot hotel : dataSnapshot.getChildren()) {
-<<<<<<< HEAD
                     HotelModel hotelModel = hotel.getValue(HotelModel.class);
-                    Log.d(TAG, "onDataChange: ");
-=======
-                    final HotelModel hotelModel = hotel.getValue(HotelModel.class);
-
                     Log.d(TAG, "onDataChange: " + hotelModel.kinhDo);
->>>>>>> fd5544f85b8af278058b157cf559f2663e3d866b
                     list.add(hotelModel);
                     LatLng sydney = new LatLng(hotelModel.viDo,hotelModel.kinhDo);
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(sydney).title(hotelModel.gia).snippet(String.valueOf(hotelModel.danhGiaTB));
                     CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(context);
                     mMap.setInfoWindowAdapter(adapter);
-
                     mMap.addMarker(markerOptions).showInfoWindow();
-
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
