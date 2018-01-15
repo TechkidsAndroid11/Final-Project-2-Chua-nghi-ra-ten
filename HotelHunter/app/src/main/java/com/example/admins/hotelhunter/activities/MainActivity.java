@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity
     FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
     public static LatLng currentLocation;
+    TextView tvName, tvNavText;
+    ImageView ivAvata;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,10 +73,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View view = navigationView.getHeaderView(0);
-        TextView tvNavText = view.findViewById(R.id.tv_nav_login);
-        final TextView tvName = view.findViewById(R.id.tv_name);
+        tvNavText = view.findViewById(R.id.tv_nav_login);
+        tvName = view.findViewById(R.id.tv_name);
         firebaseAuth = FirebaseAuth.getInstance();
-        ImageView ivAvata = view.findViewById(R.id.iv_avatar);
+        ivAvata = view.findViewById(R.id.iv_avatar);
 //        Log.d(TAG, "onCreate: "+firebaseAuth.getCurrentUser().getDisplayName());
         if (firebaseAuth.getCurrentUser() == null) {
             tvNavText.setOnClickListener(new View.OnClickListener() {
@@ -95,11 +97,6 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
-
-
-
-
-
 
 
     @Override
@@ -148,6 +145,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_Logout) {
             firebaseAuth.signOut();
+            tvNavText.setVisibility(View.VISIBLE);
+            ivAvata.setImageResource(R.mipmap.ic_launcher_round);
+            tvName.setVisibility(View.GONE);
 
 
         }

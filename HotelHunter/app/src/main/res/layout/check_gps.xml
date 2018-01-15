@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BẬT ĐỊNH VỊ?"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:id="@+id/tv_ask"
+        android:layout_centerInParent="true"/>
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Có"
+        android:layout_below="@+id/tv_ask"
+        android:id="@+id/bt_yes"/>
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Không phải bây giờ"
+        android:id="@+id/bt_no"
+        android:layout_below="@+id/tv_ask"
+        android:layout_toRightOf="@+id/bt_yes"
+        />
+
+</RelativeLayout>
