@@ -11,17 +11,10 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-<<<<<<< HEAD
 import android.widget.Toast;
-=======
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
->>>>>>> 699f6cb5a33639b37a4b2483d32433164fc698a1
 
 import com.example.admins.hotelhunter.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -41,14 +34,10 @@ import java.util.List;
 public class TurnOnGPSActivity extends AppCompatActivity {
     private static final String TAG = "ABCXYZ";
     public static LatLng currentLocation;
-<<<<<<< HEAD
     private GoogleApiClient googleApiClient;
     final static int REQUEST_LOCATION = 199;
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
-=======
-    AlertDialog alertDialog;
->>>>>>> 699f6cb5a33639b37a4b2483d32433164fc698a1
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +84,6 @@ public class TurnOnGPSActivity extends AppCompatActivity {
             return false;
         return providers.contains(LocationManager.GPS_PROVIDER);
     }
-<<<<<<< HEAD
 
     private void enableLoc() {
 
@@ -152,34 +140,6 @@ public class TurnOnGPSActivity extends AppCompatActivity {
                 }
             });
 
-=======
-    private void turnOnGPS() {
-        String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-        if (!provider.contains("gps")) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            LayoutInflater layoutInflater = this.getLayoutInflater();
-            View dialogView = layoutInflater.inflate(R.layout.turn_on_gps, null);
-            builder.setView(dialogView);
-            alertDialog = builder.create();
-            Button btYes = dialogView.findViewById(R.id.bt_yes);
-            Button btNo = dialogView.findViewById(R.id.bt_no);
-            alertDialog.show();
-
-            btYes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
-
-                }
-            });
-
-            btNo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                }
-            });
->>>>>>> 699f6cb5a33639b37a4b2483d32433164fc698a1
         }
 
 
