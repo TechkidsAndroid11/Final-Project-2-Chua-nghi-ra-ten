@@ -1,4 +1,4 @@
-package com.example.admins.hotelhunter.database;
+package com.example.admins.hotelhunter.adapter;
 
 import android.app.Activity;
 import android.content.Context;
