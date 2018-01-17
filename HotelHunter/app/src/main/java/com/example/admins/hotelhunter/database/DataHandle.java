@@ -1,20 +1,12 @@
 package com.example.admins.hotelhunter.database;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.RatingBar;
 
-import com.example.admins.hotelhunter.R;
-import com.example.admins.hotelhunter.activities.AddHotelActivity;
-import com.example.admins.hotelhunter.activities.InformationOfHotelActivity;
-import com.example.admins.hotelhunter.activities.MainActivity;
+import com.example.admins.hotelhunter.adapter.CustomInfoWindowAdapter;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,10 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
