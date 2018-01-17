@@ -1,5 +1,6 @@
 package com.example.admins.hotelhunter.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class HotelModel {
     public int danhGiaTB;
     public String gia;
     public List<String> images;
-    public List<DanhGiaModel> danhGiaModels;
+    public List<ReviewModel> reviewModels;
     public boolean wifi;
     public boolean dieuHoa;
     public boolean nongLanh;
@@ -24,7 +25,7 @@ public class HotelModel {
     public HotelModel() {
     }
 
-    public HotelModel(String nameHotel, String address, String phone, double kinhDo, double viDo, int danhGiaTB, String gia, List<String> images, List<DanhGiaModel> danhGiaModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay) {
+    public HotelModel(String nameHotel, String address, String phone, double kinhDo, double viDo, int danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay) {
         this.nameHotel = nameHotel;
         this.address = address;
         this.phone = phone;
@@ -33,11 +34,16 @@ public class HotelModel {
         this.danhGiaTB = danhGiaTB;
         this.gia = gia;
         this.images = images;
-        this.danhGiaModels = danhGiaModels;
+        this.reviewModels = reviewModels ;
         this.wifi = wifi;
         this.dieuHoa = dieuHoa;
         this.nongLanh = nongLanh;
         this.thangMay = thangMay;
+    }
+
+
+
+    public HotelModel(String s, String s1, String s2, double v, double v1, int i, String s3, ArrayList<String> strings, ArrayList<ReviewModel> reviewModels, boolean checked, boolean checked1, boolean checked2, boolean checked3) {
     }
 
     @Override
@@ -51,7 +57,7 @@ public class HotelModel {
                 ", danhGiaTB=" + danhGiaTB +
                 ", gia='" + gia + '\'' +
                 ", images=" + images +
-                ", danhGiaModels=" + danhGiaModels +
+                ", danhGiaModels=" + reviewModels +
                 ", wifi=" + wifi +
                 ", dieuHoa=" + dieuHoa +
                 ", nongLanh=" + nongLanh +

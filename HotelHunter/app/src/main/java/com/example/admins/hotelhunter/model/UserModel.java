@@ -1,14 +1,17 @@
 package com.example.admins.hotelhunter.model;
 
+import java.util.List;
+
 /**
  * Created by Admins on 1/11/2018.
  */
 
 public class UserModel {
-    private String name;
-    private String uid;
+    public String name;
+    public String uid;
+    public List<ReviewModel> reviewModels;
 
-    private String uri;
+    public String uri;
 
     public UserModel(String name, String uri) {
         this.name = name;

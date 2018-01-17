@@ -8,8 +8,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.admins.hotelhunter.R;
-import com.example.admins.hotelhunter.model.DanhGiaModel;
+
 import com.example.admins.hotelhunter.model.HotelModel;
+import com.example.admins.hotelhunter.model.ReviewModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -37,7 +38,7 @@ public class AddHotelActivity extends AppCompatActivity {
             public void onClick(View view) {
                 HotelModel hotelModel  = new HotelModel(etTenNhaNghi.getText().toString(), etDiaChi.getText().toString(), etSDT.getText().toString(),
                         Double.parseDouble(edt_kinhdo.getText().toString()), Double.parseDouble(edit_vido.getText().toString()), Integer.parseInt(edit_rate.getText().toString()),
-                        etGia.getText().toString(), new ArrayList<String>(), new ArrayList<DanhGiaModel>(),
+                        etGia.getText().toString(), new ArrayList<String>(), new ArrayList<ReviewModel>(),
                         cbWifi.isChecked(), cbDieuHoa.isChecked(), cbNongLanh.isChecked(),
                         cbThangMay.isChecked());
                 databaseReference.push().setValue(hotelModel);

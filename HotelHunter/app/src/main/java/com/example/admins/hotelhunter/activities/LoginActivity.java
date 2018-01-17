@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admins.hotelhunter.R;
+import com.example.admins.hotelhunter.model.UserModel;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int REQ_CODEGOOGLE = 2;
     public FirebaseUser firebaseUser;
     EditText etMail, etPassword;
+    public static UserModel userModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
