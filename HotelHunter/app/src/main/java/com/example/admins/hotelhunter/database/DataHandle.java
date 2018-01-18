@@ -95,7 +95,14 @@ public class DataHandle {
                         return false;
                     }
                 });
-            }
+//                    LatLng sydney = new LatLng(hotelModel.viDo,hotelModel.kinhDo);
+//                    MarkerOptions markerOptions = new MarkerOptions();
+//                    markerOptions.position(sydney).title(hotelModel.gia).snippet(String.valueOf(hotelModel.danhGiaTB));
+//                    CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(context);
+//                    mMap.setInfoWindowAdapter(adapter);
+//                    mMap.addMarker(markerOptions).showInfoWindow();
+                }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 

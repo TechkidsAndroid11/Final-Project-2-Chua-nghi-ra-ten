@@ -15,7 +15,7 @@ public class HotelModel {
     public double viDo;
     public int danhGiaTB;
     public String gia;
-    public List<String> images;
+    public List<String> images = new ArrayList<>();
     public List<ReviewModel> reviewModels;
     public boolean wifi;
     public boolean dieuHoa;

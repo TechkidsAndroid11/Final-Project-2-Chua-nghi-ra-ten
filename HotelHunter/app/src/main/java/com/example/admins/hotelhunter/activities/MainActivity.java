@@ -31,6 +31,11 @@ import android.widget.TextView;
 
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
+import com.example.admins.hotelhunter.map_direction.DirectionHandler;
+import com.example.admins.hotelhunter.map_direction.DirectionResponse;
+import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
+import com.example.admins.hotelhunter.map_direction.RetrofitService;
+import com.example.admins.hotelhunter.map_direction.RouteModel;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.CameraUpdate;
@@ -50,6 +55,11 @@ import com.example.admins.hotelhunter.R;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class MainActivity extends AppCompatActivity
@@ -199,6 +209,21 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "onInfoWindowClick: ");
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);
+            }
+        });
+        RetrofitService retrofitService = RetrofitInstance.getInstance().create(RetrofitService.class);
+        retrofitService.getDirection("21.0222381,105.8161896","21.007790699999997,105.80114449999999","AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0").enqueue(new Callback<DirectionResponse>() {
+            @Override
+            public void onResponse(Call<DirectionResponse> call, Response<DirectionResponse> response) {
+                RouteModel routeModel = DirectionHandler.getListRoute(response.body()).get(0);
+                Log.d(TAG, "onResponse: "+routeModel.distance);
+                Log.d(TAG, "onResponse: "+routeModel.duration);
+
+            }
+
+            @Override
+            public void onFailure(Call<DirectionResponse> call, Throwable t) {
+
             }
         });
     }
