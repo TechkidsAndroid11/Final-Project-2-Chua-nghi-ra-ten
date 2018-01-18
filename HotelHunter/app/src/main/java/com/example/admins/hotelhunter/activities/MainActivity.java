@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = MainActivity.class.toString();
     FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
-    public static LatLng currentLocation;
     TextView tvName, tvNavText;
     ImageView ivAvata;
 

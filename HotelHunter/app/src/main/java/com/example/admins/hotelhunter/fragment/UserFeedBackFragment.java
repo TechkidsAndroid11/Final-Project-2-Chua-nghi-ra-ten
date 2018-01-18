@@ -1,4 +1,4 @@
-package com.example.admins.hotelhunter;
+package com.example.admins.hotelhunter.fragment;
 
 
 import android.content.SharedPreferences;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.model.ReviewModel;
 import com.example.admins.hotelhunter.model.UserModel;
 import com.google.firebase.database.DataSnapshot;
