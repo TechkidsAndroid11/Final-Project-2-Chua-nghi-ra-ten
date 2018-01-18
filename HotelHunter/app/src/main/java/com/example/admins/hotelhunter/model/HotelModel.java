@@ -1,5 +1,6 @@
 package com.example.admins.hotelhunter.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,8 +15,8 @@ public class HotelModel {
     public double viDo;
     public int danhGiaTB;
     public String gia;
-    public List<String> images;
-    public List<DanhGiaModel> danhGiaModels;
+    public List<String> images = new ArrayList<>();
+    public List<DanhGiaModel> danhGiaModels= new ArrayList<>();
     public boolean wifi;
     public boolean dieuHoa;
     public boolean nongLanh;
