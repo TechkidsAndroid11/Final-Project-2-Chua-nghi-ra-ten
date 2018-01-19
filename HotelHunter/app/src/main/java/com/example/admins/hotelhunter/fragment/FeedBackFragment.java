@@ -1,4 +1,4 @@
-package com.example.admins.hotelhunter;
+package com.example.admins.hotelhunter.fragment;
 
 
 import android.os.Bundle;
@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.activities.LoginActivity;
+import com.example.admins.hotelhunter.adapter.FeedbackAdapter;
 import com.example.admins.hotelhunter.model.ReviewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
