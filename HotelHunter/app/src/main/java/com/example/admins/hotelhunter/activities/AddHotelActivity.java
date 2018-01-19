@@ -2,6 +2,7 @@ package com.example.admins.hotelhunter.activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -38,18 +39,22 @@ public class AddHotelActivity extends AppCompatActivity {
     public List<HotelModel> list = new ArrayList<>();
     public static String TAG = AddHotelActivity.class.toString();
     public ImageView img_showhotel;
+    public TextInputLayout textInputLayout;
+    public List<String> lst_String = new ArrayList<>();
+    public  Button bt_clear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hotel);
         setupUI();
        list = DataHandle.hotelModels(null, AddHotelActivity.this);
-        btAdd.setOnClickListener(new View.OnClickListener() {
+       btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 HotelModel hotelModel  = new HotelModel(etTenNhaNghi.getText().toString(), etDiaChi.getText().toString(), etSDT.getText().toString(),
-                        Double.parseDouble(edt_kinhdo.getText().toString()), Double.parseDouble(edit_vido.getText().toString()), Integer.parseInt(edit_rate.getText().toString()),
-                        etGia.getText().toString(), new ArrayList<String>(), new ArrayList<ReviewModel>(),
+                        Double.parseDouble(edt_kinhdo.getText().toString()), Double.parseDouble(edit_vido.getText().toString()),
+                        Float.parseFloat(edit_rate.getText().toString()),
+                        etGia.getText().toString(), lst_String, new ArrayList<ReviewModel>(),
                         cbWifi.isChecked(), cbDieuHoa.isChecked(), cbNongLanh.isChecked(),
                         cbThangMay.isChecked());
                 databaseReference.push().setValue(hotelModel);
@@ -61,9 +66,8 @@ public class AddHotelActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                List<String> abc = new ArrayList<>();
-                HotelModel ht = list.get(0);
-                ht.images.addAll(abc);
+                String image =textInputLayout.getEditText().toString();
+               lst_String.add(image);
 //                String encodedImage = list.get(list.size()-1).images.get(0);
 //                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
 //                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -74,8 +78,13 @@ public class AddHotelActivity extends AppCompatActivity {
 //                    img_showhotel.setImageBitmap(decodedByte);
 //                }
 //                Log.d(TAG, "onClick: "+decodedByte.getHeight());
-                databaseReference.push().setValue(ht);
 
+            }
+        });
+        bt_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lst_String = new ArrayList<>();
             }
         });
     }
@@ -94,8 +103,11 @@ public class AddHotelActivity extends AppCompatActivity {
         edt_kinhdo = findViewById(R.id.edit_kinhdo);
         edit_vido = findViewById(R.id.edit_vido);
         edit_rate = findViewById(R.id.editrate);
+        img_showhotel = findViewById(R.id.img_showhotel);
+        textInputLayout = findViewById(R.id.txt_image);
+        bt_clear = findViewById(R.id.bt_clear);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
-        img_showhotel = findViewById(R.id.img_showhotel);
+
     }
 }

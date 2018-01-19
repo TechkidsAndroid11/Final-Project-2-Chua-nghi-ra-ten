@@ -13,7 +13,7 @@ public class HotelModel {
     public String phone;
     public double kinhDo;
     public double viDo;
-    public int danhGiaTB;
+    public float danhGiaTB;
     public String gia;
     public List<String> images = new ArrayList<>();
     public List<ReviewModel> reviewModels;
@@ -25,7 +25,7 @@ public class HotelModel {
     public HotelModel() {
     }
 
-    public HotelModel(String nameHotel, String address, String phone, double kinhDo, double viDo, int danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay) {
+    public HotelModel(String nameHotel, String address, String phone, double kinhDo, double viDo, float danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay) {
         this.nameHotel = nameHotel;
         this.address = address;
         this.phone = phone;
