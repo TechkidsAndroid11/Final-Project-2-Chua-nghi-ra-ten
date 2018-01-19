@@ -91,10 +91,12 @@ public class DataHandle {
                                 Log.d(TAG, "onFailure: ");
                             }
                         });
-                        
+
                         return false;
                     }
                 });
+
+
 //                    LatLng sydney = new LatLng(hotelModel.viDo,hotelModel.kinhDo);
 //                    MarkerOptions markerOptions = new MarkerOptions();
 //                    markerOptions.position(sydney).title(hotelModel.gia).snippet(String.valueOf(hotelModel.danhGiaTB));
