@@ -189,16 +189,25 @@
 
     <Button
         android:id="@+id/bt_add"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/bt_clear"
+        android:layout_width="88dp"
         android:layout_height="41dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Add"
+        android:text="Clear"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.339"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/btn_addimage" />
 
     <EditText
         android:id="@+id/edit_kinhdo"
@@ -272,10 +281,10 @@
 
     <Button
         android:id="@+id/btn_addimage"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="41dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="48dp"
         android:text="AddImage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bt_add" />
