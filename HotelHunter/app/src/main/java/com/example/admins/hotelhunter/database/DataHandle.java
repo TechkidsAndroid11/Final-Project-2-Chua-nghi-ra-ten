@@ -51,10 +51,13 @@ public class DataHandle {
                     HotelModel hotelModel = hotel.getValue(HotelModel.class);
                     Log.d(TAG, "onDataChange: " + hotelModel.kinhDo);
                     list.add(hotelModel);
+                    CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(context);
+                    mMap.setInfoWindowAdapter(adapter);
                     LatLng sydney = new LatLng(hotelModel.viDo,hotelModel.kinhDo);
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(sydney).title(hotelModel.nameHotel).snippet(String.valueOf(hotelModel.danhGiaTB)+"/"+hotelModel.gia);
-                    mMap.addMarker(markerOptions);
+                    Marker marker = mMap.addMarker(markerOptions);
+                    marker.setTag(hotel);
                 }
 
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -64,8 +67,7 @@ public class DataHandle {
                         for (int i = 0; i < polylines.size(); i++){
                             polylines.get(i).remove();
                         }
-                        CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(context);
-                        mMap.setInfoWindowAdapter(adapter);
+
                         RetrofitService retrofitService = RetrofitInstance.getInstance().create(RetrofitService.class);
                         Log.d(TAG, "onMarkerClick: " + TurnOnGPSActivity.currentLocation);
                         retrofitService.getDirection(String.valueOf(TurnOnGPSActivity.currentLocation.latitude)

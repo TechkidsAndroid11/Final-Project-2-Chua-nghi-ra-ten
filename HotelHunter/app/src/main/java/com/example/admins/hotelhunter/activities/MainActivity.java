@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity
 //            Picasso.with(this).load(R.drawable.ic_close_black_24dp).into(ivAvata);
             ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
         }
-
     }
 
 
@@ -209,21 +208,6 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "onInfoWindowClick: ");
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);
-            }
-        });
-        RetrofitService retrofitService = RetrofitInstance.getInstance().create(RetrofitService.class);
-        retrofitService.getDirection("21.0222381,105.8161896","21.007790699999997,105.80114449999999","AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0").enqueue(new Callback<DirectionResponse>() {
-            @Override
-            public void onResponse(Call<DirectionResponse> call, Response<DirectionResponse> response) {
-                RouteModel routeModel = DirectionHandler.getListRoute(response.body()).get(0);
-                Log.d(TAG, "onResponse: "+routeModel.distance);
-                Log.d(TAG, "onResponse: "+routeModel.duration);
-
-            }
-
-            @Override
-            public void onFailure(Call<DirectionResponse> call, Throwable t) {
-
             }
         });
     }

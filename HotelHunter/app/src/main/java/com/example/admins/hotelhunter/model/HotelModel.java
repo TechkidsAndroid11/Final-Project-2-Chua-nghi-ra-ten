@@ -56,7 +56,6 @@ public class HotelModel {
                 ", viDo=" + viDo +
                 ", danhGiaTB=" + danhGiaTB +
                 ", gia='" + gia + '\'' +
-                ", images=" + images +
                 ", danhGiaModels=" + reviewModels +
                 ", wifi=" + wifi +
                 ", dieuHoa=" + dieuHoa +

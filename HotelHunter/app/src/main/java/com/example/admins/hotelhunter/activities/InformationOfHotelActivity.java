@@ -36,7 +36,7 @@ public class InformationOfHotelActivity extends AppCompatActivity {
     private void setupUI() {
         tab = findViewById(R.id.tab);
         viewPager = findViewById(R.id.vp_fragment);
-        ivHotel = findViewById(R.id.iv_hotel);
+//        ivHotel = findViewById(R.id.iv_hotel);
         tab.addTab(tab.newTab().setText("Details"));
         tab.addTab(tab.newTab().setText("Comment"));
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
