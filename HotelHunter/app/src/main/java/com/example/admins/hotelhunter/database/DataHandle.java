@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.activities.MainActivity;
 import com.example.admins.hotelhunter.activities.TurnOnGPSActivity;
 import com.example.admins.hotelhunter.adapter.CustomInfoWindowAdapter;
@@ -14,6 +15,7 @@ import com.example.admins.hotelhunter.map_direction.RetrofitService;
 import com.example.admins.hotelhunter.map_direction.RouteModel;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -55,7 +57,7 @@ public class DataHandle {
                     mMap.setInfoWindowAdapter(adapter);
                     LatLng sydney = new LatLng(hotelModel.viDo,hotelModel.kinhDo);
                     MarkerOptions markerOptions = new MarkerOptions();
-                    markerOptions.position(sydney).title(hotelModel.nameHotel).snippet(String.valueOf(hotelModel.danhGiaTB)+"/"+hotelModel.gia);
+                    markerOptions.position(sydney).title(hotelModel.nameHotel).snippet(String.valueOf(hotelModel.danhGiaTB)+"/"+hotelModel.gia).icon(BitmapDescriptorFactory.fromResource(R.drawable.marker));
                     Marker marker = mMap.addMarker(markerOptions);
                     marker.setTag(hotel);
                 }
@@ -67,7 +69,6 @@ public class DataHandle {
                         for (int i = 0; i < polylines.size(); i++){
                             polylines.get(i).remove();
                         }
-
                         RetrofitService retrofitService = RetrofitInstance.getInstance().create(RetrofitService.class);
                         Log.d(TAG, "onMarkerClick: " + TurnOnGPSActivity.currentLocation);
                         retrofitService.getDirection(String.valueOf(TurnOnGPSActivity.currentLocation.latitude)

@@ -207,6 +207,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 Log.d(TAG, "onInfoWindowClick: ");
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_from_left);
                 startActivity(intent);
             }
         });

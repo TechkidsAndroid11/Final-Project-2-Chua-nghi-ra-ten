@@ -46,7 +46,7 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         tvPrice.setText(hotelModel.gia + "VNĐ");
         ratingBar.setRating(hotelModel.danhGiaTB);
         if (hotelModel.wifi){
-            ivThangMay.setVisibility(View.VISIBLE);
+            ivWifi.setVisibility(View.VISIBLE);
         }
 
         if (hotelModel.nongLanh){
@@ -54,12 +54,13 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         }
 
         if (hotelModel.dieuHoa){
-            ivWifi.setVisibility(View.VISIBLE);
-        }
-
-        if (hotelModel.wifi){
             ivDieuHoa.setVisibility(View.VISIBLE);
         }
+
+        if (hotelModel.thangMay){
+            ivThangMay.setVisibility(View.VISIBLE);
+        }
+        Log.d(TAG, "getInfoContents: " + hotelModel);
         return view;
     }
 }
