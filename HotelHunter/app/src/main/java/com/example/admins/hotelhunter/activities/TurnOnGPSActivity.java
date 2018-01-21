@@ -22,12 +22,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
@@ -44,8 +46,32 @@ public class TurnOnGPSActivity extends AppCompatActivity {
         setContentView(R.layout.activity_turn_on_gps);
         if (Build.VERSION.SDK_INT >= 23) {
             setupPermission();
-        } else
+            FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
 
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                                Intent intent = new Intent(TurnOnGPSActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
+        } else
         {
             getCurrentLocation();
         }
@@ -55,7 +81,7 @@ public class TurnOnGPSActivity extends AppCompatActivity {
         final LocationManager manager = (LocationManager) TurnOnGPSActivity.this.getSystemService(Context.LOCATION_SERVICE);
         if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(TurnOnGPSActivity.this)) {
             Toast.makeText(TurnOnGPSActivity.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
-            finish();
+            //finish();
         }
         // Todo Location Already on  ... end
 
@@ -70,6 +96,8 @@ public class TurnOnGPSActivity extends AppCompatActivity {
         } else {
             Log.e("keshav", "Gps already enabled");
             Toast.makeText(TurnOnGPSActivity.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(TurnOnGPSActivity.this,MainActivity.class);
+//            startActivity(intent);
         }
     }
 
@@ -181,7 +209,7 @@ public class TurnOnGPSActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 100, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 10, locationListener);
     }
 
 
