@@ -81,7 +81,6 @@ public class TurnOnGPSActivity extends AppCompatActivity {
         final LocationManager manager = (LocationManager) TurnOnGPSActivity.this.getSystemService(Context.LOCATION_SERVICE);
         if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(TurnOnGPSActivity.this)) {
             Toast.makeText(TurnOnGPSActivity.this, "Gps already enabled", Toast.LENGTH_SHORT).show();
-            finish();
         }
         // Todo Location Already on  ... end
 

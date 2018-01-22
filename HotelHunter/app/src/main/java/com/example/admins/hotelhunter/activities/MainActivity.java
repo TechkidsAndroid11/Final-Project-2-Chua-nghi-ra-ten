@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "onInfoWindowClick: ");
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);
+
             }
         });
     }

@@ -34,31 +34,30 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     @Override
     public View getInfoContents(Marker marker) {
         View view = LayoutInflater.from(context).inflate(R.layout.information_marker, null);
-        TextView tvPrice = (TextView) view.findViewById(R.id.tv_price_hotel);
-        RatingBar ratingBar = (RatingBar) view.findViewById(R.id.rb_rating);
+        RatingBar ratingBar = view.findViewById(R.id.rb_rating);
         DataSnapshot dataSnapshot = (DataSnapshot) marker.getTag();
         HotelModel hotelModel = dataSnapshot.getValue(HotelModel.class);
+        TextView tvPrice = view.findViewById(R.id.tv_price);
         ImageView ivWifi = view.findViewById(R.id.iv_wifi);
-        Log.d(TAG, "getInfoContents: " + marker.getTag());
         ImageView ivThangMay = view.findViewById(R.id.iv_elevator);
         ImageView ivNongLanh = view.findViewById(R.id.iv_heater);
         ImageView ivDieuHoa = view.findViewById(R.id.iv_air_condition);
         tvPrice.setText(hotelModel.gia + "VNĐ");
         ratingBar.setRating(hotelModel.danhGiaTB);
-        if (hotelModel.wifi){
-            ivThangMay.setVisibility(View.VISIBLE);
+        if (hotelModel.dieuHoa){
+            ivDieuHoa.setVisibility(View.VISIBLE);
         }
 
         if (hotelModel.nongLanh){
             ivNongLanh.setVisibility(View.VISIBLE);
         }
 
-        if (hotelModel.dieuHoa){
-            ivWifi.setVisibility(View.VISIBLE);
+        if (hotelModel.thangMay){
+            ivThangMay.setVisibility(View.VISIBLE);
         }
 
         if (hotelModel.wifi){
-            ivDieuHoa.setVisibility(View.VISIBLE);
+            ivWifi.setVisibility(View.VISIBLE);
         }
         return view;
     }
