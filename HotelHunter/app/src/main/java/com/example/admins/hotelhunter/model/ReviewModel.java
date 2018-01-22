@@ -9,10 +9,10 @@ public class ReviewModel {
     public String userName;
     public String date;
     public String review;
-    public int ratting;
+    public float ratting;
 
 
-    public ReviewModel(String userName, String date, String review, int ratting) {
+    public ReviewModel(String userName, String date, String review, float ratting) {
         this.userName = userName;
         this.date = date;
         this.review = review;
@@ -21,12 +21,12 @@ public class ReviewModel {
 
     }
 
+    public float getRatting() {
+        return ratting;
+    }
 
     public ReviewModel() {
 
-    }
-
-    public ReviewModel(String format, String s, int numStars) {
     }
 
     public String getUserName() {
@@ -41,8 +41,14 @@ public class ReviewModel {
         return review;
     }
 
-    public int getRatting() {
-        return ratting;
+    @Override
+    public String toString() {
+        return "ReviewModel{" +
+                "userName='" + userName + '\'' +
+                ", date='" + date + '\'' +
+                ", review='" + review + '\'' +
+                ", ratting=" + ratting +
+                '}';
     }
 }
 

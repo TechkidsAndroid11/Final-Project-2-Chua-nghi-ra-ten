@@ -5,68 +5,127 @@
     tools:context="com.example.admins.hotelhunter.fragment.DetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <CheckBox
-        android:layout_marginTop="8dp"
-        android:id="@+id/cb_wifi"
-        android:layout_marginLeft="16dp"
-        android:text="wifi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:id="@+id/cb_dieu_hoa"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_below="@id/cb_wifi"
-        android:text="Điều hòa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:id="@+id/cb_nong_lanh"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:text="Nóng lạnh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <CheckBox
-        android:id="@+id/cb_thang_may"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
-        android:text="Thang máy"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/cb_nong_lanh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:text="Điện thoại: "
-        android:layout_marginLeft="16sp"
-        android:layout_marginTop="50dp"
-        android:id="@+id/tv_dien_thoai"
-        android:layout_below="@id/cb_dieu_hoa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tv_so_dien_thoai"
-        android:layout_marginLeft="100dp"
-        android:layout_below="@id/cb_dieu_hoa"
-        android:layout_marginTop="50sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tv_dia_chi"
-        android:text="Địa chỉ: "
-        android:layout_below="@id/cb_dieu_hoa"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginLeft="16dp"
-        android:layout_below="@id/cb_dieu_hoa"
-        android:layout_marginTop="100dp"
-        android:layout_toRightOf="@id/tv_dia_chi"
-        android:id="@+id/tv_dia_chi_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="150dp"-->
+        <!--android:layout_above="@+id/sv_1">-->
+        <!--<com.daimajia.slider.library.SliderLayout-->
+            <!--android:id="@+id/sl_image_product"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<com.daimajia.slider.library.Indicators.PagerIndicator-->
+            <!--android:id="@+id/pi_indicator"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="8dp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerHorizontal="true"/>-->
+
+    <!--</RelativeLayout>-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sv_1">
+
+
+
+        <RelativeLayout
+            android:id="@+id/rl_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <CheckBox
+                android:id="@+id/cb_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="wifi" />
+
+            <CheckBox
+                android:id="@+id/cb_dieu_hoa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cb_1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Điều hòa" />
+
+            <CheckBox
+                android:id="@+id/cb_nong_lanh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Nóng lạnh" />
+
+            <CheckBox
+                android:id="@+id/cb_thang_may"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/cb_nong_lanh"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Thang máy" />
+
+            <TextView
+                android:id="@+id/tv_dien_thoai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cb_dieu_hoa"
+                android:layout_marginLeft="16sp"
+                android:layout_marginTop="50dp"
+                android:text="Điện thoại: " />
+
+            <TextView
+                android:id="@+id/tv_so_dien_thoai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cb_dieu_hoa"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="50sp" />
+
+            <TextView
+                android:id="@+id/tv_dia_chi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cb_dieu_hoa"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="100dp"
+                android:text="Địa chỉ: " />
+
+            <TextView
+                android:id="@+id/tv_dia_chi_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cb_dieu_hoa"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="100dp"
+                android:layout_toRightOf="@id/tv_dia_chi" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/tv_dia_chi"></android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_feedback11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_feedback"
+                android:layout_marginTop="8dp"
+                android:text="Đánh giá của bạn"
+                android:layout_marginEnd="16dp"/>
+
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+
 </RelativeLayout>

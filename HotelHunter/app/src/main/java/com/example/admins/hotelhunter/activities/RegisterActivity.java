@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.admins.hotelhunter.model.ReviewModel;
 import com.example.admins.hotelhunter.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import com.example.admins.hotelhunter.R;
 
+import java.util.ArrayList;
+
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     EditText etEmail, etName;
@@ -35,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     UserModel userModel;
+    FirebaseUser firebaseUser;
 
     Button btRegister;
 
@@ -57,6 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         tvCheckName = findViewById(R.id.tv_checkName);
         tvCheckPass = findViewById(R.id.tv_checkPass);
         tvCheckConPass = findViewById(R.id.tv_checkConPass);
+
 
 //        if (etName.getText().toString().equals("")) {
 //            tvCheckName.setVisibility(View.VISIBLE);
@@ -112,10 +117,12 @@ public class RegisterActivity extends AppCompatActivity {
                                                                 databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
                                                                 Intent ii= new Intent(RegisterActivity.this,MainActivity.class);
                                                                 Log.d(TAG, "onComplete: "+firebaseAuth.getCurrentUser().getDisplayName());
+                                                                pushData();
                                                                 startActivity(ii);
                                                             }
                                                         }
                                                     });
+
 
 
 
@@ -154,5 +161,15 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void pushData() {
+        Log.d(TAG, "pushData: ");
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference= firebaseDatabase.getReference("users");
+        userModel= new UserModel(firebaseUser.getDisplayName(), firebaseUser.getUid(), new ArrayList<ReviewModel>(), "");
+        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
+
+
     }
 }

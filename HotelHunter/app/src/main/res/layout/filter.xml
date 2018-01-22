@@ -13,7 +13,7 @@
         android:textStyle="bold" />
 
     <RadioGroup
-        android:id="@+id/gr_pen_size"
+        android:id="@+id/gr_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_price"
@@ -24,19 +24,19 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/rb_thin"
+            android:id="@+id/rb_11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100k" />
 
         <RadioButton
-            android:id="@+id/rb_med"
+            android:id="@+id/rb_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="200k" />
 
         <RadioButton
-            android:id="@+id/rb_strong"
+            android:id="@+id/rb_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="300k" />
@@ -46,14 +46,14 @@
         android:id="@+id/tv_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gr_pen_size"
+        android:layout_below="@+id/gr_price"
         android:layout_marginLeft="8dp"
         android:text="Khoảng cách:"
         android:textSize="24dp"
         android:textStyle="bold" />
 
     <RadioGroup
-        android:id="@+id/gr_pen_size1"
+        android:id="@+id/gr_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_distance"
@@ -86,36 +86,53 @@
         android:id="@+id/tv_service"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gr_pen_size1"
+        android:layout_below="@id/gr_distance"
         android:layout_marginLeft="8dp"
         android:text="Tiện ích:"
         android:textSize="24dp"
         android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </RelativeLayout>
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wifi"
-        android:id="@+id/cb_wifi"
+        android:id="@+id/cb_1"
         android:layout_below="@+id/tv_service"/>
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wifi"
-        android:id="@+id/cb_BCS"
-        android:layout_below="@+id/cb_thangMay"
-        android:layout_toRightOf="@+id/cb_maylanh"/>
+        android:id="@+id/cb_2"
+        android:layout_below="@+id/cb_3"
+        android:layout_toRightOf="@+id/cb_4"/>
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wifi"
-        android:id="@+id/cb_maylanh"
-        android:layout_below="@+id/cb_wifi"/>
+        android:id="@+id/cb_4"
+        android:layout_below="@+id/cb_1"/>
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wifi"
-        android:id="@+id/cb_thangMay"
+        android:id="@+id/cb_3"
         android:layout_below="@+id/tv_service"
-        android:layout_toRightOf="@+id/cb_wifi"/>
+        android:layout_toRightOf="@+id/cb_1"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_ok"
+        android:text="ok"
+        android:layout_below="@+id/cb_2"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancer"
+        android:layout_toRightOf="@id/bt_ok"
+        android:layout_below="@id/cb_2"/>
 
 </RelativeLayout>

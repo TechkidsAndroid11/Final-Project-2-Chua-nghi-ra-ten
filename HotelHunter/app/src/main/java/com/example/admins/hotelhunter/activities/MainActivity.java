@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import android.view.LayoutInflater;
@@ -25,7 +26,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 
@@ -53,12 +56,12 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, View.OnClickListener {
     private static final String TAG = MainActivity.class.toString();
     FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
     public static LatLng currentLocation;
-    TextView tvName, tvNavText;
+    TextView tvName, tvNavText, tvFilter;
     ImageView ivAvata;
 
     @Override
@@ -71,12 +74,13 @@ public class MainActivity extends AppCompatActivity
         mapFragment.getMapAsync(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        tvFilter=findViewById(R.id.tv_filter);
+        tvFilter.setOnClickListener(this);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -191,8 +195,8 @@ public class MainActivity extends AppCompatActivity
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                for (int i = 0; i < list.size(); i++){
-                    if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo){
+                for (int i = 0; i < list.size(); i++) {
+                    if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo) {
                         EventBus.getDefault().postSticky(new OnClickWindowinfo(list.get(i)));
                         Log.d(TAG, "onInfoWindowClick: ");
                     }
@@ -203,4 +207,51 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_filter:
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                LayoutInflater layoutInflater = this.getLayoutInflater();
+                View dialogView = layoutInflater.inflate(R.layout.filter, null);
+                dialogBuilder.setView(dialogView);
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                RadioGroup rgPrice = dialogView.findViewById(R.id.gr_price);
+                switch (rgPrice.getCheckedRadioButtonId()) {
+                    case R.id.rb_11: {
+                        break;
+                    }
+                    case R.id.rb_12: {
+                        break;
+                    }
+                    case R.id.rb_13: {
+                        break;
+                    }
+
+
+
+                }
+                RadioGroup rgDistance= dialogView.findViewById(R.id.gr_distance);
+                switch (rgDistance.getCheckedRadioButtonId()){
+                    case R.id.rb_1:{
+
+                    }
+                    case R.id.rb_2:{
+
+                    }
+                    case R.id.rb_3:{
+
+                    }
+                }
+                Button btOk=dialogView.findViewById(R.id.bt_ok);
+                Button btCancer= dialogView.findViewById(R.id.bt_cancer);
+
+
+        }
+
+
+    }
 }
+

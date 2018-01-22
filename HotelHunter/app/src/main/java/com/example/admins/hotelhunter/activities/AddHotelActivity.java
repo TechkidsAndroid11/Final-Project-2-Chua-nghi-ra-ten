@@ -51,7 +51,7 @@ public class AddHotelActivity extends AppCompatActivity {
         etDiaChi = findViewById(R.id.et_dia_chi);
         etSDT = findViewById(R.id.et_sdt);
         etGia = findViewById(R.id.et_gia)   ;
-        cbWifi = findViewById(R.id.cb_wifi);
+        cbWifi = findViewById(R.id.cb_1);
         cbDieuHoa = findViewById(R.id.cb_dieu_hoa);
         cbThangMay = findViewById(R.id.cb_thang_may);
         cbNongLanh = findViewById(R.id.cb_nong_lanh);

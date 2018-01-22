@@ -128,7 +128,7 @@
         app:layout_constraintVertical_bias="0.047" />
 
     <CheckBox
-        android:id="@+id/cb_wifi"
+        android:id="@+id/cb_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -152,7 +152,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toEndOf="@+id/cb_wifi"
+        app:layout_constraintStart_toEndOf="@+id/cb_1"
         app:layout_constraintTop_toBottomOf="@+id/edit_kinhdo"
         app:layout_constraintVertical_bias="0.222" />
 
@@ -183,7 +183,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cb_dieu_hoa"
         app:layout_constraintHorizontal_bias="0.769"
-        app:layout_constraintStart_toEndOf="@+id/cb_wifi"
+        app:layout_constraintStart_toEndOf="@+id/cb_1"
         app:layout_constraintTop_toBottomOf="@+id/edit_kinhdo"
         app:layout_constraintVertical_bias="0.226" />
 

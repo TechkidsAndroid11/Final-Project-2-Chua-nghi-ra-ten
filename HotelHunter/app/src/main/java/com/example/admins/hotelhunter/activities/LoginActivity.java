@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,19 +37,26 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
     public static final String TAG = "ABCXYZ";
     LoginButton btLoginFacebook;
     Button btLogin;
     CallbackManager callbackManager;
-    public FirebaseAuth firebaseAuth;
     public FirebaseAuth.AuthStateListener mAuthListener;
     SignInButton signInButton;
+    FirebaseAuth firebaseAuth;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
     GoogleApiClient googleApiClient;
     private static final int REQ_CODEGOOGLE = 2;
     public FirebaseUser firebaseUser;
     EditText etMail, etPassword;
+    ImageView ivClose;
     public static UserModel userModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btLoginFacebook = findViewById(R.id.bt_LoginFacebook);
         callbackManager = CallbackManager.Factory.create();
         TextView tvRegister= findViewById(R.id.tv_register);
+
+
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +96,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "onError: " + error.toString());
+            }
+        });
+        ivClose=findViewById(R.id.iv_close);
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
         firebaseAuth = FirebaseAuth.getInstance();
@@ -124,8 +141,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(i);
+//                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+//                                startActivity(i);
+
+                                LoginActivity.this.finish();
 
                             } else {
                                 Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -223,4 +242,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed: ");
     }
+
+
 }

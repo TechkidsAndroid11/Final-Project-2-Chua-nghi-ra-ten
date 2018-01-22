@@ -13,12 +13,21 @@ public class UserModel {
 
     public String uri;
 
+
+
     public UserModel(String name, String uri) {
         this.name = name;
 
 
         this.uri = uri;
 
+    }
+
+    public UserModel(String name, String uid, List<ReviewModel> reviewModels, String uri) {
+        this.name = name;
+        this.uid = uid;
+        this.reviewModels = reviewModels;
+        this.uri = uri;
     }
 
     public UserModel() {
@@ -28,6 +37,16 @@ public class UserModel {
         this.name = name;
 
 
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "name='" + name + '\'' +
+                ", uid='" + uid + '\'' +
+                ", reviewModels=" + reviewModels +
+                ", uri='" + uri + '\'' +
+                '}';
     }
 
     public String getUid() {
