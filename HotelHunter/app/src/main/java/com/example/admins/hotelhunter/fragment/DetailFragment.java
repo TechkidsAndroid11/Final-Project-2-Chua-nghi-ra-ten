@@ -1,24 +1,27 @@
 package com.example.admins.hotelhunter.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.admins.hotelhunter.FeedbackAdapter;
 import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.activities.LoginActivity;
+import com.example.admins.hotelhunter.adapter.FeedbackAdapter;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.example.admins.hotelhunter.model.ReviewModel;
@@ -46,16 +49,19 @@ import static com.example.admins.hotelhunter.activities.LoginActivity.userModel;
  * A simple {@link Fragment} subclass.
  */
 public class DetailFragment extends Fragment implements View.OnClickListener {
-    private static final String TAG = "DetailFragment";
-    CheckBox cbWifi, cbDieuHoa, cbNongLanh, cbThangMay;
-    TextView tvDienThoai, tvDiaChi, tvFeedback;
-    HotelModel hotelModel;
+    private static final String TAG = DetailFragment.class.toString();
+    TextView tvGia;
+    RelativeLayout rlWifi, rlNongLanh, rlDieuHoa, rlThangMay;
+    TextView tvAddress;
+    TextView tvPhone;
+    TextView tvRate;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     List<ReviewModel> reviewModelList = new ArrayList<>();
     FeedbackAdapter feedbackAdapter;
     RecyclerView rvFeedback;
+    public HotelModel hotelModel;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -68,36 +74,77 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         EventBus.getDefault().register(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
         setupUI(view);
         loadData();
         return view;
     }
 
+    @SuppressLint("Range")
     private void loadData() {
-        tvDiaChi.setText(hotelModel.address);
-        tvDienThoai.setText(hotelModel.phone);
-        cbWifi.setChecked(hotelModel.wifi);
-        cbDieuHoa.setChecked(hotelModel.dieuHoa);
-        cbNongLanh.setChecked(hotelModel.nongLanh);
-        cbThangMay.setChecked(hotelModel.thangMay);
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        AlphaAnimation alpha = new AlphaAnimation(0.1F, 0.1F);
+        alpha.setDuration(0);
+        alpha.setFillAfter(true);
+        if (!hotelModel.dieuHoa) {
+            rlDieuHoa.startAnimation(alpha);
+        }
+
+        if (!hotelModel.wifi) {
+            rlWifi.startAnimation(alpha);
+        }
+
+        if (!hotelModel.nongLanh) {
+            rlNongLanh.startAnimation(alpha);
+        }
+
+        if (!hotelModel.thangMay) {
+            rlThangMay.startAnimation(alpha);
+        }
+
+        tvAddress.setText(hotelModel.address);
+
+        tvPhone.setText(hotelModel.phone);
+        tvGia.setText(hotelModel.gia + "VNĐ");
+        if (hotelModel.danhGiaTB >= 0 && hotelModel.danhGiaTB < 1) {
+            tvRate.setText("Rất kém");
+        }
 
 
-        tvFeedback.setOnClickListener(this);
+        if (hotelModel.danhGiaTB >= 1 && hotelModel.danhGiaTB < 2) {
+            tvRate.setText("Kém");
+        }
+
+
+        if (hotelModel.danhGiaTB >= 2 && hotelModel.danhGiaTB < 3) {
+            tvRate.setText("Bình thường");
+        }
+
+
+        if (hotelModel.danhGiaTB >= 3 && hotelModel.danhGiaTB < 4) {
+            tvRate.setText("Tốt");
+        }
+
+
+        if (hotelModel.danhGiaTB >= 4 && hotelModel.danhGiaTB <= 5) {
+            tvRate.setText("Rất tốt");
+        }
     }
 
-
     private void setupUI(View view) {
-        cbWifi = view.findViewById(R.id.cb_1);
-        cbDieuHoa = view.findViewById(R.id.cb_dieu_hoa);
-        cbNongLanh = view.findViewById(R.id.cb_nong_lanh);
-        cbThangMay = view.findViewById(R.id.cb_thang_may);
-        tvDienThoai = view.findViewById(R.id.tv_so_dien_thoai);
-        tvDiaChi = view.findViewById(R.id.tv_dia_chi_2);
-        tvFeedback = view.findViewById(R.id.tv_feedback11);
+        rlDieuHoa = view.findViewById(R.id.rl_dieu_hoa);
+        rlNongLanh = view.findViewById(R.id.rl_nong_lanh);
+        rlThangMay = view.findViewById(R.id.rl_thang_may);
+        rlWifi = view.findViewById(R.id.rl_wifi);
+        tvAddress = view.findViewById(R.id.tv_address);
+        tvPhone = view.findViewById(R.id.tv_phone);
+        tvRate = view.findViewById(R.id.tv_rating);
+        tvGia = view.findViewById(R.id.tv_gia);
+        tvRate.setOnClickListener(this);
         rvFeedback = view.findViewById(R.id.rv_feedback);
-
+        feedbackAdapter = new FeedbackAdapter(getContext(),hotelModel.reviewModels);
+        rvFeedback.setAdapter(feedbackAdapter);
+        rvFeedback.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
@@ -109,7 +156,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_feedback11: {
+            case R.id.tv_rating: {
                 if (firebaseAuth.getCurrentUser() == null) {
                     Intent i = new Intent(getActivity(), LoginActivity.class);
                     startActivity(i);
@@ -140,8 +187,8 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                     btPost.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // child phai la reviewModels, k phai reviewModelList.
-                            // de nhu cu sai ten so vs database firebase nen code k chay vao
+
+
                             databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("reviewModels")
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -157,16 +204,15 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                                             }
 
                                             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                            // nhu nay ms lay dc tgian hien tai. de nhu cu no null
+
                                             Date date = Calendar.getInstance().getTime();
 
-                                            // sua lai constructor cua thg review model, constructor cu bi sai
-                                            // rating phai la float chu k phai int
+
                                             ReviewModel review = new ReviewModel(
                                                     firebaseAuth.getCurrentUser().getDisplayName(),
                                                     dateFormat.format(date),
                                                     etComment.getText().toString(),
-                                                    //getRating ms la lay rate, getNumStar no luc nao cung return 5
+
                                                     rbRate.getRating()
                                             );
                                             reviewModelList.add(review);
@@ -187,11 +233,35 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                                         }
                                     });
                             databaseReference = firebaseDatabase.getReference("hotels");
-                            databaseReference.child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            databaseReference.orderByChild("phone").equalTo(hotelModel.phone).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    hotelModel = dataSnapshot.getValue(HotelModel.class);
+                                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                        hotelModel = data.getValue(HotelModel.class);
+                                        Log.d(TAG, "onDataChange.: " + hotelModel.phone);
+                                        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                                        Date date = Calendar.getInstance().getTime();
 
+
+                                        ReviewModel review = new ReviewModel(
+                                                firebaseAuth.getCurrentUser().getDisplayName(),
+                                                dateFormat.format(date),
+                                                etComment.getText().toString(),
+
+                                                rbRate.getRating()
+                                        );
+                                        if (hotelModel.reviewModels == null) {
+                                            List<ReviewModel>reviewModels= new ArrayList<>();
+                                            reviewModels.add(review);
+                                            hotelModel.reviewModels=reviewModels;
+                                        } else {
+                                            hotelModel.reviewModels.add(review);
+                                        }
+                                        databaseReference.child(data.getKey()).setValue(hotelModel);
+
+
+
+                                    }
                                 }
 
                                 @Override
@@ -199,47 +269,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
 
                                 }
                             });
-                            databaseReference.child(FirebaseAuth.getInstance().getUid()).child("reviewModels")
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            if (dataSnapshot.getChildrenCount() > 0) {
-                                                List<ReviewModel> reviewModelList = new ArrayList<>();
-                                                for (DataSnapshot reviewSnapshot : dataSnapshot.getChildren()) {
-                                                    ReviewModel reviewModel = reviewSnapshot.getValue(ReviewModel.class);
-                                                    reviewModelList.add(reviewModel);
-                                                }
 
-
-                                                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                                Date date = Calendar.getInstance().getTime();
-
-
-                                                ReviewModel review = new ReviewModel(
-                                                        firebaseAuth.getCurrentUser().getDisplayName(),
-                                                        dateFormat.format(date),
-                                                        etComment.getText().toString(),
-
-                                                        rbRate.getRating()
-                                                );
-                                                Log.d(TAG, "onDataChange: " + review);
-                                                reviewModelList.add(review);
-
-
-                                                hotelModel.reviewModels = reviewModelList;
-
-                                                databaseReference.child(firebaseAuth.getCurrentUser().getUid())
-                                                        .setValue(hotelModel);
-
-
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
                             alertDialog.dismiss();
 
                         }
@@ -248,12 +278,9 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                     });
 
 
-
                 }
+
             }
-
-
         }
     }
 }
-

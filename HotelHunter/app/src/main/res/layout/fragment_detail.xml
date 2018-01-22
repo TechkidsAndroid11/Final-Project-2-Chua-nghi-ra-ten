@@ -3,129 +3,228 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.admins.hotelhunter.fragment.DetailFragment">
-
     <!-- TODO: Update blank fragment layout -->
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="150dp"-->
-        <!--android:layout_above="@+id/sv_1">-->
-        <!--<com.daimajia.slider.library.SliderLayout-->
-            <!--android:id="@+id/sl_image_product"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
-        <!--<com.daimajia.slider.library.Indicators.PagerIndicator-->
-            <!--android:id="@+id/pi_indicator"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="8dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_centerHorizontal="true"/>-->
-
-    <!--</RelativeLayout>-->
-    <ScrollView
+    <android.support.v7.widget.CardView
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/iv_hotel"
+        android:id="@+id/cv_gia"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sv_1">
-
-
-
-        <RelativeLayout
-            android:id="@+id/rl_2"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <CheckBox
-                android:id="@+id/cb_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:text="wifi" />
-
-            <CheckBox
-                android:id="@+id/cb_dieu_hoa"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cb_1"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Điều hòa" />
-
-            <CheckBox
-                android:id="@+id/cb_nong_lanh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Nóng lạnh" />
-
-            <CheckBox
-                android:id="@+id/cb_thang_may"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/cb_nong_lanh"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Thang máy" />
-
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tv_dien_thoai"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cb_dieu_hoa"
-                android:layout_marginLeft="16sp"
-                android:layout_marginTop="50dp"
-                android:text="Điện thoại: " />
-
-            <TextView
-                android:id="@+id/tv_so_dien_thoai"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cb_dieu_hoa"
-                android:layout_marginLeft="100dp"
-                android:layout_marginTop="50sp" />
-
-            <TextView
-                android:id="@+id/tv_dia_chi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cb_dieu_hoa"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="100dp"
-                android:text="Địa chỉ: " />
-
-            <TextView
-                android:id="@+id/tv_dia_chi_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cb_dieu_hoa"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="100dp"
-                android:layout_toRightOf="@id/tv_dia_chi" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_feedback"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@id/tv_dia_chi"></android.support.v7.widget.RecyclerView>
-
-            <TextView
-                android:id="@+id/tv_feedback11"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rv_feedback"
+                android:text="Giá"/>
+            <TextView
+                android:id="@+id/tv_gia"
+                android:textColor="@color/yellow"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                android:text="100000đ-250000đ"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:id="@+id/cb_tien_ich"
+        android:layout_below="@id/cv_gia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:layout_below="@id/cv_gia"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:layout_marginLeft="16dp"
+                android:text="Các tiện ích"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/ll1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="2dp"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/rl_thang_may"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv_thang_may"
+                        android:src="@drawable/elevator"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:id="@+id/tv_thang_may"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/iv_thang_may"
+                        android:textColor="@color/yellow"
+                        android:text="Thang máy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_nong_lanh"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv_nong_lanh"
+                        android:src="@drawable/nong_lanh"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                    <TextView
+                        android:id="@+id/tv_nong_lanh"
+                        android:layout_marginLeft="5dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/iv_nong_lanh"
+                        android:textColor="@color/yellow"
+                        android:text="Nóng lạnh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_wifi"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv_wifi"
+                        android:src="@drawable/ic_wifi_black_24dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                    <TextView
+                        android:id="@+id/tv_wifi"
+                        android:layout_marginLeft="5dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/iv_wifi"
+                        android:textColor="@color/yellow"
+                        android:text="Wifi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Đánh giá của bạn"
-                android:layout_marginEnd="16dp"/>
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:id="@+id/rl_dieu_hoa"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv_dieu_hoa"
+                        android:src="@drawable/air_conditioner"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:id="@+id/tv_dieu_hoa"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/iv_dieu_hoa"
+                        android:textColor="@color/yellow"
+                        android:text="Điều hòa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-        </RelativeLayout>
+                </RelativeLayout>
 
-
-
-    </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:layout_below="@id/cb_tien_ich"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textStyle="bold"
+                android:text="Liên hệ"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_address"
+                    android:src="@drawable/address"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/iv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_phone"
+                    android:src="@drawable/ic_call_black_24dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/iv_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_star"
+                    android:src="@drawable/star"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+                <TextView
+                    android:id="@+id/tv_rating"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/iv_star"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@id/rv_feedback"
+                    android:layout_below="@+id/tv_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

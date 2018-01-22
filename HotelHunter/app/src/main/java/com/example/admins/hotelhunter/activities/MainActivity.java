@@ -1,6 +1,7 @@
 package com.example.admins.hotelhunter.activities;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -26,14 +27,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
+import com.example.admins.hotelhunter.map_direction.DirectionHandler;
+import com.example.admins.hotelhunter.map_direction.DirectionResponse;
+import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
+import com.example.admins.hotelhunter.map_direction.RetrofitService;
+import com.example.admins.hotelhunter.map_direction.RouteModel;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.CameraUpdate;
@@ -53,62 +60,30 @@ import com.example.admins.hotelhunter.R;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
     private static final String TAG = MainActivity.class.toString();
     FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
-    public static LatLng currentLocation;
-    TextView tvName, tvNavText, tvFilter;
+    TextView tvName, tvNavText;
     ImageView ivAvata;
+    RelativeLayout relativeLayout;
+    public LatLng currentLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+}
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        tvFilter=findViewById(R.id.tv_filter);
-        tvFilter.setOnClickListener(this);
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View view = navigationView.getHeaderView(0);
-        tvNavText = view.findViewById(R.id.tv_nav_login);
-        tvName = view.findViewById(R.id.tv_name);
-        firebaseAuth = FirebaseAuth.getInstance();
-        ivAvata = view.findViewById(R.id.iv_avatar);
-//        Log.d(TAG, "onCreate: "+firebaseAuth.getCurrentUser().getDisplayName());
-        if (firebaseAuth.getCurrentUser() == null) {
-            tvNavText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-
-                }
-            });
-        } else {
-            tvNavText.setVisibility(View.GONE);
-            tvName.setText(firebaseAuth.getCurrentUser().getDisplayName());
-//            Picasso.with(this).load(R.drawable.ic_close_black_24dp).into(ivAvata);
-            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
-        }
-
-    }
 
 
     @Override
@@ -119,6 +94,53 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View view = navigationView.getHeaderView(0);
+        tvNavText = view.findViewById(R.id.tv_nav_login);
+        tvName = view.findViewById(R.id.tv_name);
+        firebaseAuth = FirebaseAuth.getInstance();
+        ivAvata = view.findViewById(R.id.iv_avatar);
+//        Log.d(TAG, "onCreate: "+firebaseAuth.getCurrentUser().getDisplayName());
+        if (firebaseAuth.getCurrentUser() == null) {
+
+        } else {
+            Log.d(TAG, "onResume: "+firebaseAuth.getCurrentUser());
+            tvNavText.setVisibility(View.GONE);
+            tvName.setVisibility(View.VISIBLE);
+            ivAvata.setVisibility(View.VISIBLE);
+            tvName.setText(firebaseAuth.getCurrentUser().getDisplayName());
+//            Picasso.with(this).load(R.drawable.ic_close_black_24dp).into(ivAvata);
+            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
+        }
+        tvNavText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -171,8 +193,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
+        mMap = googleMap;
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -195,8 +217,8 @@ public class MainActivity extends AppCompatActivity
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                for (int i = 0; i < list.size(); i++) {
-                    if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo) {
+                for (int i = 0; i < list.size(); i++){
+                    if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo){
                         EventBus.getDefault().postSticky(new OnClickWindowinfo(list.get(i)));
                         Log.d(TAG, "onInfoWindowClick: ");
                     }
@@ -204,54 +226,10 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "onInfoWindowClick: ");
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);
+
             }
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_filter:
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-                LayoutInflater layoutInflater = this.getLayoutInflater();
-                View dialogView = layoutInflater.inflate(R.layout.filter, null);
-                dialogBuilder.setView(dialogView);
-                AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.show();
-                RadioGroup rgPrice = dialogView.findViewById(R.id.gr_price);
-                switch (rgPrice.getCheckedRadioButtonId()) {
-                    case R.id.rb_11: {
-                        break;
-                    }
-                    case R.id.rb_12: {
-                        break;
-                    }
-                    case R.id.rb_13: {
-                        break;
-                    }
 
-
-
-                }
-                RadioGroup rgDistance= dialogView.findViewById(R.id.gr_distance);
-                switch (rgDistance.getCheckedRadioButtonId()){
-                    case R.id.rb_1:{
-
-                    }
-                    case R.id.rb_2:{
-
-                    }
-                    case R.id.rb_3:{
-
-                    }
-                }
-                Button btOk=dialogView.findViewById(R.id.bt_ok);
-                Button btCancer= dialogView.findViewById(R.id.bt_cancer);
-
-
-        }
-
-
-    }
 }
-

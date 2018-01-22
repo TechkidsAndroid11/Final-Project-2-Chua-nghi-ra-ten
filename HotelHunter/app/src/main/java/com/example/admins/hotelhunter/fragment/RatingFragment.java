@@ -13,8 +13,6 @@ import com.example.admins.hotelhunter.R;
  * A simple {@link Fragment} subclass.
  */
 public class RatingFragment extends Fragment {
-
-
     public RatingFragment() {
         // Required empty public constructor
     }
