@@ -37,12 +37,12 @@ import retrofit2.Response;
  */
 
 public class DataHandle {
+    public static final List<Polyline> polylines = new ArrayList<>();
     private static final String TAG = "DataHandle";
     public static List<HotelModel> hotelModels(final GoogleMap mMap, final Context context) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("hotels");
         final List<HotelModel> list = new ArrayList<>();
-        final List<Polyline> polylines = new ArrayList<>();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {

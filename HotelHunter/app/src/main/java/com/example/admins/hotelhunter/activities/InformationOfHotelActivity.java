@@ -30,7 +30,7 @@ public class InformationOfHotelActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+
         setContentView(R.layout.activity_information_of_hotel);
         Log.d(TAG, "onCreate: ");
         EventBus.getDefault().register(this);
