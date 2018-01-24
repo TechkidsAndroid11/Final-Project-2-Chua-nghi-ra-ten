@@ -217,11 +217,7 @@
                     android:layout_toRightOf="@id/iv_star"
                     android:layout_width="match_parent"
                     android:layout_height="25dp" />
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_feedback"
-                    android:layout_below="@+id/tv_rating"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
             </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

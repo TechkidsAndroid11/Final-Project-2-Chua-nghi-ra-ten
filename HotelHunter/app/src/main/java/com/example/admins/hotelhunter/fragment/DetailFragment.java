@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class DetailFragment extends Fragment  {
     List<ReviewModel> reviewModelList = new ArrayList<>();
     FeedbackAdapter feedbackAdapter;
     RecyclerView rvFeedback;
+    ImageView ivStar;
     public HotelModel hotelModel;
 
     public DetailFragment() {
@@ -160,6 +162,9 @@ public class DetailFragment extends Fragment  {
         tvAddress = view.findViewById(R.id.tv_address);
         tvPhone = view.findViewById(R.id.tv_phone);
         tvGia = view.findViewById(R.id.tv_gia);
+        tvRate= view.findViewById(R.id.tv_rating);
+        ivStar= view.findViewById(R.id.iv_star);
+
 
 
 
