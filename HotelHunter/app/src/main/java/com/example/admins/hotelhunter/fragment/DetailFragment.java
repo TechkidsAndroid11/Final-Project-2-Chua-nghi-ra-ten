@@ -160,7 +160,7 @@ public class DetailFragment extends Fragment  {
         tvAddress = view.findViewById(R.id.tv_address);
         tvPhone = view.findViewById(R.id.tv_phone);
         tvGia = view.findViewById(R.id.tv_gia);
-
+        tvRate = view.findViewById(R.id.tv_rating);
 
 
 
