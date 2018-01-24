@@ -27,6 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -178,10 +179,32 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_favourite) {
 
         } else if (id == R.id.nav_Logout) {
-            firebaseAuth.signOut();
-            tvNavText.setVisibility(View.VISIBLE);
-            ivAvata.setImageResource(R.mipmap.ic_launcher_round);
-            tvName.setVisibility(View.GONE);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+            LayoutInflater layoutInflater = this.getLayoutInflater();
+            View dialogView = layoutInflater.inflate(R.layout.sign_out, null);
+            dialogBuilder.setView(dialogView);
+            final AlertDialog alertDialog = dialogBuilder.create();
+            alertDialog.show();
+            Button btYes=dialogView.findViewById(R.id.btn_yes);
+            btYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    firebaseAuth.signOut();
+                    tvNavText.setVisibility(View.VISIBLE);
+                    ivAvata.setImageResource(R.mipmap.ic_launcher_round);
+                    tvName.setVisibility(View.GONE);
+                    alertDialog.dismiss();
+
+                }
+            });
+            Button btNo=dialogView.findViewById(R.id.btn_no);
+            btNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alertDialog.dismiss();
+                }
+            });
+
 
 
         }

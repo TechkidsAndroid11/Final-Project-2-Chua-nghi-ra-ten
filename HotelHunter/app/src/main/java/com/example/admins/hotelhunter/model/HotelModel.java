@@ -63,4 +63,11 @@ public class HotelModel {
                 ", thangMay=" + thangMay +
                 '}';
     }
+    public void addReview(ReviewModel reviewModel){
+        if (this.reviewModels == null) {
+            this.reviewModels = new ArrayList<>();
+        }
+        this.reviewModels.add(reviewModel);
+    }
 }
+

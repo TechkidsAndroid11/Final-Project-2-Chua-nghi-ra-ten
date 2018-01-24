@@ -163,11 +163,9 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         tvGia = view.findViewById(R.id.tv_gia);
         tvRate.setOnClickListener(this);
         rvFeedback = view.findViewById(R.id.rv_feedback);
-        feedbackAdapter = new FeedbackAdapter(getContext(),hotelModel.reviewModels);
+        feedbackAdapter = new FeedbackAdapter(getContext(), hotelModel.reviewModels);
         rvFeedback.setAdapter(feedbackAdapter);
         rvFeedback.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
 
 
     }
@@ -175,6 +173,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
     @Subscribe(sticky = true)
     public void getHotelModel(final OnClickWindowinfo onClickWindowinfo) {
         hotelModel = onClickWindowinfo.hotelModel;
+        if (hotelModel.reviewModels == null) hotelModel.reviewModels = new ArrayList<>();
     }
 
     @Override
@@ -182,8 +181,30 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.tv_rating: {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    Intent i = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(i);
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                    LayoutInflater layoutInflater = this.getLayoutInflater();
+                    View dialogView = layoutInflater.inflate(R.layout.require, null);
+                    dialogBuilder.setView(dialogView);
+                    final AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.show();
+                    Button btnYes = dialogView.findViewById(R.id.btn_yes);
+                    btnYes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(getActivity(), LoginActivity.class);
+                            startActivity(i);
+                            alertDialog.dismiss();
+
+                        }
+                    });
+
+                    Button btHuy=dialogView.findViewById(R.id.btn_no);
+                    btHuy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.dismiss();
+                        }
+                    });
                 } else {
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
                     LayoutInflater layoutInflater = this.getLayoutInflater();
@@ -260,33 +281,35 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
                             databaseReference.orderByChild("phone").equalTo(hotelModel.phone).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                        hotelModel = data.getValue(HotelModel.class);
-                                        Log.d(TAG, "onDataChange.: " + hotelModel.phone);
-                                        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                        Date date = Calendar.getInstance().getTime();
+                                    if (dataSnapshot.getChildrenCount() > 0) {
+                                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                            hotelModel = data.getValue(HotelModel.class);
+                                            Log.d(TAG, "onDataChange.: " + hotelModel.phone);
+                                            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                                            Date date = Calendar.getInstance().getTime();
 
 
-                                        ReviewModel review = new ReviewModel(
-                                                firebaseAuth.getCurrentUser().getDisplayName(),
-                                                dateFormat.format(date),
-                                                etComment.getText().toString(),
+                                            ReviewModel review = new ReviewModel(
+                                                    firebaseAuth.getCurrentUser().getDisplayName(),
+                                                    dateFormat.format(date),
+                                                    etComment.getText().toString(),
 
-                                                rbRate.getRating()
-                                        );
-                                        if (hotelModel.reviewModels == null) {
-                                            List<ReviewModel>reviewModels= new ArrayList<>();
-                                            reviewModels.add(review);
-                                            hotelModel.reviewModels=reviewModels;
-                                        } else {
-                                            hotelModel.reviewModels.add(review);
+                                                    rbRate.getRating()
+                                            );
+                                            if (hotelModel.reviewModels == null) {
+                                                List<ReviewModel> reviewModels = new ArrayList<>();
+                                                reviewModels.add(review);
+                                                hotelModel.reviewModels = reviewModels;
+                                            } else {
+                                                hotelModel.reviewModels.add(review);
+                                            }
+                                            databaseReference.child(data.getKey()).setValue(hotelModel);
+
+                                            rvFeedback.setAdapter(new FeedbackAdapter(getContext(),hotelModel.reviewModels));
                                         }
-                                        databaseReference.child(data.getKey()).setValue(hotelModel);
-
-
-
                                     }
                                 }
+
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
