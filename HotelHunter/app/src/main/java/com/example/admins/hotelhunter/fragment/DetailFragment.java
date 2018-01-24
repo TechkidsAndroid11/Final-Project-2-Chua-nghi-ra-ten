@@ -76,6 +76,27 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         EventBus.getDefault().register(this);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+//        databaseReference = firebaseDatabase.getReference("hotels");
+//        databaseReference.child("reviewModels").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren())
+//                {
+//                    ReviewModel reviewModel = postSnapshot.getValue(ReviewModel.class);
+//                    reviewModelList.add(reviewModel);
+//                    Log.d(TAG, "onDataChange: "+reviewModelList);
+//
+//                    feedbackAdapter = new FeedbackAdapter(getContext(),reviewModelList);
+//                    rvFeedback.setAdapter(feedbackAdapter);
+//                    rvFeedback.setLayoutManager(new LinearLayoutManager(getContext()));
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
         setupUI(view);
         loadData();
         return view;
@@ -145,6 +166,9 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         feedbackAdapter = new FeedbackAdapter(getContext(),hotelModel.reviewModels);
         rvFeedback.setAdapter(feedbackAdapter);
         rvFeedback.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+
 
     }
 

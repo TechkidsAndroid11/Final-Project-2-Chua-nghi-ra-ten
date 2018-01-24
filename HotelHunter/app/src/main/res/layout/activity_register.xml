@@ -29,12 +29,79 @@
             android:textColor="#f00"
             android:layout_marginLeft="5sp"
             android:text="Mục này còn thiếu"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_phone"
+            android:layout_below="@+id/tv_checkName">
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:hint="ĐIện thoại"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="65dp"
+                android:layout_height="38dp"
+                android:layout_centerVertical="true"
+                android:padding="3dp"
+
+                android:layout_alignParentEnd="true">
+
+                <Button
+                    android:id="@+id/bt_phone_verify"
+                    android:layout_centerVertical="true"
+                    android:layout_width="65dp"
+                    android:layout_height="38dp"
+
+                    android:padding="3dp"
+
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:text="Verify"
+                    android:visibility="visible"/>
+                <com.github.rahatarmanahmed.cpv.CircularProgressView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/progress_view_phone_verify"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    app:cpv_animAutostart="true"
+                    app:cpv_indeterminate="true"
+                    app:cpv_color="#fff"
+                    android:visibility="invisible"/>
+                <ImageView
+                    android:id="@+id/iv_done_phone_verify"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_done_black_24dp"
+                    android:layout_alignParentEnd="true"
+                    android:visibility="invisible"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_checkPhone"
+            android:layout_below="@+id/rl_phone"
+            android:textStyle="italic"
+            android:visibility="gone"
+            android:textColor="#f00"
+            android:layout_marginLeft="5sp"
+            android:text="Mục này còn thiếu"/>
+
         <EditText
-            android:layout_marginTop="16sp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
-            android:layout_below="@+id/et_name"
+            android:layout_below="@+id/tv_checkPhone"
             android:textStyle="normal"
             android:textSize="14sp"
             android:inputType="textEmailAddress"
@@ -88,6 +155,15 @@
             android:layout_marginLeft="5sp"
             android:text="Mật khẩu không trùng khớp"
             android:layout_below="@+id/et_confirmPassDK"/>
+        <CheckBox
+            android:id="@+id/cb_fixer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:text="Bạn là chủ nhà nghỉ?"
+            android:layout_below="@+id/tv_checkConPass"
+            android:textSize="14sp"
+            android:buttonTint="#000"/>
     </RelativeLayout>
 
     <Button
