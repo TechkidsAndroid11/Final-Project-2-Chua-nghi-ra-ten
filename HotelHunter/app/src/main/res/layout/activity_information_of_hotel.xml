@@ -21,14 +21,22 @@
                 android:layout_height="match_parent" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-    <ImageView
-        android:layout_below="@id/abl_name"
-        android:background="@drawable/anh_nen"
-        android:id="@+id/iv_hotel"
+    <com.daimajia.slider.library.SliderLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:id="@+id/slide_hotel"
+        android:layout_below="@id/abl_name">
+    </com.daimajia.slider.library.SliderLayout>
+    <com.daimajia.slider.library.Indicators.PagerIndicator
+        android:id="@+id/custom_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/vp_fragment"
+        android:layout_marginBottom="55dp"/>
     <android.support.design.widget.TabLayout
-        android:layout_below="@id/iv_hotel"
+        android:layout_below="@id/slide_hotel"
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

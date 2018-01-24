@@ -48,7 +48,7 @@ import static com.example.admins.hotelhunter.activities.LoginActivity.userModel;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetailFragment extends Fragment implements View.OnClickListener {
+public class DetailFragment extends Fragment  {
     private static final String TAG = DetailFragment.class.toString();
     TextView tvGia;
     RelativeLayout rlWifi, rlNongLanh, rlDieuHoa, rlThangMay;
@@ -159,13 +159,9 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         rlWifi = view.findViewById(R.id.rl_wifi);
         tvAddress = view.findViewById(R.id.tv_address);
         tvPhone = view.findViewById(R.id.tv_phone);
-        tvRate = view.findViewById(R.id.tv_rating);
         tvGia = view.findViewById(R.id.tv_gia);
-        tvRate.setOnClickListener(this);
-        rvFeedback = view.findViewById(R.id.rv_feedback);
-        feedbackAdapter = new FeedbackAdapter(getContext(), hotelModel.reviewModels);
-        rvFeedback.setAdapter(feedbackAdapter);
-        rvFeedback.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
 
 
     }
@@ -176,158 +172,7 @@ public class DetailFragment extends Fragment implements View.OnClickListener {
         if (hotelModel.reviewModels == null) hotelModel.reviewModels = new ArrayList<>();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_rating: {
-                if (firebaseAuth.getCurrentUser() == null) {
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-                    LayoutInflater layoutInflater = this.getLayoutInflater();
-                    View dialogView = layoutInflater.inflate(R.layout.require, null);
-                    dialogBuilder.setView(dialogView);
-                    final AlertDialog alertDialog = dialogBuilder.create();
-                    alertDialog.show();
-                    Button btnYes = dialogView.findViewById(R.id.btn_yes);
-                    btnYes.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(getActivity(), LoginActivity.class);
-                            startActivity(i);
-                            alertDialog.dismiss();
-
-                        }
-                    });
-
-                    Button btHuy=dialogView.findViewById(R.id.btn_no);
-                    btHuy.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            alertDialog.dismiss();
-                        }
-                    });
-                } else {
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
-                    LayoutInflater layoutInflater = this.getLayoutInflater();
-                    View dialogView = layoutInflater.inflate(R.layout.fragment_user_feed_back, null);
-                    dialogBuilder.setView(dialogView);
-                    final AlertDialog alertDialog = dialogBuilder.create();
-                    alertDialog.show();
-                    final RatingBar rbRate = dialogView.findViewById(R.id.rb_rating);
-                    final EditText etComment = dialogView.findViewById(R.id.et_comment);
-                    Log.d(TAG, "onClick: " + etComment.getText().toString());
-                    Button btPost = dialogView.findViewById(R.id.bt_post);
-                    databaseReference = firebaseDatabase.getReference("users");
-                    databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            userModel = dataSnapshot.getValue(UserModel.class);
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                    btPost.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
 
 
-                            databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("reviewModels")
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                            List<ReviewModel> reviewModelList = new ArrayList<>();
-
-                                            if (dataSnapshot.getChildrenCount() > 0) {
-                                                for (DataSnapshot reviewSnapshot : dataSnapshot.getChildren()) {
-                                                    ReviewModel reviewModel = reviewSnapshot.getValue(ReviewModel.class);
-                                                    reviewModelList.add(reviewModel);
-                                                }
-                                            }
-
-                                            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-                                            Date date = Calendar.getInstance().getTime();
-
-
-                                            ReviewModel review = new ReviewModel(
-                                                    firebaseAuth.getCurrentUser().getDisplayName(),
-                                                    dateFormat.format(date),
-                                                    etComment.getText().toString(),
-
-                                                    rbRate.getRating()
-                                            );
-                                            reviewModelList.add(review);
-
-
-                                            userModel.reviewModels = reviewModelList;
-
-                                            databaseReference.child(firebaseAuth.getCurrentUser().getUid())
-                                                    .setValue(userModel);
-
-
-                                        }
-
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-                                            Log.d(TAG, "onCancelled: " + databaseError.getMessage());
-                                        }
-                                    });
-                            databaseReference = firebaseDatabase.getReference("hotels");
-                            databaseReference.orderByChild("phone").equalTo(hotelModel.phone).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.getChildrenCount() > 0) {
-                                        for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                            hotelModel = data.getValue(HotelModel.class);
-                                            Log.d(TAG, "onDataChange.: " + hotelModel.phone);
-                                            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                            Date date = Calendar.getInstance().getTime();
-
-
-                                            ReviewModel review = new ReviewModel(
-                                                    firebaseAuth.getCurrentUser().getDisplayName(),
-                                                    dateFormat.format(date),
-                                                    etComment.getText().toString(),
-
-                                                    rbRate.getRating()
-                                            );
-                                            if (hotelModel.reviewModels == null) {
-                                                List<ReviewModel> reviewModels = new ArrayList<>();
-                                                reviewModels.add(review);
-                                                hotelModel.reviewModels = reviewModels;
-                                            } else {
-                                                hotelModel.reviewModels.add(review);
-                                            }
-                                            databaseReference.child(data.getKey()).setValue(hotelModel);
-
-                                            rvFeedback.setAdapter(new FeedbackAdapter(getContext(),hotelModel.reviewModels));
-                                        }
-                                    }
-                                }
-
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-
-                            alertDialog.dismiss();
-
-                        }
-
-
-                    });
-
-
-                }
-
-            }
-        }
-    }
 }

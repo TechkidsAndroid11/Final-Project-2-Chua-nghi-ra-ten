@@ -1,10 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.admins.hotelhunter.fragment.RatingFragment">
-    <ListView
-        android:id="@+id/lv_rate"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_feedback"
+        android:layout_marginLeft="8dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
-</RelativeLayout>
+        android:layout_height="200dp">
+
+    </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:layout_marginLeft="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_rate"
+        android:text="Đánh giá của bạn"/>
+</LinearLayout>
