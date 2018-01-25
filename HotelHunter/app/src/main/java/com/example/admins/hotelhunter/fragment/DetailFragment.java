@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,11 +38,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.admins.hotelhunter.activities.LoginActivity.userModel;
 
@@ -61,6 +65,7 @@ public class DetailFragment extends Fragment  {
     List<ReviewModel> reviewModelList = new ArrayList<>();
     FeedbackAdapter feedbackAdapter;
     RecyclerView rvFeedback;
+    ImageView ivStar;
     public HotelModel hotelModel;
 
     public DetailFragment() {
@@ -126,30 +131,12 @@ public class DetailFragment extends Fragment  {
         tvAddress.setText(hotelModel.address);
 
         tvPhone.setText(hotelModel.phone);
-        tvGia.setText(hotelModel.gia + "VNĐ");
-        if (hotelModel.danhGiaTB >= 0 && hotelModel.danhGiaTB < 1) {
-            tvRate.setText("Rất kém");
-        }
+        String giaDon = hotelModel.gia.substring(0, hotelModel.gia.indexOf("-"));
+        String giaDoi = hotelModel.gia.substring(hotelModel.gia.indexOf("-")+1);
+        Log.d(TAG, "loadData: " + giaDon + "   " + giaDoi);
+        tvGia.setText(NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDon))+"-" + NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDoi))+ " VNĐ");
 
-
-        if (hotelModel.danhGiaTB >= 1 && hotelModel.danhGiaTB < 2) {
-            tvRate.setText("Kém");
-        }
-
-
-        if (hotelModel.danhGiaTB >= 2 && hotelModel.danhGiaTB < 3) {
-            tvRate.setText("Bình thường");
-        }
-
-
-        if (hotelModel.danhGiaTB >= 3 && hotelModel.danhGiaTB < 4) {
-            tvRate.setText("Tốt");
-        }
-
-
-        if (hotelModel.danhGiaTB >= 4 && hotelModel.danhGiaTB <= 5) {
-            tvRate.setText("Rất tốt");
-        }
+        tvRate.setText(hotelModel.danhGiaTB*2 + "/10");
     }
 
     private void setupUI(View view) {
@@ -161,6 +148,8 @@ public class DetailFragment extends Fragment  {
         tvPhone = view.findViewById(R.id.tv_phone);
         tvGia = view.findViewById(R.id.tv_gia);
         tvRate = view.findViewById(R.id.tv_rating);
+        tvRate= view.findViewById(R.id.tv_rating);
+        ivStar= view.findViewById(R.id.iv_star);
     }
 
     @Subscribe(sticky = true)

@@ -178,8 +178,6 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
                                                     rbRate.getRating()
                                             );
                                             reviewModelList.add(review);
-
-
                                             userModel.reviewModels = reviewModelList;
 
                                             databaseReference.child(firebaseAuth.getCurrentUser().getUid())
