@@ -1,5 +1,6 @@
 package com.example.admins.hotelhunter.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,10 +10,8 @@ import java.util.List;
 public class UserModel {
     public String name;
     public String uid;
-    public List<ReviewModel> reviewModels;
-
     public String uri;
-
+    public boolean register;
 
 
     public UserModel(String name, String uri) {
@@ -23,10 +22,9 @@ public class UserModel {
 
     }
 
-    public UserModel(String name, String uid, List<ReviewModel> reviewModels, String uri) {
+    public UserModel(String name, String uid, String uri) {
         this.name = name;
         this.uid = uid;
-        this.reviewModels = reviewModels;
         this.uri = uri;
     }
 
@@ -44,7 +42,6 @@ public class UserModel {
         return "UserModel{" +
                 "name='" + name + '\'' +
                 ", uid='" + uid + '\'' +
-                ", reviewModels=" + reviewModels +
                 ", uri='" + uri + '\'' +
                 '}';
     }

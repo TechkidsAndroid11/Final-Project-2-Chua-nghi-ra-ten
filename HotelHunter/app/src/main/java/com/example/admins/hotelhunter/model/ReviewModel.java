@@ -6,14 +6,14 @@ package com.example.admins.hotelhunter.model;
 
 public class ReviewModel {
 
-    public String userName;
+    public UserModel userModel;
     public String date;
     public String review;
     public float ratting;
 
 
-    public ReviewModel(String userName, String date, String review, float ratting) {
-        this.userName = userName;
+    public ReviewModel(UserModel userModel, String date, String review, float ratting) {
+        this.userModel = userModel;
         this.date = date;
         this.review = review;
         this.ratting = ratting;
@@ -29,8 +29,8 @@ public class ReviewModel {
 
     }
 
-    public String getUserName() {
-        return userName;
+    public UserModel getUserModel() {
+        return userModel;
     }
 
     public String getDate() {
@@ -44,7 +44,7 @@ public class ReviewModel {
     @Override
     public String toString() {
         return "ReviewModel{" +
-                "userName='" + userName + '\'' +
+                "userName='" +
                 ", date='" + date + '\'' +
                 ", review='" + review + '\'' +
                 ", ratting=" + ratting +
