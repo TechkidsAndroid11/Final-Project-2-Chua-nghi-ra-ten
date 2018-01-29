@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PhoneVerifyActivity"
+    tools:context=".activities.RegisterActivity$PhoneVerifyActivity"
 
     android:fillViewport="true"
     android:overScrollMode="never"
@@ -49,7 +49,7 @@
              />
 
         <EditText
-            android:id="@+id/et_verify_recievedCode"
+            android:id="@+id/et_code"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -108,7 +108,7 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/tv_verify_resend_code"
+            android:id="@+id/tv_resend_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_register"

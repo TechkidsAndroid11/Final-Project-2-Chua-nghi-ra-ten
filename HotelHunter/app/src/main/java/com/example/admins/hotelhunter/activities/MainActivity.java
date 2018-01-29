@@ -1,18 +1,10 @@
 package com.example.admins.hotelhunter.activities;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 
-import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -29,21 +21,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
-import com.example.admins.hotelhunter.map_direction.DirectionHandler;
-import com.example.admins.hotelhunter.map_direction.DirectionResponse;
-import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
-import com.example.admins.hotelhunter.map_direction.RetrofitService;
-import com.example.admins.hotelhunter.map_direction.RouteModel;
 import com.example.admins.hotelhunter.model.HotelModel;
-import com.facebook.login.LoginManager;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,22 +35,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import com.example.admins.hotelhunter.R;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 public class MainActivity extends AppCompatActivity
@@ -207,6 +182,21 @@ public class MainActivity extends AppCompatActivity
 
 
 
+        } else if (id == R.id.nav_myhotel){
+            if(firebaseAuth.getCurrentUser()==null){
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                LayoutInflater layoutInflater = this.getLayoutInflater();
+                View dialogView = layoutInflater.inflate(R.layout.require, null);
+                dialogBuilder.setView(dialogView);
+                final AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                Intent i2= new Intent(this, LoginActivity.class);
+                startActivity(i2);
+
+            } else {
+                Intent i3= new Intent(this, CodeActivity.class);
+                startActivity(i3);
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -39,6 +39,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int REQ_CODEGOOGLE = 2;
     public FirebaseUser firebaseUser;
     EditText etMail, etPassword;
+    AVLoadingIndicatorView av;
     ImageView ivClose;
     public static UserModel userModel;
     @Override

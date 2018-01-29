@@ -1,4 +1,4 @@
-package com.example.admins.hotelhunter;
+package com.example.admins.hotelhunter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,23 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.admins.hotelhunter.activities.RegisterActivity;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthProvider;
-
-import java.util.concurrent.TimeUnit;
-
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import com.example.admins.hotelhunter.R;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -35,15 +19,14 @@ import java.util.concurrent.TimeUnit;
 
 public class PhoneVerifyActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "deptrai";
+
+    private static final String TAG = PhoneVerifyActivity.class.toString();
     TextView tvPhoneNumber;
-    EditText etRecievedCode;
+    EditText etcode;
     Button btPhoneVerify;
     TextView tvResendCode;
-    String mVerificationID;
-    //verify and sign in
-    // private String mVerificationId;
-    // private PhoneAuthProvider.ForceResendingToken mResendToken;
+    String code1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,22 +35,17 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
 
 
         tvPhoneNumber = findViewById(R.id.tv_verify_phoneNumber);
-        etRecievedCode = findViewById(R.id.et_verify_recievedCode);
+        etcode = findViewById(R.id.et_code);
         btPhoneVerify = findViewById(R.id.bt_verify_verifyPhone);
-        tvResendCode = findViewById(R.id.tv_verify_resend_code);
+        tvResendCode = findViewById(R.id.tv_resend_code);
+        String phone = getIntent().getStringExtra("KEYPHONE");
+        tvPhoneNumber.setText(phone);
 
-        String value = getIntent().getStringExtra("KEYPHONE");
-        Log.i(TAG, "onCreate111: " + value);
-        tvPhoneNumber.setText(value);
+        code1 = getIntent().getStringExtra("KEY_CODE");
 
-        //get item from intent
-        mVerificationID = getIntent().getStringExtra("KEY_VERIFYCATIONID");
-        Log.i(TAG, "onCreate: verifycationID"+ mVerificationID);
 
         btPhoneVerify.setOnClickListener(this);
         tvResendCode.setOnClickListener(this);
-
-
 
 
     }
@@ -76,14 +54,15 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_verify_verifyPhone:
+                if (etcode.getText().toString().equalsIgnoreCase(code1)) {
 
-                Intent intent = new Intent(PhoneVerifyActivity.this, RegisterActivity.class);
-                intent.putExtra("KEY_VERIFYED","KEY_VERIFYED");
-                intent.putExtra("KEY_VERIFYED_PHONE",tvPhoneNumber.getText().toString());
-                startActivity(intent);
-                finish();
+                    Intent intent = new Intent(PhoneVerifyActivity.this, AddHotelActivity.class);
+                    intent.putExtra("KEY_VERIFYEDPHONE", tvPhoneNumber.getText().toString());
+                    startActivity(intent);
+                    
+                }
                 break;
-            case R.id.tv_verify_resend_code:
+            case R.id.tv_resend_code:
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
                         tvPhoneNumber.getText().toString(),
                         1,
@@ -107,13 +86,13 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
 
                             @Override
                             public void onCodeAutoRetrievalTimeOut(String s) {
-                                Log.i(TAG, "onCodeAutoRetrievalTimeOut: code time out!: "+ s);
-                                Toast.makeText(PhoneVerifyActivity.this, "time out" +s, Toast.LENGTH_SHORT).show();
+                                Log.i(TAG, "onCodeAutoRetrievalTimeOut: code time out!: " + s);
+                                Toast.makeText(PhoneVerifyActivity.this, "time out" + s, Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                                Log.i(TAG, "onCodeSent: code sent!"+ verificationId);
+                                Log.i(TAG, "onCodeSent: code sent!" + verificationId);
                                 // Toast.makeText(PhoneVerifyActivity.this, "code sent! "+ verificationId, Toast.LENGTH_SHORT).show();
 
                             }
@@ -123,3 +102,4 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
         }
     }
 }
+

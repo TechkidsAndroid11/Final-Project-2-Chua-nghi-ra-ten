@@ -17,16 +17,21 @@ import com.example.admins.hotelhunter.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.example.admins.hotelhunter.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
@@ -38,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
     UserModel userModel;
+    AVLoadingIndicatorView av;
     FirebaseUser firebaseUser;
 
     Button btRegister;
@@ -142,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
                     tvCheckName.setVisibility(View.VISIBLE);
                 }
 
-                if (etPassword.getText().toString().length() < 6) {
+                if (etPassword.getText().toString().length() < 5) {
                     Log.d(TAG, "onClick: " + etPassword.getText().toString().length());
                     tvCheckPass.setTextColor(Color.RED);
 
@@ -172,4 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
+
+
+
 }
