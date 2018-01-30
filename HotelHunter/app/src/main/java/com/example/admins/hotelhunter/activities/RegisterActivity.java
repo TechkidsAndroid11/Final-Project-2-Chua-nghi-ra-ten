@@ -173,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "pushData: ");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference= firebaseDatabase.getReference("users");
-        userModel= new UserModel(firebaseUser.getDisplayName(), firebaseUser.getUid(), new ArrayList<ReviewModel>(), "");
+        userModel= new UserModel(firebaseUser.getDisplayName(), firebaseUser.getUid(), "");
         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
 
 

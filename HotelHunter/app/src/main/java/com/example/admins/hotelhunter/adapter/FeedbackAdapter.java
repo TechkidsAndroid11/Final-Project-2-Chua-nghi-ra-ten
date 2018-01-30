@@ -63,7 +63,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.Feedba
 
         public void setData(ReviewModel reviewModel) {
 
-            tvName.setText(reviewModel.getUserName());
+            tvName.setText(reviewModel.userModel.getName());
             tvDate.setText(reviewModel.getDate());
             rbRatting.setMax(5);
             rbRatting.setRating(reviewModel.getRatting());

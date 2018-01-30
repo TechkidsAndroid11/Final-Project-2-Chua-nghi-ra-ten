@@ -2,6 +2,7 @@ package com.example.admins.hotelhunter.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admins.hotelhunter.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -26,22 +31,33 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
     Button btPhoneVerify;
     TextView tvResendCode;
     String code1;
+    FirebaseAuth auth;
+    public static String phone;
+    public String code;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_verify);
+        auth = FirebaseAuth.getInstance();
 
 
         tvPhoneNumber = findViewById(R.id.tv_verify_phoneNumber);
         etcode = findViewById(R.id.et_code);
         btPhoneVerify = findViewById(R.id.bt_verify_verifyPhone);
         tvResendCode = findViewById(R.id.tv_resend_code);
-        String phone = getIntent().getStringExtra("KEYPHONE");
-        tvPhoneNumber.setText(phone);
 
-        code1 = getIntent().getStringExtra("KEY_CODE");
+
+        if(CodeActivity.phoneCre!=null){
+            signInWithPhone(CodeActivity.phoneCre);
+        } else {
+
+            code1 = getIntent().getStringExtra("KEY_CODE");
+            Log.d(TAG, "onCreate: "+code1);
+        }
+        phone = getIntent().getStringExtra("KEYPHONE");
+        tvPhoneNumber.setText(phone);
 
 
         btPhoneVerify.setOnClickListener(this);
@@ -54,13 +70,16 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_verify_verifyPhone:
-                if (etcode.getText().toString().equalsIgnoreCase(code1)) {
+                code = etcode.getText().toString();
+                if (code1 != null) {
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(code1, code);
+                    signInWithPhone(credential);
+                    Log.d(TAG, "onClick: ");
 
-                    Intent intent = new Intent(PhoneVerifyActivity.this, AddHotelActivity.class);
-                    intent.putExtra("KEY_VERIFYEDPHONE", tvPhoneNumber.getText().toString());
-                    startActivity(intent);
-                    
+
                 }
+
+
                 break;
             case R.id.tv_resend_code:
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -100,6 +119,29 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
 
                 break;
         }
+    }
+
+
+    private void signInWithPhone(PhoneAuthCredential credential) {
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(PhoneVerifyActivity.this, AddHotelActivity.class);
+                            intent.putExtra("KEY_VERIFYEDPHONE", phone);
+                            startActivity(intent);
+                            Log.d(TAG, "onComplete:ll ");
+
+
+                        } else {
+                            Log.d(TAG, "onComplete: "+task.getException().getMessage());
+                        }
+                    }
+
+                });
+
+
     }
 }
 

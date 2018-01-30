@@ -22,7 +22,7 @@
         android:visibility="invisible"
         android:id="@+id/iv_wifi"
         android:layout_below="@id/rb_rating"
-        android:src="@drawable/ic_wifi_black_24dp"
+        android:src="@drawable/wifi"
         android:layout_width="25dp"
         android:layout_height="25dp" />
     <ImageView
@@ -37,7 +37,7 @@
 
     <ImageView
         android:visibility="invisible"
-        android:src="@drawable/nong_lanh"
+        android:src="@drawable/heater"
         android:layout_marginLeft="2dp"
         android:layout_toRightOf="@id/iv_air_condition"
         android:id="@+id/iv_heater"

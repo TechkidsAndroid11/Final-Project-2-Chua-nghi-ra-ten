@@ -45,7 +45,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
     private static final String TAG = MainActivity.class.toString();
     FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
@@ -58,8 +58,7 @@ public class MainActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-}
-
+    }
 
 
     @Override
@@ -75,6 +74,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume: ");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         if (firebaseAuth.getCurrentUser() == null) {
 
         } else {
-            Log.d(TAG, "onResume: "+firebaseAuth.getCurrentUser());
+            Log.d(TAG, "onResume: " + firebaseAuth.getCurrentUser());
             tvNavText.setVisibility(View.GONE);
             tvName.setVisibility(View.VISIBLE);
             ivAvata.setVisibility(View.VISIBLE);
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity
             dialogBuilder.setView(dialogView);
             final AlertDialog alertDialog = dialogBuilder.create();
             alertDialog.show();
-            Button btYes=dialogView.findViewById(R.id.btn_yes);
+            Button btYes = dialogView.findViewById(R.id.btn_yes);
             btYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -172,13 +172,14 @@ public class MainActivity extends AppCompatActivity
 
                 }
             });
-            Button btNo=dialogView.findViewById(R.id.btn_no);
+            Button btNo = dialogView.findViewById(R.id.btn_no);
             btNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     alertDialog.dismiss();
                 }
             });
+
 
 
 
@@ -197,6 +198,7 @@ public class MainActivity extends AppCompatActivity
                 Intent i3= new Intent(this, CodeActivity.class);
                 startActivity(i3);
             }
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -206,7 +208,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        Log.d(TAG, "onMapReady: ");
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
@@ -230,8 +232,8 @@ public class MainActivity extends AppCompatActivity
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                for (int i = 0; i < list.size(); i++){
-                    if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo){
+                for (int i = 0; i < list.size(); i++) {
+                    if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo) {
                         EventBus.getDefault().postSticky(new OnClickWindowinfo(list.get(i)));
                         Log.d(TAG, "onInfoWindowClick: ");
                     }
@@ -239,10 +241,23 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "onInfoWindowClick: ");
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);
-
+                overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
             }
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+        for (int i = 0; i < DataHandle.polylines.size(); i++) {
+            DataHandle.polylines.get(i).remove();
+        }
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+    }
 }

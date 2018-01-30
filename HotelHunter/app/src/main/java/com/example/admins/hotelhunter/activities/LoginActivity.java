@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admins.hotelhunter.R;
+import com.example.admins.hotelhunter.model.ReviewModel;
 import com.example.admins.hotelhunter.model.UserModel;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -42,6 +43,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
     public static final String TAG = "ABCXYZ";
@@ -146,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 //                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
 //                                startActivity(i);
 
+
                                 LoginActivity.this.finish();
 
                             } else {
@@ -221,7 +224,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             if (task.isSuccessful()) {
 
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                                Log.d(TAG, "signInWithCredential:success"+user.getEmail().toString()+" "+user.toString());
 
                             } else {
                                 // If sign in fails, display a message to the user.

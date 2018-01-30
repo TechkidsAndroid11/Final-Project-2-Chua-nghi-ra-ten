@@ -13,6 +13,8 @@ import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
 import com.example.admins.hotelhunter.map_direction.RetrofitService;
 import com.example.admins.hotelhunter.map_direction.RouteModel;
 import com.example.admins.hotelhunter.model.HotelModel;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -37,12 +39,12 @@ import retrofit2.Response;
  */
 
 public class DataHandle {
+    public static final List<Polyline> polylines = new ArrayList<>();
     private static final String TAG = "DataHandle";
     public static List<HotelModel> hotelModels(final GoogleMap mMap, final Context context) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("hotels");
         final List<HotelModel> list = new ArrayList<>();
-        final List<Polyline> polylines = new ArrayList<>();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
@@ -67,7 +69,8 @@ public class DataHandle {
                         for (int i = 0; i < polylines.size(); i++){
                             polylines.get(i).remove();
                         }
-
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 20);
+                        mMap.animateCamera(cameraUpdate);
                         RetrofitService retrofitService = RetrofitInstance.getInstance().create(RetrofitService.class);
                         Log.d(TAG, "onMarkerClick: " + TurnOnGPSActivity.currentLocation);
                         retrofitService.getDirection(String.valueOf(TurnOnGPSActivity.currentLocation.latitude)
