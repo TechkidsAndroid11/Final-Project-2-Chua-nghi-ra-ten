@@ -15,6 +15,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 import com.google.firebase.database.DataSnapshot;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Created by Nguyen Duc Anh on 1/15/2018.
  */
@@ -42,7 +45,11 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         ImageView ivThangMay = view.findViewById(R.id.iv_elevator);
         ImageView ivNongLanh = view.findViewById(R.id.iv_heater);
         ImageView ivDieuHoa = view.findViewById(R.id.iv_air_condition);
-        tvPrice.setText(hotelModel.gia + "VNĐ");
+        String giaDon = hotelModel.gia.substring(0, hotelModel.gia.indexOf("-"));
+        String giaDoi = hotelModel.gia.substring(hotelModel.gia.indexOf("-")+1);
+        Log.d(TAG, "loadData: " + giaDon + "   " + giaDoi);
+        tvPrice.setText(NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDon))+"-" + NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDoi))+ " VNĐ");
+
         ratingBar.setRating(hotelModel.danhGiaTB);
         if (hotelModel.dieuHoa){
             ivDieuHoa.setVisibility(View.VISIBLE);

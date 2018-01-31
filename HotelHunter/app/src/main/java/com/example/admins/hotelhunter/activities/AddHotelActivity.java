@@ -96,21 +96,21 @@ public class AddHotelActivity extends AppCompatActivity {
     }
     private void setupUI() {
 
-        etTenNhaNghi = findViewById(R.id.et_ten_nha_nghi);
-        etDiaChi = findViewById(R.id.et_dia_chi);
-        etSDT = findViewById(R.id.et_sdt);
-        etGia = findViewById(R.id.et_gia)   ;
-        cbDieuHoa = findViewById(R.id.cb_dieu_hoa);
-        cbThangMay = findViewById(R.id.cb_thang_may);
-        cbNongLanh = findViewById(R.id.cb_nong_lanh);
-        btAdd = findViewById(R.id.bt_add);
-        bt_addImage = findViewById(R.id.btn_addimage);
-        edt_kinhdo = findViewById(R.id.edit_kinhdo);
-        edit_vido = findViewById(R.id.edit_vido);
-        edit_rate = findViewById(R.id.editrate);
-        img_showhotel = findViewById(R.id.img_showhotel);
-        textInputLayout = findViewById(R.id.txt_image);
-        bt_clear = findViewById(R.id.bt_clear);
+//        etTenNhaNghi = findViewById(R.id.et_ten_nha_nghi);
+//        etDiaChi = findViewById(R.id.et_dia_chi);
+//        etSDT = findViewById(R.id.et_sdt);
+//        etGia = findViewById(R.id.et_gia)   ;
+//        cbDieuHoa = findViewById(R.id.cb_dieu_hoa);
+//        cbThangMay = findViewById(R.id.cb_thang_may);
+//        cbNongLanh = findViewById(R.id.cb_nong_lanh);
+//        btAdd = findViewById(R.id.bt_add);
+//        bt_addImage = findViewById(R.id.btn_addimage);
+//        edt_kinhdo = findViewById(R.id.edit_kinhdo);
+//        edit_vido = findViewById(R.id.edit_vido);
+//        edit_rate = findViewById(R.id.editrate);
+//        img_showhotel = findViewById(R.id.img_showhotel);
+//        textInputLayout = findViewById(R.id.txt_image);
+//        bt_clear = findViewById(R.id.bt_clear);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
 
