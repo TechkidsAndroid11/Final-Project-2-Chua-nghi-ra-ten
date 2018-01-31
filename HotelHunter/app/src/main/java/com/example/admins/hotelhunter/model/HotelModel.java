@@ -21,6 +21,7 @@ public class HotelModel {
     public boolean dieuHoa;
     public boolean nongLanh;
     public boolean thangMay;
+    public String key;
 
     public HotelModel() {
     }
