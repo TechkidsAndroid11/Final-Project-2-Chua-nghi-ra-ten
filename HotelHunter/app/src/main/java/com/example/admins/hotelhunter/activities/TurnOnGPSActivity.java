@@ -69,7 +69,7 @@ public class TurnOnGPSActivity extends AppCompatActivity {
         if (!provider.contains("gps")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             LayoutInflater layoutInflater = this.getLayoutInflater();
-            View dialogView = layoutInflater.inflate(R.layout.activity_turn_on_gps, null);
+            View dialogView = layoutInflater.inflate(R.layout.check_gps, null);
             builder.setView(dialogView);
             alertDialog = builder.create();
             Button btYes = dialogView.findViewById(R.id.bt_yes);

@@ -8,6 +8,7 @@ import java.util.List;
  */
 
 public class HotelModel {
+    public String phone1;
     public String nameHotel;
     public String address;
     public String phone;
@@ -26,8 +27,10 @@ public class HotelModel {
     public HotelModel() {
     }
 
-    public HotelModel(String nameHotel, String address, String phone, double kinhDo, double viDo, float danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay) {
+    public HotelModel(String phone1, String nameHotel, String address, String phone, double kinhDo, double viDo, float danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay) {
+        this.phone1 = phone1;
         this.nameHotel = nameHotel;
+
         this.address = address;
         this.phone = phone;
         this.kinhDo = kinhDo;
@@ -35,13 +38,12 @@ public class HotelModel {
         this.danhGiaTB = danhGiaTB;
         this.gia = gia;
         this.images = images;
-        this.reviewModels = reviewModels ;
+        this.reviewModels = reviewModels;
         this.wifi = wifi;
         this.dieuHoa = dieuHoa;
         this.nongLanh = nongLanh;
         this.thangMay = thangMay;
     }
-
 
 
     public HotelModel(String s, String s1, String s2, double v, double v1, int i, String s3, ArrayList<String> strings, ArrayList<ReviewModel> reviewModels, boolean checked, boolean checked1, boolean checked2, boolean checked3) {
@@ -64,7 +66,8 @@ public class HotelModel {
                 ", thangMay=" + thangMay +
                 '}';
     }
-    public void addReview(ReviewModel reviewModel){
+
+    public void addReview(ReviewModel reviewModel) {
         if (this.reviewModels == null) {
             this.reviewModels = new ArrayList<>();
         }
