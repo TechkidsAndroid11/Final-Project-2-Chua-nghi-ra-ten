@@ -52,6 +52,7 @@ public class DataHandle {
                 for (DataSnapshot hotel : dataSnapshot.getChildren()) {
                     HotelModel hotelModel = hotel.getValue(HotelModel.class);
                     Log.d(TAG, "onDataChange: " + hotelModel.kinhDo);
+                    hotelModel.key = hotel.getKey();
                     list.add(hotelModel);
                     CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(context);
                     mMap.setInfoWindowAdapter(adapter);
