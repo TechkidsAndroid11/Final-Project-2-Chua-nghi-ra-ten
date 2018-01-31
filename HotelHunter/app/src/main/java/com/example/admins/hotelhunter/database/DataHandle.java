@@ -45,7 +45,8 @@ public class DataHandle {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("hotels");
         final List<HotelModel> list = new ArrayList<>();
-        databaseReference.addValueEventListener(new ValueEventListener() {
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(final DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange: " + dataSnapshot);

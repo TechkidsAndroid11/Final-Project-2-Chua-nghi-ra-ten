@@ -1,11 +1,9 @@
 package com.example.admins.hotelhunter.activities;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +16,8 @@ import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.example.admins.hotelhunter.model.ReviewModel;
 import com.example.admins.hotelhunter.model.UserModel;
-import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,7 +36,7 @@ public class AddHotelActivity extends AppCompatActivity {
     CheckBox cbWifi, cbThangMay, cbNongLanh, cbDieuHoa;
     Button btAdd;
     public static FirebaseDatabase firebaseDatabase;
-    public  static DatabaseReference databaseReference;
+    public static DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     EditText edt_kinhdo;
     EditText edit_vido;
@@ -48,23 +47,46 @@ public class AddHotelActivity extends AppCompatActivity {
     public ImageView img_showhotel;
     public TextInputLayout textInputLayout;
     public List<String> lst_String = new ArrayList<>();
-    public  Button bt_clear;
+    public Button bt_clear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hotel);
         setupUI();
-        list = DataHandle.hotelModels(null, AddHotelActivity.this);
+        final String phone1 = getIntent().getStringExtra("KEYPHONE");
+//        list = DataHandle.hotelModels(null, AddHotelActivity.this);
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HotelModel hotelModel  = new HotelModel(etTenNhaNghi.getText().toString(), etDiaChi.getText().toString(), etSDT.getText().toString(),
+                final HotelModel hotelModel = new HotelModel(phone1, etTenNhaNghi.getText().toString(), etDiaChi.getText().toString(), etSDT.getText().toString(),
                         Double.parseDouble(edt_kinhdo.getText().toString()), Double.parseDouble(edit_vido.getText().toString()),
                         Float.parseFloat(edit_rate.getText().toString()),
                         etGia.getText().toString(), lst_String, new ArrayList<ReviewModel>(),
                         cbWifi.isChecked(), cbDieuHoa.isChecked(), cbNongLanh.isChecked(),
                         cbThangMay.isChecked());
-                databaseReference.push().setValue(hotelModel);
+
+                databaseReference.child(hotelModel.phone).setValue(hotelModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "onComplete: push hotel");
+                        databaseReference = firebaseDatabase.getReference("users");
+                        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                UserModel userModel = new UserModel();
+                                userModel.Huid = hotelModel.phone;
+                                databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
+                                Log.d(TAG, "onDataChange: push hotel");
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
             }
         });
         img_showhotel.setVisibility(View.GONE);
@@ -72,13 +94,8 @@ public class AddHotelActivity extends AppCompatActivity {
         bt_addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // String image =textInputLayout.getEditText().toString();
-                HotelModel hotelModel =  list.get(1);
-
+                final HotelModel hotelModel = list.get(1);
                 hotelModel.images.addAll(lst_String);
-                databaseReference.push().setValue(hotelModel);
-
                 //                String encodedImage = list.get(list.size()-1).images.get(0);
 //                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
 //                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -90,22 +107,25 @@ public class AddHotelActivity extends AppCompatActivity {
 //                }
 //                Log.d(TAG, "onClick: "+decodedByte.getHeight());
 
+
+
             }
         });
         bt_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                list = DataHandle.hotelModels(null, AddHotelActivity.this);
+//                list = DataHandle.hotelModels(null, AddHotelActivity.this);
 
             }
         });
     }
+
     private void setupUI() {
 
         etTenNhaNghi = findViewById(R.id.et_ten_nha_nghi);
         etDiaChi = findViewById(R.id.et_dia_chi);
         etSDT = findViewById(R.id.et_sdt);
-        etGia = findViewById(R.id.et_gia)   ;
+        etGia = findViewById(R.id.et_gia);
         cbDieuHoa = findViewById(R.id.cb_dieu_hoa);
         cbThangMay = findViewById(R.id.cb_thang_may);
         cbNongLanh = findViewById(R.id.cb_nong_lanh);
@@ -117,23 +137,9 @@ public class AddHotelActivity extends AppCompatActivity {
         img_showhotel = findViewById(R.id.img_showhotel);
         textInputLayout = findViewById(R.id.txt_image);
         bt_clear = findViewById(R.id.bt_clear);
-        firebaseAuth=FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
-        databaseReference= firebaseDatabase.getReference("users");
-        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
     }
