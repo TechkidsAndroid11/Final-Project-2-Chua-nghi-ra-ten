@@ -17,9 +17,14 @@ import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.example.admins.hotelhunter.model.ReviewModel;
+import com.example.admins.hotelhunter.model.UserModel;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +38,7 @@ public class AddHotelActivity extends AppCompatActivity {
     Button btAdd;
     public static FirebaseDatabase firebaseDatabase;
     public  static DatabaseReference databaseReference;
+    FirebaseAuth firebaseAuth;
     EditText edt_kinhdo;
     EditText edit_vido;
     EditText edit_rate;
@@ -111,8 +117,24 @@ public class AddHotelActivity extends AppCompatActivity {
         img_showhotel = findViewById(R.id.img_showhotel);
         textInputLayout = findViewById(R.id.txt_image);
         bt_clear = findViewById(R.id.bt_clear);
+        firebaseAuth=FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
+        databaseReference= firebaseDatabase.getReference("users");
+        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 }
