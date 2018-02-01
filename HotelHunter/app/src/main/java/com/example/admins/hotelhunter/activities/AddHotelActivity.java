@@ -15,15 +15,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.Utils.ImageUtils;
+import com.example.admins.hotelhunter.adapter.CustomImageView;
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.example.admins.hotelhunter.model.ReviewModel;
@@ -49,7 +52,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     EditText etGia;
     ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_addphoto;
     TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_sdt1, tv_vitribando;
-    LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh;
+    LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh,ln_image;
     public static FirebaseDatabase firebaseDatabase;
     public static DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
@@ -64,7 +67,8 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     public boolean wifi = false;
     public boolean nongLanh = false;
     public Button bt_dangBai;
-
+    HorizontalScrollView horizontalScrollView;
+    MyAsyncTask myAsyncTask;
     List<HotelModel> lstModels = new ArrayList<>();
 
     @Override
@@ -75,7 +79,6 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         addListtenners();
         setEnableService();
         final String phone1 = getIntent().getStringExtra("KEYPHONE");
-        lstModels = DataHandle.hotelModels(null, this);
     }
 
     private void setupUI() {
@@ -106,6 +109,8 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         ln_thangmay = findViewById(R.id.ln_thangmay);
         ln_tulanh= findViewById(R.id.ln_tulanh);
         ln_tivi = findViewById(R.id.ln_tivi);
+        ln_image = findViewById(R.id.ln_image);
+        horizontalScrollView = findViewById(R.id.sc_view);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
 
@@ -230,14 +235,14 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     Log.e(TAG, "Data Null!!!!");
                 }
-//                myAsyncTask = new MyAsyncTask();
-//                myAsyncTask.execute(bitmap);
+                myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute(bitmap);
             } else if (requestCode == 2) {
                 Bitmap bitmap = null;
                 if (resultCode == RESULT_OK) {
                     bitmap = ImageUtils.getBitmap(this);
-//                    myAsyncTask = new MyAsyncTask();
-//                    myAsyncTask.execute(bitmap);
+                    myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute(bitmap);
                 }
 
             }
@@ -262,7 +267,26 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
+            showPhoto(bitmap);
         }
+    }
+    public void showPhoto(Bitmap bitmap) {
+        CustomImageView customImageView = new CustomImageView(this);
+        customImageView.setLayoutParams(new ViewGroup.LayoutParams
+                (100, 100));
+        customImageView.setMaxHeight(100);
+        customImageView.setMaxWidth(100);
+        customImageView.setCropToPadding(true);
+        customImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        customImageView.setImageBitmap(bitmap);
+        ImageView abc = new ImageView(this);
+        abc.setImageBitmap(bitmap);
+        abc.setMaxWidth(100);
+        abc.setMaxHeight(100);
+        ln_image.addView(abc);
+
+        //ln_image.addView(customImageView);
+        horizontalScrollView.fullScroll(View.FOCUS_DOWN);
     }
     private void setEnableService() {
         if(tiVi)
