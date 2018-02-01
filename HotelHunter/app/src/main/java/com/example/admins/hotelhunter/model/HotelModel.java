@@ -22,15 +22,17 @@ public class HotelModel {
     public boolean dieuHoa;
     public boolean nongLanh;
     public boolean thangMay;
+    public boolean tivi;
+    public boolean tulanh;
     public String key;
 
     public HotelModel() {
     }
 
-    public HotelModel(String phone1, String nameHotel, String address, String phone, double kinhDo, double viDo, float danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay) {
+    public HotelModel(String phone1, String nameHotel, String address, String phone, double kinhDo, double viDo, float danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels,
+                      boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay, boolean tivi, boolean tulanh) {
         this.phone1 = phone1;
         this.nameHotel = nameHotel;
-
         this.address = address;
         this.phone = phone;
         this.kinhDo = kinhDo;
@@ -43,6 +45,8 @@ public class HotelModel {
         this.dieuHoa = dieuHoa;
         this.nongLanh = nongLanh;
         this.thangMay = thangMay;
+        this.tulanh = tulanh;
+        this.tivi = tivi;
     }
 
 
