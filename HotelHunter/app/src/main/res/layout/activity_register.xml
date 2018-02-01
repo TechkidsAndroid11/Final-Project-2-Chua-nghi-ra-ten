@@ -1,118 +1,169 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:weightSum="3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/nen_dang_nhap"
     tools:context="com.example.admins.hotelhunter.activities.RegisterActivity">
-
     <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="120dp"
-        android:id="@+id/rl_dk">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_name"
-            android:hint="Tên của bạn"
-            android:textSize="14sp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_checkName"
-            android:layout_below="@+id/et_name"
-            android:textStyle="italic"
-            android:visibility="gone"
-            android:textColor="#f00"
-            android:layout_marginLeft="5sp"
-            android:text="Mục này còn thiếu"/>
-
-
-        <EditText
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:layout_below="@+id/tv_checkName"
-            android:textStyle="normal"
-            android:textSize="14sp"
-            android:inputType="textEmailAddress"
-            android:id="@+id/et_emailDK"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_check_email"
-            android:textStyle="italic"
-            android:visibility="gone"
-            android:textColor="#f00"
-            android:layout_marginLeft="5sp"
-            android:layout_below="@+id/et_emailDK"
-            android:text="Email đã được đăng ký"/>
-
-        <EditText
-            android:id="@+id/et_passDK"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/tv_check_email"
-            android:hint="Mật khẩu"
-            android:inputType="textPassword"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_checkPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-
-            android:layout_below="@+id/et_passDK"
-            android:text="Mật khẩu không nên dưới 6 kí tự"
-            android:textStyle="italic" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Xác nhận lại mật khẩu"
-            android:id="@+id/et_confirmPassDK"
-            android:inputType="textPassword"
-            android:textSize="14sp"
-            android:layout_below="@+id/et_passDK"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_checkConPass"
-            android:textStyle="italic"
-            android:visibility="gone"
-            android:textColor="#f00"
-            android:layout_marginLeft="5sp"
-            android:text="Mật khẩu không trùng khớp"
-            android:layout_below="@+id/et_confirmPassDK"/>
-
-    </RelativeLayout>
-
-    <Button
-        android:layout_margin="20dp"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/rl_dk"
-        android:text="Đăng KÝ"
-        android:id="@+id/bt_register"
-        android:layout_centerInParent="true"/>
-    <com.wang.avi.AVLoadingIndicatorView
+    <LinearLayout
+        android:id="@+id/ll_input"
         android:layout_centerInParent="true"
-        android:id="@+id/avi"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:weightSum="4"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:layout_weight="1.5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <LinearLayout
+                android:weightSum="4"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_marginRight="16dp"
+                    android:gravity="end|bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="0.7"
+                    android:text="Tên"
+                    android:textColor="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+                <TextView
+                    android:layout_marginRight="16dp"
+                    android:gravity="end|bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Email"
+                    android:textColor="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+                <TextView
+                    android:layout_marginRight="16dp"
+                    android:gravity="end|bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Mật khẩu"
+                    android:textColor="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+                <TextView
+                    android:layout_marginRight="16dp"
+                    android:gravity="end|bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Nhập lại"
+                    android:textColor="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:weightSum="4"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/et_name"
+                    android:textColor="#fff"
+                    android:backgroundTint="#fff"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
+                <TextView
+                    android:id="@+id/tv_checkName"
+                    android:visibility="invisible"
+                    android:textColor="#fff"
+                    android:text="Không được để trống"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/et_emailDK"
+                    android:textColor="#fff"
+                    android:backgroundTint="#fff"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
+                <TextView
+                    android:id="@+id/tv_check_email"
+                    android:visibility="invisible"
+                    android:textColor="#fff"
+                    android:text="Email đã được đăng ký"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/et_passDK"
+                    android:textColor="#fff"
+                    android:backgroundTint="#fff"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
+                <TextView
+                    android:id="@+id/tv_checkPass"
+                    android:visibility="invisible"
+                    android:textColor="#fff"
+                    android:text="Mật khẩu phải nhiều hơn 6 ký tự"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/et_confirmPassDK"
+                    android:textColor="#fff"
+                    android:backgroundTint="#fff"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
+                <TextView
+                    android:id="@+id/tv_checkConPass"
+                    android:visibility="invisible"
+                    android:textColor="#fff"
+                    android:text="Mật khẩu không trùng khớp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_register"
+            android:textSize="17dp"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:text="Đăng ký"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/login"
+            android:layout_width="300dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="50dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/ll_input"
+        android:layout_marginBottom="16dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/AVLoadingIndicatorView"
-        android:visibility="visible"
-        app:indicatorName="BallSpinFadeLoaderIndicator"
-        app:indicatorColor="@color/com_facebook_blue" />
-
-
-
-
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="bottom"
+            android:textColor="#fff"
+            android:text="Đã có tài khoản? - "
+            android:textSize="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:textColor="#fff"
+            android:text="Đăng nhập"
+            android:textSize="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </RelativeLayout>
+
+

@@ -18,12 +18,16 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.admins.hotelhunter.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class TurnOnGPSActivity extends AppCompatActivity {
     private static final String TAG = "ABCXYZ";
     public static LatLng currentLocation;
     AlertDialog alertDialog;
+    private FusedLocationProviderClient mFusedLocationClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +35,30 @@ public class TurnOnGPSActivity extends AppCompatActivity {
         turnOnGPS();
         if (Build.VERSION.SDK_INT >= 23) {
             setupPermission();
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                                Intent intent = new Intent(TurnOnGPSActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+                    });
         } else {
             getCurrentLocation();
         }
@@ -40,7 +68,7 @@ public class TurnOnGPSActivity extends AppCompatActivity {
         if (!provider.contains("gps")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             LayoutInflater layoutInflater = this.getLayoutInflater();
-            View dialogView = layoutInflater.inflate(R.layout.activity_turn_on_gps, null);
+            View dialogView = layoutInflater.inflate(R.layout.check_gps, null);
             builder.setView(dialogView);
             alertDialog = builder.create();
             Button btYes = dialogView.findViewById(R.id.bt_yes);

@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    ImageView ivLoginFacebook, ivLoginGoogle;
     GoogleApiClient googleApiClient;
     private static final int REQ_CODEGOOGLE = 2;
     public FirebaseUser firebaseUser;
@@ -76,13 +77,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btLoginFacebook = findViewById(R.id.bt_LoginFacebook);
         callbackManager = CallbackManager.Factory.create();
         TextView tvRegister= findViewById(R.id.tv_register);
-
+        ivLoginFacebook = findViewById(R.id.iv_login_facebook);
+        ivLoginGoogle = findViewById(R.id.iv_login_google);
 
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i= new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(i);
+            }
+        });
+        ivLoginFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btLoginFacebook.performClick();
             }
         });
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -102,13 +110,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.d(TAG, "onError: " + error.toString());
             }
         });
-        ivClose=findViewById(R.id.iv_close);
-        ivClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
         firebaseAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -131,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Toast.makeText(LoginActivity.this, "Somthing went wrong", Toast.LENGTH_SHORT).show();
             }
         }).addApi(Auth.GOOGLE_SIGN_IN_API,googleSignInOptions).build();
-        signInButton.setOnClickListener(new View.OnClickListener() {
+        ivLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
@@ -161,8 +163,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
     }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);

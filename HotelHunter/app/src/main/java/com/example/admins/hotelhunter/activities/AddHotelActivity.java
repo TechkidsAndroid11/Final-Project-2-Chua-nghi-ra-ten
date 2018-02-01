@@ -89,7 +89,7 @@ public class AddHotelActivity extends AppCompatActivity {
         bt_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                list = DataHandle.hotelModels(null, AddHotelActivity.this);
+//                list = DataHandle.hotelModels(null, AddHotelActivity.this);
 
             }
         });
