@@ -31,7 +31,7 @@ import java.util.List;
 public class AddHotelActivity extends AppCompatActivity {
     EditText etTenNhaNghi;
     EditText etDiaChi;
-    EditText etSDT;
+    EditText etSDT1, etSDT2;
     EditText etGia;
     CheckBox cbWifi, cbThangMay, cbNongLanh, cbDieuHoa;
     Button btAdd;
@@ -54,12 +54,13 @@ public class AddHotelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hotel);
         setupUI();
-        final String phone1 = getIntent().getStringExtra("KEYPHONE");
+         final String phone1 = getIntent().getStringExtra("KEYPHONE");
 //        list = DataHandle.hotelModels(null, AddHotelActivity.this);
+        etSDT1.setText(phone1 );
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final HotelModel hotelModel = new HotelModel(phone1, etTenNhaNghi.getText().toString(), etDiaChi.getText().toString(), etSDT.getText().toString(),
+                final HotelModel hotelModel = new HotelModel(phone1, etTenNhaNghi.getText().toString(), etDiaChi.getText().toString(), etSDT2.getText().toString(),
                         Double.parseDouble(edt_kinhdo.getText().toString()), Double.parseDouble(edit_vido.getText().toString()),
                         Float.parseFloat(edit_rate.getText().toString()),
                         etGia.getText().toString(), lst_String, new ArrayList<ReviewModel>(),
@@ -121,14 +122,16 @@ public class AddHotelActivity extends AppCompatActivity {
     }
 
     private void setupUI() {
-//        etTenNhaNghi = findViewById(R.id.et_ten_nha_nghi);
-//        etDiaChi = findViewById(R.id.et_dia_chi);
-//        etSDT = findViewById(R.id.et_sdt);
-//        etGia = findViewById(R.id.et_gia)   ;
+        etTenNhaNghi = findViewById(R.id.et_ten);
+        etDiaChi = findViewById(R.id.et_diachi);
+        etSDT1 = findViewById(R.id.et_sdt1);
+        etSDT2 = findViewById(R.id.et_sdt2);
+
+        etGia = findViewById(R.id.et_gia)   ;
 //        cbDieuHoa = findViewById(R.id.cb_dieu_hoa);
 //        cbThangMay = findViewById(R.id.cb_thang_may);
 //        cbNongLanh = findViewById(R.id.cb_nong_lanh);
-//        btAdd = findViewById(R.id.bt_add);
+        btAdd = findViewById(R.id.bt_danghotel);
 //        bt_addImage = findViewById(R.id.btn_addimage);
 //        edt_kinhdo = findViewById(R.id.edit_kinhdo);
 //        edit_vido = findViewById(R.id.edit_vido);
