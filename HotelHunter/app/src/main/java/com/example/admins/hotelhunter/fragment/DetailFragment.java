@@ -128,7 +128,7 @@ public class DetailFragment extends Fragment  {
             rlThangMay.startAnimation(alpha);
         }
 
-        if (!hotelModel.tuLanh) {
+        if (!hotelModel.tulanh) {
             rlTuLanh.startAnimation(alpha);
         }
 

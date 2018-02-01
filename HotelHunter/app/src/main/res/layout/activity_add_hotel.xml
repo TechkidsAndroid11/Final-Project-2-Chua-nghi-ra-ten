@@ -8,8 +8,6 @@
        <ScrollView
            android:layout_width="match_parent"
            android:layout_height="match_parent"
-           android:layout_marginRight="16dp"
-           android:layout_marginLeft="16dp"
            >
            <LinearLayout
                android:layout_width="match_parent"
@@ -18,7 +16,20 @@
                <HorizontalScrollView
                    android:layout_width="match_parent"
                    android:layout_height="100dp"
-                   android:layout_margin="16dp">
+                   android:layout_margin="16dp"
+                   android:id="@+id/sc_view">
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:id="@+id/ln_image"
+                       android:orientation="horizontal">
+                       <ImageView
+                           android:layout_width="100dp"
+                           android:layout_height="100dp"
+                           android:src="@drawable/add_photo"
+                           android:id="@+id/iv_addphoto"/>
+
+                   </LinearLayout>
                </HorizontalScrollView>
 
                <TextView
@@ -33,7 +44,7 @@
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
-                   android:id="@+id/et_ten"/>
+                   android:id="@+id/et_tenadd"/>
                <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
@@ -41,26 +52,29 @@
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
                    android:textStyle="bold"
+                   android:layout_marginTop="8dp"
                    />
                <EditText
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
-                   android:id="@+id/et_diachi"/>
+                   android:id="@+id/et_diachiadd"/>
                <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:text="* Số điện thoại 1"
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
-                   android:textStyle="bold"/>
+                   android:textStyle="bold"
+                   android:id="@+id/tv_sdt1add"
+                   android:layout_marginTop="8dp"/>
                <EditText
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
-                   android:id="@+id/et_sdt1"
+                   android:id="@+id/et_sdt1add"
                    android:textStyle="bold"/>
                <TextView
                    android:layout_width="match_parent"
@@ -68,13 +82,14 @@
                    android:text="Số điện thoại 2"
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
-                   android:textStyle="bold"/>
+                   android:textStyle="bold"
+                   android:layout_marginTop="8dp"/>
                <EditText
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
-                   android:id="@+id/et_sdt2"
+                   android:id="@+id/et_sdt2add"
                    />
                <TextView
                    android:layout_width="match_parent"
@@ -82,13 +97,14 @@
                    android:text="* Giá"
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
-                   android:textStyle="bold"/>
+                   android:textStyle="bold"
+                   android:layout_marginTop="8dp"/>
                <EditText
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
-                   android:id="@+id/et_gia"
+                   android:id="@+id/et_giaadd"
                    android:hint=""/>
                <TextView
                    android:layout_width="match_parent"
@@ -97,6 +113,7 @@
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
                    android:textStyle="bold"
+                   android:layout_marginTop="8dp"
                    />
                <LinearLayout
                    android:layout_width="match_parent"
@@ -110,56 +127,38 @@
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_dieuhoa">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
                            android:layout_marginTop="16dp"
                            android:layout_marginRight="8dp"
-                           android:src="@drawable/elevator"
-                           android:id="@+id/iv_thangmay"/>
+                           android:src="@drawable/air_conditioner"
+                           android:id="@+id/iv_dieuhoaadd"/>
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:layout_marginTop="18dp"
-                           android:text="Thang máy"
+                           android:text="Điều hòa"
                            android:textColor="@color/orange"
-                           android:id="@+id/tv_thangmay"
-                           android:textStyle="bold"/>
+                           android:textStyle="bold"
+                           android:id="@+id/tv_dieuhoaadd"/>
                    </LinearLayout>
+
                    <LinearLayout
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
-                       <ImageView
-                           android:layout_width="24dp"
-                           android:layout_height="24dp"
-                           android:layout_marginTop="16dp"
-                           android:layout_marginRight="8dp"
-                           android:src="@drawable/heater"
-                           android:id="@+id/iv_nonglanh"/>
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
-                           android:text="Nóng lạnh"
-                           android:textColor="@color/orange"
-                           android:id="@+id/tv_nonglanh"
-                           android:textStyle="bold"/>
-                   </LinearLayout>
-                   <LinearLayout
-                       android:layout_width="0dp"
-                       android:layout_height="wrap_content"
-                       android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_wifi">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
                            android:layout_marginTop="16dp"
                            android:layout_marginRight="8dp"
                            android:src="@drawable/wifi"
-                           android:id="@+id/iv_wifi"/>
+                           android:id="@+id/iv_wifiadd"/>
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
@@ -167,8 +166,31 @@
                            android:text="Wifi"
                            android:textColor="@color/orange"
                            android:textStyle="bold"
-                           android:id="@+id/tv_wifi"/>
+                           android:id="@+id/tv_wifiadd"/>
                    </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_weight="1"
+                       android:id="@+id/ln_nonglanh">
+                       <ImageView
+                           android:layout_width="24dp"
+                           android:layout_height="24dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginRight="8dp"
+                           android:src="@drawable/heater"
+                           android:id="@+id/iv_nonglanhadd"/>
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="18dp"
+                           android:text="Nóng lạnh"
+                           android:textColor="@color/orange"
+                           android:id="@+id/tv_nonglanhadd"
+                           android:textStyle="bold"/>
+                   </LinearLayout>
+
 
                </LinearLayout>
                <LinearLayout
@@ -179,39 +201,20 @@
                    android:orientation="horizontal"
                    android:weightSum="3"
                    >
+
                    <LinearLayout
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
-                       <ImageView
-                           android:layout_width="24dp"
-                           android:layout_height="24dp"
-                           android:layout_marginTop="16dp"
-                           android:layout_marginRight="8dp"
-                           android:src="@drawable/air_conditioner"
-                           android:id="@+id/iv_dieuhoa"/>
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
-                           android:text="Điều hòa"
-                           android:textColor="@color/orange"
-                           android:textStyle="bold"
-                           android:id="@+id/tv_dieuhoa"/>
-                   </LinearLayout>
-                   <LinearLayout
-                       android:layout_width="0dp"
-                       android:layout_height="wrap_content"
-                       android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_tivi">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
                            android:layout_marginTop="16dp"
                            android:layout_marginRight="8dp"
                            android:src="@drawable/tivi"
-                           android:id="@+id/iv_tivi"/>
+                           android:id="@+id/iv_tiviadd"/>
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
@@ -219,21 +222,22 @@
                            android:text="Tivi"
                            android:textColor="@color/orange"
                            android:textStyle="bold"
-                           android:id="@+id/tv_tivi"
+                           android:id="@+id/tv_tiviadd"
                            />
                    </LinearLayout>
                    <LinearLayout
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_tulanh">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
                            android:layout_marginTop="16dp"
                            android:layout_marginRight="8dp"
                            android:src="@drawable/tulanh"
-                           android:id="@+id/iv_tulanh"/>
+                           android:id="@+id/iv_tulanhadd"/>
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
@@ -241,10 +245,41 @@
                            android:text="Tủ lạnh"
                            android:textColor="@color/orange"
                            android:textStyle="bold"
-                           android:id="@+id/tv_tulanh"/>
+                           android:id="@+id/tv_tulanhadd"/>
                    </LinearLayout>
-
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_weight="1"
+                       android:id="@+id/ln_thangmay">
+                       <ImageView
+                           android:layout_width="24dp"
+                           android:layout_height="24dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginRight="8dp"
+                           android:src="@drawable/elevator"
+                           android:id="@+id/iv_thangmayadd"/>
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="18dp"
+                           android:text="Thang máy"
+                           android:textColor="@color/orange"
+                           android:id="@+id/tv_thangmayadd"
+                           android:textStyle="bold"/>
+                   </LinearLayout>
                </LinearLayout>
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="*Vị trí trên bản đồ"
+                   android:textColor="@color/orange"
+                   android:textStyle="bold"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginTop="16dp"
+                   android:id="@+id/tv_vitribando"
+                   />
 
                <Button
                    android:layout_width="match_parent"
@@ -256,8 +291,9 @@
                    android:textColor="#fff"
                    android:textStyle="bold"
                    android:textAllCaps="false"
-                   android:id="@+id/bt_danghotel"/>
-
+                   android:id="@+id/bt_danghotel"
+                   android:background="@drawable/login"
+                   android:layout_marginBottom="16dp"/>
            </LinearLayout>
        </ScrollView>
 
