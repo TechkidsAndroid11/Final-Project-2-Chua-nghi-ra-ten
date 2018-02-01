@@ -131,13 +131,20 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
                     final RatingBar rbRate = dialogView.findViewById(R.id.rb_rating);
                     final EditText etComment = dialogView.findViewById(R.id.et_comment);
                     Log.d(TAG, "onClick: " + etComment.getText().toString());
-                    Button btPost = dialogView.findViewById(R.id.bt_post);
+                    TextView tvGui = dialogView.findViewById(R.id.bt_post);
+                    TextView tvHuy = dialogView.findViewById(R.id.tv_huy);
+                    rbRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                        @Override
+                        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                            rbRate.setRating(v);
+                            Log.d(TAG, "onRatingChanged: ");
+                        }
+                    });
                     databaseReference = firebaseDatabase.getReference("users");
                     databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             userModel = dataSnapshot.getValue(UserModel.class);
-
                         }
 
                         @Override
@@ -145,7 +152,13 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
 
                         }
                     });
-                    btPost.setOnClickListener(new View.OnClickListener() {
+                    tvHuy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    tvGui.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
