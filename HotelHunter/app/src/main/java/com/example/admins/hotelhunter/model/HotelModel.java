@@ -49,7 +49,6 @@ public class HotelModel {
         this.tivi = tivi;
     }
 
-
     public HotelModel(String s, String s1, String s2, double v, double v1, int i, String s3, ArrayList<String> strings, ArrayList<ReviewModel> reviewModels, boolean checked, boolean checked1, boolean checked2, boolean checked3) {
     }
 
