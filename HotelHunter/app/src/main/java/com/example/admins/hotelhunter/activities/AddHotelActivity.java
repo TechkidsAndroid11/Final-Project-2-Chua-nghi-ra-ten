@@ -1,8 +1,13 @@
 package com.example.admins.hotelhunter.activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,8 +15,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
+import com.example.admins.hotelhunter.Utils.ImageUtils;
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.example.admins.hotelhunter.model.ReviewModel;
@@ -28,118 +35,139 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddHotelActivity extends AppCompatActivity {
+public class AddHotelActivity extends AppCompatActivity implements View.OnClickListener {
     EditText etTenNhaNghi;
     EditText etDiaChi;
-    EditText etSDT;
+    EditText etSDT1;
+    EditText etSDT2;
     EditText etGia;
-    CheckBox cbWifi, cbThangMay, cbNongLanh, cbDieuHoa;
-    Button btAdd;
+    ImageView iv_wifi, iv_thangmay,iv_dieuhoa, iv_nonglanh,iv_tivi, iv_tulanh, iv_addphoto;
+    TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_sdt1, tv_vitribando;
     public static FirebaseDatabase firebaseDatabase;
     public static DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
-    EditText edt_kinhdo;
-    EditText edit_vido;
-    EditText edit_rate;
-    Button bt_addImage;
     public List<HotelModel> list = new ArrayList<>();
     public static String TAG = AddHotelActivity.class.toString();
     public ImageView img_showhotel;
-    public TextInputLayout textInputLayout;
     public List<String> lst_String = new ArrayList<>();
-    public Button bt_clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hotel);
         setupUI();
+        addListtenners();
         final String phone1 = getIntent().getStringExtra("KEYPHONE");
-//        list = DataHandle.hotelModels(null, AddHotelActivity.this);
-        btAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final HotelModel hotelModel = new HotelModel(phone1, etTenNhaNghi.getText().toString(), etDiaChi.getText().toString(), etSDT.getText().toString(),
-                        Double.parseDouble(edt_kinhdo.getText().toString()), Double.parseDouble(edit_vido.getText().toString()),
-                        Float.parseFloat(edit_rate.getText().toString()),
-                        etGia.getText().toString(), lst_String, new ArrayList<ReviewModel>(),
-                        cbWifi.isChecked(), cbDieuHoa.isChecked(), cbNongLanh.isChecked(),
-                        cbThangMay.isChecked());
 
-                databaseReference.child(hotelModel.phone).setValue(hotelModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG, "onComplete: push hotel");
-                        databaseReference = firebaseDatabase.getReference("users");
-                        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                UserModel userModel = new UserModel();
-                                userModel.Huid = hotelModel.phone;
-                                databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
-                                Log.d(TAG, "onDataChange: push hotel");
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                });
-            }
-        });
-        img_showhotel.setVisibility(View.GONE);
-        img_showhotel.setVisibility(View.INVISIBLE);
-        bt_addImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final HotelModel hotelModel = list.get(1);
-                hotelModel.images.addAll(lst_String);
-                //                String encodedImage = list.get(list.size()-1).images.get(0);
-//                byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-//                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//                if(decodedByte!=null)
-//                {
-//                    img_showhotel.setVisibility(View.GONE);
-//                    img_showhotel.setVisibility(View.VISIBLE);
-//                    img_showhotel.setImageBitmap(decodedByte);
-//                }
-//                Log.d(TAG, "onClick: "+decodedByte.getHeight());
-
-
-
-            }
-        });
-        bt_clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                list = DataHandle.hotelModels(null, AddHotelActivity.this);
-
-            }
-        });
     }
 
     private void setupUI() {
-//        etTenNhaNghi = findViewById(R.id.et_ten_nha_nghi);
-//        etDiaChi = findViewById(R.id.et_dia_chi);
-//        etSDT = findViewById(R.id.et_sdt);
-//        etGia = findViewById(R.id.et_gia)   ;
-//        cbDieuHoa = findViewById(R.id.cb_dieu_hoa);
-//        cbThangMay = findViewById(R.id.cb_thang_may);
-//        cbNongLanh = findViewById(R.id.cb_nong_lanh);
-//        btAdd = findViewById(R.id.bt_add);
-//        bt_addImage = findViewById(R.id.btn_addimage);
-//        edt_kinhdo = findViewById(R.id.edit_kinhdo);
-//        edit_vido = findViewById(R.id.edit_vido);
-//        edit_rate = findViewById(R.id.editrate);
-//        img_showhotel = findViewById(R.id.img_showhotel);
-//        textInputLayout = findViewById(R.id.txt_image);
-//        bt_clear = findViewById(R.id.bt_clear);
-
+        etTenNhaNghi = findViewById(R.id.et_tenadd);
+        etDiaChi = findViewById(R.id.et_diachiadd);
+        etSDT1 = findViewById(R.id.et_sdt1add);
+        etSDT2 = findViewById(R.id.et_sdt2add);
+        etGia = findViewById(R.id.et_giaadd);
+        iv_wifi = findViewById(R.id.iv_wifiadd);
+        iv_thangmay = findViewById(R.id.iv_thangmayadd);
+        iv_dieuhoa = findViewById(R.id.iv_dieuhoaadd);
+        iv_nonglanh = findViewById(R.id.iv_nonglanhadd);
+        iv_tivi = findViewById(R.id.iv_tiviadd);
+        iv_tulanh = findViewById(R.id.iv_tulanhadd);
+        iv_addphoto = findViewById(R.id.iv_addphoto);
+        tv_wifi = findViewById(R.id.tv_wifiadd);
+        tv_thangmay = findViewById(R.id.tv_thangmayadd);
+        tv_dieuhoa = findViewById(R.id.tv_dieuhoaadd);
+        tv_nonglanh = findViewById(R.id.tv_nonglanhadd);
+        tv_tivi = findViewById(R.id.tv_tiviadd);
+        tv_tulanh = findViewById(R.id.tv_tulanhadd);
+        tv_sdt1 = findViewById(R.id.tv_sdt1add);
+        tv_vitribando = findViewById(R.id.tv_vitribando);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
 
+    }
+    private void addListtenners()
+    {
+        iv_addphoto.setOnClickListener(this);
+        iv_wifi.setOnClickListener(this);
+        iv_thangmay.setOnClickListener(this);
+        iv_dieuhoa.setOnClickListener(this);
+        iv_nonglanh.setOnClickListener(this);
+        iv_tivi.setOnClickListener(this);
+        iv_tulanh.setOnClickListener(this);
+        tv_vitribando.setOnClickListener(this);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.iv_addphoto:
+            {
+                Log.d(TAG, "onClick: "+"addphoto");
+                AddPhoto();
+                break;
+            }
+            case R.id.iv_wifiadd:{
+                break;
+            }
+            case R.id.iv_thangmayadd:
+            {
+                break;
+            }
+            case R.id.iv_dieuhoaadd:{
+                break;
+            }
+            case R.id.iv_nonglanhadd:
+            {
+                break;
+            }
+            case R.id.iv_tiviadd:{
+                break;
+            }
+            case R.id.iv_tulanhadd:{
+                break;
+            }
+        }
+    }
+    private void AddPhoto()
+    {
+        final String[] item = {"Chụp ảnh", "Mở Bộ sưu tập", "Huỷ"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Thêm Ảnh");
+        builder.setItems(item, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (item[i].equals("Chụp ảnh")) {
+                    cameraIntent();
+                } else if (item[i].equals("Mở Bộ sưu tập")) {
+                    galleryIntent();
+                } else {
+                    dialogInterface.dismiss();
+                }
+            }
+        }).show();
+    }
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*"); // mở tất cả các folder lưa trữ ảnh
+        intent.setAction(Intent.ACTION_GET_CONTENT); // đi đến folder mình chọn
+        startActivityForResult(Intent.createChooser(intent, "Chọn Ảnh"), 1);
+    }
+
+    private void cameraIntent() {
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        Uri uri = ImageUtils.getUriFromImage(this);
+//        if(uri!=null){
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+//        }
+       // check xem co ton tai intent nao khong
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, 2);
+        }
     }
 }
