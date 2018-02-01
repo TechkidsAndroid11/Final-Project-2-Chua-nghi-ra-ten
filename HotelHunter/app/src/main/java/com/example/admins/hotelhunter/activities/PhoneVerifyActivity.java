@@ -139,6 +139,7 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
                             startActivity(intent);
                             Log.d(TAG, "onComplete:ll ");
                             UserProfileChangeRequest user = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+                            auth.getCurrentUser().updateProfile(user);
 
                             Toast.makeText(PhoneVerifyActivity.this," Xác thực thành công!", Toast.LENGTH_SHORT).show();
 

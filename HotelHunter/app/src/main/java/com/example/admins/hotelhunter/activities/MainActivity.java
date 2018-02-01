@@ -24,9 +24,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
+import com.example.admins.hotelhunter.Utils.ImageUtils;
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
 import com.example.admins.hotelhunter.fragment.DetailFragment;
+import com.example.admins.hotelhunter.fragment.MyHotelFragment;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -198,10 +200,8 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i3);
             }
 
-        } else if (id == R.id.nav_myPost) {
-
-
-        }
+        } else if (id == R.id.nav_myPost)
+            ImageUtils.openFragment(getSupportFragmentManager(), R.id.rl_main, new  MyHotelFragment());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -102,7 +102,7 @@ public class InformationOfHotelActivity extends AppCompatActivity implements Bas
                 TextSliderView sliderView = new TextSliderView(this);
                 File f = File.createTempFile("tmp","png", getCacheDir());
                 FileOutputStream fos = new FileOutputStream(f);
-                decodedByte.compress(Bitmap.CompressFormat.PNG,100,fos);
+                decodedByte.compress(Bitmap.CompressFormat.JPEG,100,fos);
                 fos.close();
                 sliderView.image(f)
                         .setScaleType(BaseSliderView.ScaleType.CenterCrop);
