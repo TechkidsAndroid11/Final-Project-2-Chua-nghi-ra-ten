@@ -123,6 +123,7 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
 
 
     private void signInWithPhone(PhoneAuthCredential credential) {
+
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -132,9 +133,11 @@ public class PhoneVerifyActivity extends AppCompatActivity implements View.OnCli
                             intent.putExtra("KEY_VERIFYEDPHONE", phone);
                             startActivity(intent);
                             Log.d(TAG, "onComplete:ll ");
+                            Toast.makeText(PhoneVerifyActivity.this," Xác thực thành công!", Toast.LENGTH_SHORT).show();
 
 
                         } else {
+                            Toast.makeText(PhoneVerifyActivity.this," Xảy ra lỗi xác thực", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "onComplete: "+task.getException().getMessage());
                         }
                     }

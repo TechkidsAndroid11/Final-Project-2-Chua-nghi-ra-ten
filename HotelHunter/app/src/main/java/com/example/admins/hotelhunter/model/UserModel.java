@@ -11,6 +11,7 @@ public class UserModel {
     public String name;
     public String uid;
     public String uri;
+    public String Huid;
     public boolean register;
 
 

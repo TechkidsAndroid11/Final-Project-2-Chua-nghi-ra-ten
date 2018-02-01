@@ -4,29 +4,29 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
+import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
+import com.example.admins.hotelhunter.fragment.DetailFragment;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,15 +37,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.firebase.auth.FirebaseAuth;
 
-import com.example.admins.hotelhunter.R;
-
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback{
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, View.OnClickListener {
     private static final String TAG = MainActivity.class.toString();
     FirebaseAuth firebaseAuth;
     private GoogleMap mMap;
@@ -58,6 +56,9 @@ public class MainActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TextView tvFilter=findViewById(R.id.tv_filter);
+        tvFilter.setOnClickListener(this);
+
     }
 
 
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity
         if (firebaseAuth.getCurrentUser() == null) {
 
         } else {
-            Log.d(TAG, "onResume: " + firebaseAuth.getCurrentUser());
+            Log.d(TAG, "onResume: " + firebaseAuth.getCurrentUser() + firebaseAuth.getCurrentUser().getDisplayName());
             tvNavText.setVisibility(View.GONE);
             tvName.setVisibility(View.VISIBLE);
             ivAvata.setVisibility(View.VISIBLE);
@@ -181,23 +182,24 @@ public class MainActivity extends AppCompatActivity
             });
 
 
-
-
-        } else if (id == R.id.nav_myhotel){
-            if(firebaseAuth.getCurrentUser()==null){
+        } else if (id == R.id.nav_myhotel) {
+            if (firebaseAuth.getCurrentUser() == null) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater layoutInflater = this.getLayoutInflater();
                 View dialogView = layoutInflater.inflate(R.layout.require, null);
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                Intent i2= new Intent(this, LoginActivity.class);
+                Intent i2 = new Intent(this, LoginActivity.class);
                 startActivity(i2);
 
             } else {
-                Intent i3= new Intent(this, CodeActivity.class);
+                Intent i3 = new Intent(this, CodeActivity.class);
                 startActivity(i3);
             }
+
+        } else if (id == R.id.nav_myPost) {
+
 
         }
 
@@ -259,5 +261,51 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_filter:
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                LayoutInflater layoutInflater = this.getLayoutInflater();
+                View dialogView = layoutInflater.inflate(R.layout.filter, null);
+                dialogBuilder.setView(dialogView);
+                AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                RadioGroup rgPrice = dialogView.findViewById(R.id.gr_price);
+                switch (rgPrice.getCheckedRadioButtonId()) {
+                    case R.id.rb_11: {
+                        break;
+                    }
+                    case R.id.rb_12: {
+                        break;
+                    }
+                    case R.id.rb_13: {
+                        break;
+                    }
+
+
+
+                }
+                RadioGroup rgDistance= dialogView.findViewById(R.id.gr_distance);
+                switch (rgDistance.getCheckedRadioButtonId()){
+                    case R.id.rb_1:{
+
+                    }
+                    case R.id.rb_2:{
+
+                    }
+                    case R.id.rb_3:{
+
+                    }
+                }
+                Button btOk=dialogView.findViewById(R.id.bt_ok);
+                Button btCancer= dialogView.findViewById(R.id.bt_cancer);
+
+
+        }
+
+
     }
 }
