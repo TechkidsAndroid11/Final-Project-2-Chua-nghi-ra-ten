@@ -8,8 +8,6 @@
        <ScrollView
            android:layout_width="match_parent"
            android:layout_height="match_parent"
-           android:layout_marginRight="16dp"
-           android:layout_marginLeft="16dp"
            >
            <LinearLayout
                android:layout_width="match_parent"
@@ -54,6 +52,7 @@
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
                    android:textStyle="bold"
+                   android:layout_marginTop="8dp"
                    />
                <EditText
                    android:layout_width="match_parent"
@@ -68,7 +67,8 @@
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
                    android:textStyle="bold"
-                   android:id="@+id/tv_sdt1add"/>
+                   android:id="@+id/tv_sdt1add"
+                   android:layout_marginTop="8dp"/>
                <EditText
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
@@ -82,7 +82,8 @@
                    android:text="Số điện thoại 2"
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
-                   android:textStyle="bold"/>
+                   android:textStyle="bold"
+                   android:layout_marginTop="8dp"/>
                <EditText
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
@@ -96,7 +97,8 @@
                    android:text="* Giá"
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
-                   android:textStyle="bold"/>
+                   android:textStyle="bold"
+                   android:layout_marginTop="8dp"/>
                <EditText
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
@@ -111,80 +113,8 @@
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
                    android:textStyle="bold"
+                   android:layout_marginTop="8dp"
                    />
-               <LinearLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="40dp"
-                   android:layout_marginLeft="16dp"
-                   android:layout_marginRight="16dp"
-                   android:orientation="horizontal"
-                   android:weightSum="3"
-                   >
-                   <LinearLayout
-                       android:layout_width="0dp"
-                       android:layout_height="wrap_content"
-                       android:orientation="horizontal"
-                       android:layout_weight="1">
-                       <ImageView
-                           android:layout_width="24dp"
-                           android:layout_height="24dp"
-                           android:layout_marginTop="16dp"
-                           android:layout_marginRight="8dp"
-                           android:src="@drawable/elevator"
-                           android:id="@+id/iv_thangmayadd"/>
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
-                           android:text="Thang máy"
-                           android:textColor="@color/orange"
-                           android:id="@+id/tv_thangmayadd"
-                           android:textStyle="bold"/>
-                   </LinearLayout>
-                   <LinearLayout
-                       android:layout_width="0dp"
-                       android:layout_height="wrap_content"
-                       android:orientation="horizontal"
-                       android:layout_weight="1">
-                       <ImageView
-                           android:layout_width="24dp"
-                           android:layout_height="24dp"
-                           android:layout_marginTop="16dp"
-                           android:layout_marginRight="8dp"
-                           android:src="@drawable/heater"
-                           android:id="@+id/iv_nonglanhadd"/>
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
-                           android:text="Nóng lạnh"
-                           android:textColor="@color/orange"
-                           android:id="@+id/tv_nonglanhadd"
-                           android:textStyle="bold"/>
-                   </LinearLayout>
-                   <LinearLayout
-                       android:layout_width="0dp"
-                       android:layout_height="wrap_content"
-                       android:orientation="horizontal"
-                       android:layout_weight="1">
-                       <ImageView
-                           android:layout_width="24dp"
-                           android:layout_height="24dp"
-                           android:layout_marginTop="16dp"
-                           android:layout_marginRight="8dp"
-                           android:src="@drawable/wifi"
-                           android:id="@+id/iv_wifiadd"/>
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
-                           android:text="Wifi"
-                           android:textColor="@color/orange"
-                           android:textStyle="bold"
-                           android:id="@+id/tv_wifiadd"/>
-                   </LinearLayout>
-
-               </LinearLayout>
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="40dp"
@@ -214,6 +144,61 @@
                            android:textStyle="bold"
                            android:id="@+id/tv_dieuhoaadd"/>
                    </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_weight="1">
+                       <ImageView
+                           android:layout_width="24dp"
+                           android:layout_height="24dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginRight="8dp"
+                           android:src="@drawable/wifi"
+                           android:id="@+id/iv_wifiadd"/>
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="18dp"
+                           android:text="Wifi"
+                           android:textColor="@color/orange"
+                           android:textStyle="bold"
+                           android:id="@+id/tv_wifiadd"/>
+                   </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_weight="1">
+                       <ImageView
+                           android:layout_width="24dp"
+                           android:layout_height="24dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginRight="8dp"
+                           android:src="@drawable/heater"
+                           android:id="@+id/iv_nonglanhadd"/>
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="18dp"
+                           android:text="Nóng lạnh"
+                           android:textColor="@color/orange"
+                           android:id="@+id/tv_nonglanhadd"
+                           android:textStyle="bold"/>
+                   </LinearLayout>
+
+
+               </LinearLayout>
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="40dp"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginRight="16dp"
+                   android:orientation="horizontal"
+                   android:weightSum="3"
+                   >
+
                    <LinearLayout
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
@@ -257,7 +242,27 @@
                            android:textStyle="bold"
                            android:id="@+id/tv_tulanhadd"/>
                    </LinearLayout>
-
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_weight="1">
+                       <ImageView
+                           android:layout_width="24dp"
+                           android:layout_height="24dp"
+                           android:layout_marginTop="16dp"
+                           android:layout_marginRight="8dp"
+                           android:src="@drawable/elevator"
+                           android:id="@+id/iv_thangmayadd"/>
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="18dp"
+                           android:text="Thang máy"
+                           android:textColor="@color/orange"
+                           android:id="@+id/tv_thangmayadd"
+                           android:textStyle="bold"/>
+                   </LinearLayout>
                </LinearLayout>
                <TextView
                    android:layout_width="wrap_content"
@@ -280,8 +285,8 @@
                    android:textColor="#fff"
                    android:textStyle="bold"
                    android:textAllCaps="false"
-                   android:id="@+id/bt_danghotel"/>
-
+                   android:id="@+id/bt_danghotel"
+                   android:background="@drawable/login"/>
            </LinearLayout>
        </ScrollView>
 

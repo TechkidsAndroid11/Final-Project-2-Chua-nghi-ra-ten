@@ -96,7 +96,6 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         iv_tivi.setOnClickListener(this);
         iv_tulanh.setOnClickListener(this);
         tv_vitribando.setOnClickListener(this);
-
     }
 
     @Override
@@ -110,6 +109,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
                 break;
             }
             case R.id.iv_wifiadd:{
+
                 break;
             }
             case R.id.iv_thangmayadd:
