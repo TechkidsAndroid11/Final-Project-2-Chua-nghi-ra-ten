@@ -22,6 +22,8 @@ public class HotelModel {
     public boolean dieuHoa;
     public boolean nongLanh;
     public boolean thangMay;
+    public boolean tivi;
+    public boolean tuLanh;
     public String key;
 
     public HotelModel() {
@@ -45,6 +47,25 @@ public class HotelModel {
         this.thangMay = thangMay;
     }
 
+    public HotelModel(String phone1, String nameHotel, String address, String phone, double kinhDo, double viDo, float danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels, boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay, boolean tivi, boolean tuLanh, String key) {
+        this.phone1 = phone1;
+        this.nameHotel = nameHotel;
+        this.address = address;
+        this.phone = phone;
+        this.kinhDo = kinhDo;
+        this.viDo = viDo;
+        this.danhGiaTB = danhGiaTB;
+        this.gia = gia;
+        this.images = images;
+        this.reviewModels = reviewModels;
+        this.wifi = wifi;
+        this.dieuHoa = dieuHoa;
+        this.nongLanh = nongLanh;
+        this.thangMay = thangMay;
+        this.tivi = tivi;
+        this.tuLanh = tuLanh;
+        this.key = key;
+    }
 
     public HotelModel(String s, String s1, String s2, double v, double v1, int i, String s3, ArrayList<String> strings, ArrayList<ReviewModel> reviewModels, boolean checked, boolean checked1, boolean checked2, boolean checked3) {
     }
