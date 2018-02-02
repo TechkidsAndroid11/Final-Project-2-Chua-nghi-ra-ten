@@ -55,7 +55,7 @@ import static com.example.admins.hotelhunter.activities.LoginActivity.userModel;
 public class DetailFragment extends Fragment  {
     private static final String TAG = DetailFragment.class.toString();
     TextView tvGia;
-    RelativeLayout rlWifi, rlNongLanh, rlDieuHoa, rlThangMay;
+    RelativeLayout rlWifi, rlNongLanh, rlDieuHoa, rlThangMay, rlTuLanh, rlTivi;
     TextView tvAddress;
     TextView tvPhone;
     TextView tvRate;
@@ -128,6 +128,14 @@ public class DetailFragment extends Fragment  {
             rlThangMay.startAnimation(alpha);
         }
 
+        if (!hotelModel.tulanh) {
+            rlTuLanh.startAnimation(alpha);
+        }
+
+        if (!hotelModel.tivi) {
+            rlTivi.startAnimation(alpha);
+        }
+
         tvAddress.setText(hotelModel.address);
 
         tvPhone.setText(hotelModel.phone);
@@ -150,6 +158,8 @@ public class DetailFragment extends Fragment  {
         tvRate = view.findViewById(R.id.tv_rating);
         tvRate= view.findViewById(R.id.tv_rating);
         ivStar= view.findViewById(R.id.iv_star);
+        rlTivi = view.findViewById(R.id.rl_tivi);
+        rlTuLanh = view.findViewById(R.id.rl_tu_lanh);
     }
 
     @Subscribe(sticky = true)

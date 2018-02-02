@@ -94,10 +94,11 @@
                     android:id="@+id/tv_check_email"
                     android:visibility="invisible"
                     android:textColor="#fff"
-                    android:text="Email đã được đăng ký"
+                    android:text="Trùng hoặc xảy ra lỗi với Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <EditText
+                    android:inputType="textPassword"
                     android:id="@+id/et_passDK"
                     android:textColor="#fff"
                     android:backgroundTint="#fff"
@@ -112,6 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <EditText
+                    android:inputType="textPassword"
                     android:id="@+id/et_confirmPassDK"
                     android:textColor="#fff"
                     android:backgroundTint="#fff"

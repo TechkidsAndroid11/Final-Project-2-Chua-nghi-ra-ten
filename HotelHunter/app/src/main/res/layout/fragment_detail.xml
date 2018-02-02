@@ -75,7 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:paddingLeft="16dp">
 
                 <ImageView
                     android:id="@+id/iv_nong_lanh"
@@ -99,7 +99,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:paddingLeft="16dp">
 
                 <ImageView
                     android:id="@+id/iv_wifi"
@@ -150,9 +150,59 @@
                     android:gravity="center"
                     android:text="Điều hòa"
                     android:textColor="#000" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:paddingLeft="16dp"
+                android:id="@+id/rl_tivi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_tivi"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/tivi" />
+
+                <TextView
+                    android:id="@+id/tv_tivi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/iv_tivi"
+                    android:gravity="center"
+                    android:text="Tivi"
+                    android:textColor="#000" />
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:paddingLeft="16dp"
+                android:id="@+id/rl_tu_lanh"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_tu_lanh"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/tulanh" />
+
+                <TextView
+                    android:id="@+id/tv_tu_lanh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/iv_tu_lanh"
+                    android:gravity="center"
+                    android:text="Thang máy"
+                    android:textColor="#000" />
+
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

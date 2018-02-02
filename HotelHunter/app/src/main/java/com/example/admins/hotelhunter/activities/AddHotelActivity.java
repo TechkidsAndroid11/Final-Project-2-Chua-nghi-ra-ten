@@ -1,8 +1,12 @@
 package com.example.admins.hotelhunter.activities;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -15,6 +19,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
@@ -32,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,15 +47,25 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     EditText etSDT1;
     EditText etSDT2;
     EditText etGia;
-    ImageView iv_wifi, iv_thangmay,iv_dieuhoa, iv_nonglanh,iv_tivi, iv_tulanh, iv_addphoto;
+    ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_addphoto;
     TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_sdt1, tv_vitribando;
+    LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh;
     public static FirebaseDatabase firebaseDatabase;
     public static DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     public List<HotelModel> list = new ArrayList<>();
     public static String TAG = AddHotelActivity.class.toString();
     public ImageView img_showhotel;
-    public List<String> lst_String = new ArrayList<>();
+    public List<String> lst_Image = new ArrayList<>();
+    public boolean tiVi = false;
+    public boolean tuLanh = false;
+    public boolean dieuHoa = false;
+    public boolean thangMay = false;
+    public boolean wifi = false;
+    public boolean nongLanh = false;
+    public Button bt_dangBai;
+
+    List<HotelModel> lstModels = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +73,9 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_add_hotel);
         setupUI();
         addListtenners();
+        setEnableService();
         final String phone1 = getIntent().getStringExtra("KEYPHONE");
-
+        lstModels = DataHandle.hotelModels(null, this);
     }
 
     private void setupUI() {
@@ -82,12 +99,19 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         tv_tulanh = findViewById(R.id.tv_tulanhadd);
         tv_sdt1 = findViewById(R.id.tv_sdt1add);
         tv_vitribando = findViewById(R.id.tv_vitribando);
+        bt_dangBai = findViewById(R.id.bt_danghotel);
+        ln_dieuhoa= findViewById(R.id.ln_dieuhoa);
+        ln_wifi = findViewById(R.id.ln_wifi);
+        ln_nonglanh= findViewById(R.id.ln_nonglanh);
+        ln_thangmay = findViewById(R.id.ln_thangmay);
+        ln_tulanh= findViewById(R.id.ln_tulanh);
+        ln_tivi = findViewById(R.id.ln_tivi);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
 
     }
-    private void addListtenners()
-    {
+
+    private void addListtenners() {
         iv_addphoto.setOnClickListener(this);
         iv_wifi.setOnClickListener(this);
         iv_thangmay.setOnClickListener(this);
@@ -96,43 +120,61 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         iv_tivi.setOnClickListener(this);
         iv_tulanh.setOnClickListener(this);
         tv_vitribando.setOnClickListener(this);
+        bt_dangBai.setOnClickListener(this);
+        ln_tivi.setOnClickListener(this);
+        ln_tulanh.setOnClickListener(this);
+        ln_nonglanh.setOnClickListener(this);
+        ln_wifi.setOnClickListener(this);
+        ln_thangmay.setOnClickListener(this);
+        ln_dieuhoa.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
-            case R.id.iv_addphoto:
-            {
-                Log.d(TAG, "onClick: "+"addphoto");
+        switch (view.getId()) {
+            case R.id.iv_addphoto: {
+                Log.d(TAG, "onClick: " + "addphoto");
                 AddPhoto();
                 break;
             }
-            case R.id.iv_wifiadd:{
-
+            case R.id.ln_wifi: {
+                wifi=wifi?false:true;
+                setEnableService();
                 break;
             }
-            case R.id.iv_thangmayadd:
-            {
+            case R.id.ln_thangmay: {
+                thangMay=thangMay?false:true;
+                setEnableService();
                 break;
             }
-            case R.id.iv_dieuhoaadd:{
+            case R.id.ln_dieuhoa: {
+                dieuHoa=dieuHoa?false:true;
+                setEnableService();
                 break;
             }
-            case R.id.iv_nonglanhadd:
-            {
+            case R.id.ln_nonglanh: {
+                nongLanh=nongLanh?false:true;
+                setEnableService();
                 break;
             }
-            case R.id.iv_tiviadd:{
+            case R.id.ln_tivi: {
+                tiVi=tiVi?false:true;
+                setEnableService();
                 break;
             }
-            case R.id.iv_tulanhadd:{
+            case R.id.ln_tulanh: {
+                tuLanh=tuLanh?false:true;
+                setEnableService();
+                break;
+            }
+            case R.id.bt_danghotel: {
                 break;
             }
         }
     }
-    private void AddPhoto()
-    {
+
+    private void AddPhoto() {
         final String[] item = {"Chụp ảnh", "Mở Bộ sưu tập", "Huỷ"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -150,6 +192,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
             }
         }).show();
     }
+
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*"); // mở tất cả các folder lưa trữ ảnh
@@ -169,6 +212,110 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, 2);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                Bitmap bitmap = null;
+                Log.d(TAG, "onActivityResult: ");
+                if (data != null) {
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.e(TAG, "Data Null!!!!");
+                }
+//                myAsyncTask = new MyAsyncTask();
+//                myAsyncTask.execute(bitmap);
+            } else if (requestCode == 2) {
+                Bitmap bitmap = null;
+                if (resultCode == RESULT_OK) {
+                    bitmap = ImageUtils.getBitmap(this);
+//                    myAsyncTask = new MyAsyncTask();
+//                    myAsyncTask.execute(bitmap);
+                }
+
+            }
+
+        }
+    }
+    public class MyAsyncTask extends AsyncTask<Bitmap, Void, Bitmap> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Bitmap doInBackground(Bitmap... bitmaps) {
+            lst_Image.add(ImageUtils.endcodeImageToBase64(bitmaps[0]));
+            Bitmap bitmap = ImageUtils.base64ToImage(lst_Image.get(lst_Image.size()-1));
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+        }
+    }
+    private void setEnableService() {
+        if(tiVi)
+        {
+            iv_tivi.setAlpha(255);
+            tv_tivi.setTextColor(Color.argb(255,252,119,3));
+        }
+        else {
+            iv_tivi.setAlpha(100);
+            tv_tivi.setTextColor(Color.argb(100,252,119,3));
+        }
+        if(tuLanh){
+            tv_tulanh.setTextColor(Color.argb(255,252,119,3));
+            iv_tulanh.setAlpha(255);
+        }
+        else {
+            tv_tulanh.setTextColor(Color.argb(100,252,119,3));
+            iv_tulanh.setAlpha(100);
+        }
+        if(thangMay){
+            tv_thangmay.setTextColor(Color.argb(255,252,119,3));
+            iv_thangmay.setAlpha(255);
+        }
+        else {
+            tv_thangmay.setTextColor(Color.argb(100,252,119,3));
+            iv_thangmay.setAlpha(100);
+        }
+        if(nongLanh){
+            iv_nonglanh.setAlpha(255);
+            tv_nonglanh.setTextColor(Color.argb(255,252,119,3));
+        }
+        else {
+            iv_nonglanh.setAlpha(100);
+            tv_nonglanh.setTextColor(Color.argb(100,252,119,3));
+        }
+        if(dieuHoa){
+            tv_dieuhoa.setTextColor(Color.argb(255,252,119,3));
+            iv_dieuhoa.setAlpha(255);
+        }
+        else {
+            tv_dieuhoa.setTextColor(Color.argb(100,252,119,3));
+            iv_dieuhoa.setAlpha(100);
+        }
+        if(wifi)
+        {
+            tv_wifi.setTextColor(Color.argb(255,252,119,3));
+            iv_wifi.setAlpha(255);
+        }
+        else{
+            tv_wifi.setTextColor(Color.argb(100,252,119,3));
+            iv_wifi.setAlpha(100);
+        }
+
     }
 }
 //        btAdd.setOnClickListener(new View.OnClickListener() {

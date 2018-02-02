@@ -127,7 +127,8 @@
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_dieuhoa">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
@@ -149,7 +150,8 @@
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_wifi">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
@@ -170,7 +172,8 @@
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_nonglanh">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
@@ -203,7 +206,8 @@
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_tivi">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
@@ -225,7 +229,8 @@
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_tulanh">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
@@ -246,7 +251,8 @@
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
                        android:orientation="horizontal"
-                       android:layout_weight="1">
+                       android:layout_weight="1"
+                       android:id="@+id/ln_thangmay">
                        <ImageView
                            android:layout_width="24dp"
                            android:layout_height="24dp"
@@ -286,7 +292,8 @@
                    android:textStyle="bold"
                    android:textAllCaps="false"
                    android:id="@+id/bt_danghotel"
-                   android:background="@drawable/login"/>
+                   android:background="@drawable/login"
+                   android:layout_marginBottom="16dp"/>
            </LinearLayout>
        </ScrollView>
 
