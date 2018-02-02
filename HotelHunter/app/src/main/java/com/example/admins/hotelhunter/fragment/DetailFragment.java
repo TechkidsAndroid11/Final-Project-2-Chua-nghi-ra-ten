@@ -1,9 +1,17 @@
 package com.example.admins.hotelhunter.fragment;
 
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.activities.LoginActivity;
@@ -47,6 +56,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.admins.hotelhunter.activities.LoginActivity.userModel;
 
 /**
@@ -67,6 +77,7 @@ public class DetailFragment extends Fragment  {
     RecyclerView rvFeedback;
     ImageView ivStar;
     public HotelModel hotelModel;
+    Intent in;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -103,6 +114,8 @@ public class DetailFragment extends Fragment  {
 //            }
 //        });
         setupUI(view);
+        in = new Intent(Intent.ACTION_CALL, Uri.parse("tel: "+tvPhone.getText().toString().trim()));
+        addListtenners();
         loadData();
         return view;
     }
@@ -167,8 +180,56 @@ public class DetailFragment extends Fragment  {
         hotelModel = onClickWindowinfo.hotelModel;
         if (hotelModel.reviewModels == null) hotelModel.reviewModels = new ArrayList<>();
     }
+    public void addListtenners()
+    {
+        tvPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder altdial = new AlertDialog.Builder(getContext(),R.style.MyDialogTheme);
+                altdial.setMessage("Bạn muốn thực hiện cuộc gọi").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
+                        try {
+                            if (Build.VERSION.SDK_INT >= 23) {
+                                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 0);
+                                    Log.e(TAG, "onClick: "+"permission" );
+                                }
+                                else {
+                                    startActivity(in);
+                                }
 
+                            }
+                            else {
 
+                                startActivity(in);
+                            }
+                        } catch (ActivityNotFoundException ex) {
+                            Toast.makeText(getContext(), "Không thể thực hiện cuộc gọi", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }).show();
 
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==0)
+        {
+            Log.e(TAG, "onRequestPermissionsResult: " );
+            if (grantResults.length!=0&&grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            {
+                startActivity(in);
+            }
+        }
+    }
 }

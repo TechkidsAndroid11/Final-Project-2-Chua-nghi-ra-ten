@@ -36,6 +36,8 @@ public class ImageUtils {
         immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+
         Log.e("base64   ", imageEncoded);
         return imageEncoded;
     }
@@ -43,8 +45,7 @@ public class ImageUtils {
     public static Bitmap base64ToImage(String base64Image) {
         byte[] imageBytes = Base64.decode(base64Image, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-
-        return Bitmap.createScaledBitmap(bitmap, 500, 500, false);
+        return Bitmap.createScaledBitmap(bitmap, 500, 500, true);
     }
 
     public static String endcodeImageToBase64(Bitmap bitmap) {
@@ -58,28 +59,25 @@ public class ImageUtils {
     }
 
     public static Uri getUriFromImage(Context context) {
-        //creat temp file
         temFile = null;
-        try {
+        try{
             temFile = File.createTempFile(
-                    Calendar.getInstance().getTime().toString(), ".jpg",
-                    context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            );
-            Log.d(TAG, "getUriFromImage: " + temFile.getPath());
+                    Calendar.getInstance().getTime().toString(),".jpg",
+                    context.getExternalFilesDir(Environment.DIRECTORY_PICTURES));
+            Log.d(TAG,"getUriFromImages: "+temFile.getPath());
             temFile.deleteOnExit();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
-        //get uri
-        Uri uri = null;
-        if (temFile != null) {
-            uri = FileProvider.getUriForFile(
-                    context,
-                    context.getPackageName() + ".provider",
-                    temFile
-            );
+        //getUri
+        Uri  uri= null;
+        if(temFile!=null)
+        {
+            uri= FileProvider.getUriForFile(context,context.getPackageName()+".provider",temFile);
         }
-        Log.d(TAG, "getUriFromImage: " + uri);
+        Log.d(TAG,"getUriFromImages: "+uri);
         return uri;
     }
 

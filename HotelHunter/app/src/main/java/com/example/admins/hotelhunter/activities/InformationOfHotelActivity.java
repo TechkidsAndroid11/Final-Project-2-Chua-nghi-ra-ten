@@ -100,7 +100,7 @@ public class InformationOfHotelActivity extends AppCompatActivity implements Bas
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             try {
                 TextSliderView sliderView = new TextSliderView(this);
-                File f = File.createTempFile("tmp","png", getCacheDir());
+                File f = File.createTempFile("tmp","jpg", getCacheDir());
                 FileOutputStream fos = new FileOutputStream(f);
                 decodedByte.compress(Bitmap.CompressFormat.JPEG,100,fos);
                 fos.close();

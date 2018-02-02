@@ -46,6 +46,15 @@
                    android:layout_marginRight="16dp"
                    android:id="@+id/et_tenadd"/>
                <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginRight="16dp"
+                   android:text="Tên nhà nghỉ không được để trống"
+                   android:textSize="10sp"
+                   android:textColor="@color/orange"
+                   android:id="@+id/tv_thongbaoten"/>
+               <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:text="* Địa chỉ"
@@ -61,6 +70,15 @@
                    android:layout_marginRight="16dp"
                    android:id="@+id/et_diachiadd"/>
                <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginRight="16dp"
+                   android:text="Địa chỉ không được để trống"
+                   android:textSize="10sp"
+                   android:textColor="@color/orange"
+                   android:id="@+id/tv_thongbaodiachi"/>
+               <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:text="* Số điện thoại 1"
@@ -69,13 +87,14 @@
                    android:textStyle="bold"
                    android:id="@+id/tv_sdt1add"
                    android:layout_marginTop="8dp"/>
+
                <EditText
+                   android:id="@+id/et_sdt1add"
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
-                   android:id="@+id/et_sdt1add"
-                   android:textStyle="bold"/>
+                   android:inputType="phone" />
                <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
@@ -84,13 +103,14 @@
                    android:layout_marginLeft="16dp"
                    android:textStyle="bold"
                    android:layout_marginTop="8dp"/>
+
                <EditText
+                   android:id="@+id/et_sdt2add"
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
-                   android:id="@+id/et_sdt2add"
-                   />
+                   android:inputType="phone" />
                <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
@@ -99,13 +119,23 @@
                    android:layout_marginLeft="16dp"
                    android:textStyle="bold"
                    android:layout_marginTop="8dp"/>
+
                <EditText
+                   android:id="@+id/et_giaadd"
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
-                   android:id="@+id/et_giaadd"
-                   android:hint=""/>
+                   android:hint="" />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginRight="16dp"
+                   android:text="10,000-20,000"
+                   android:textSize="10sp"
+                   android:textColor="@color/orange"
+                   android:id="@+id/tv_thongbaogia"/>
                <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
