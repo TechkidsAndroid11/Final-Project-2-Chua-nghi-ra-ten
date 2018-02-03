@@ -273,35 +273,6 @@ public class MainActivity extends AppCompatActivity
                 dialogBuilder.setView(dialogView);
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                RadioGroup rgPrice = dialogView.findViewById(R.id.gr_price);
-                switch (rgPrice.getCheckedRadioButtonId()) {
-                    case R.id.rb_11: {
-                        break;
-                    }
-                    case R.id.rb_12: {
-                        break;
-                    }
-                    case R.id.rb_13: {
-                        break;
-                    }
-
-
-
-                }
-                RadioGroup rgDistance= dialogView.findViewById(R.id.gr_distance);
-                switch (rgDistance.getCheckedRadioButtonId()){
-                    case R.id.rb_1:{
-
-                    }
-                    case R.id.rb_2:{
-
-                    }
-                    case R.id.rb_3:{
-
-                    }
-                }
-                Button btOk=dialogView.findViewById(R.id.bt_ok);
-                Button btCancer= dialogView.findViewById(R.id.bt_cancer);
 
 
         }

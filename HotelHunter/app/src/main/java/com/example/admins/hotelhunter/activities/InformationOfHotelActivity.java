@@ -31,7 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class InformationOfHotelActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener{
-    private static final String TAG = "InformationOfHotelActivity";
+    private static final String TAG = "InformationOfHotel";
     TabLayout tab;
     ViewPager vpFragment;
     ImageView ivHotel;
@@ -84,7 +84,6 @@ public class InformationOfHotelActivity extends AppCompatActivity implements Bas
         tvName.setText("Nhà nghỉ " + hotelModel.nameHotel);
     }
 
-    @SuppressLint("LongLogTag")
     @Subscribe(sticky = true)
     public void onRecievedHotelModel(final OnClickWindowinfo onClickWindowinfo) {
         hotelModel = onClickWindowinfo.hotelModel;
