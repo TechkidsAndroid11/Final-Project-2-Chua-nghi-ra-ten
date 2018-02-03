@@ -310,7 +310,24 @@
                    android:layout_marginTop="16dp"
                    android:id="@+id/tv_vitribando"
                    />
-
+               <EditText
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="kinh do"
+                   android:id="@+id/et_kinhdoadd"
+                  />
+               <EditText
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="vi do"
+                   android:id="@+id/et_vidoadd"
+                   />
+               <EditText
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="rate"
+                   android:id="@+id/et_rateadd"
+                   />
                <Button
                    android:layout_width="match_parent"
                    android:layout_height="45dp"

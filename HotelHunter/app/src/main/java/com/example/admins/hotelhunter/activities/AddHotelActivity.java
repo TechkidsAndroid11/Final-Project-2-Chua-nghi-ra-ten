@@ -72,6 +72,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     HorizontalScrollView horizontalScrollView;
     MyAsyncTask myAsyncTask;
     List<HotelModel> lstModels = new ArrayList<>();
+    EditText kinhdo, vido,rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +120,9 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         tv_thongbaogia.setVisibility(View.GONE);
         tv_thongbaoten.setVisibility(View.GONE);
         horizontalScrollView = findViewById(R.id.sc_view);
+        kinhdo = findViewById(R.id.et_kinhdoadd);
+        vido = findViewById(R.id.et_vidoadd);
+        rate = findViewById(R.id.et_rateadd);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
 
@@ -213,6 +217,9 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         hotelModel.phone = etSDT1.getText().toString();
         hotelModel.phone1 = etSDT2.getText().toString();
         hotelModel.gia = etGia.getText().toString();
+        hotelModel.kinhDo = Double.parseDouble(kinhdo.getText().toString());
+        hotelModel.viDo = Double.parseDouble(vido.getText().toString());
+        hotelModel.danhGiaTB = Float.parseFloat(rate.getText().toString());
         databaseReference.push().setValue(hotelModel);
     }
 
