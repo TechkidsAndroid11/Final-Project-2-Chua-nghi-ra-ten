@@ -119,8 +119,6 @@ public class DetailFragment extends Fragment  {
         loadData();
         return view;
     }
-
-    @SuppressLint("Range")
     private void loadData() {
         AlphaAnimation alpha = new AlphaAnimation(0.1F, 0.1F);
         alpha.setDuration(0);

@@ -86,7 +86,6 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
         rvFeedback.setAdapter(feedbackAdapter);
         rvFeedback.setLayoutManager(new LinearLayoutManager(getContext()));
     }
-
     @Subscribe(sticky = true)
     public void getHotelModel(final OnClickWindowinfo onClickWindowinfo) {
         hotelModel = onClickWindowinfo.hotelModel;
@@ -180,8 +179,6 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
                                             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
                                             Date date = Calendar.getInstance().getTime();
-
-
                                             ReviewModel review = new ReviewModel(
                                                     new UserModel(firebaseAuth.getCurrentUser().getDisplayName(),firebaseAuth.getCurrentUser().getUid(),""),
                                                     dateFormat.format(date),
@@ -190,7 +187,6 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
                                                     rbRate.getRating()
                                             );
                                             reviewModelList.add(review);
-
                                             databaseReference.child(firebaseAuth.getCurrentUser().getUid())
                                                     .setValue(userModel);
                                         }

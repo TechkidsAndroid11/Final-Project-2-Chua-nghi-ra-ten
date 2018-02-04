@@ -22,8 +22,7 @@
         android:textColor="@color/orange"
         android:textSize="14sp"
         android:textStyle="bold" />
-
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -31,7 +30,6 @@
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         android:weightSum="5">
-
         <RadioButton
             android:id="@+id/rd_cademnho100"
             android:layout_width="0dp"
@@ -61,8 +59,7 @@
             android:text="&gt; 200.000đ"
             android:textColor="@color/black"
             android:textSize="10sp" />
-    </LinearLayout>
-
+    </RadioGroup>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,7 +71,7 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -112,7 +109,7 @@
             android:text="&gt; 100.000đ"
             android:textColor="@color/black"
             android:textSize="10sp" />
-    </LinearLayout>
+    </RadioGroup>
 
 
     <TextView
@@ -125,7 +122,7 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -163,7 +160,7 @@
             android:text="&gt; 7km"
             android:textColor="@color/black"
             android:textSize="10sp" />
-    </LinearLayout>
+    </RadioGroup>
 
     <TextView
         android:layout_width="match_parent"
