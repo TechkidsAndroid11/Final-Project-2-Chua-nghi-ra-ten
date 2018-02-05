@@ -1,6 +1,5 @@
 package com.example.admins.hotelhunter.adapter;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,6 +27,8 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
 
+
+
     public HotelAdapter(Context context, List<HotelModel> hotelModels) {
         this.context = context;
         this.hotelModels = hotelModels;
@@ -35,16 +36,16 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
 
     @Override
     public HotelAdapter.HotelViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
-        View view= layoutInflater.inflate(R.layout.item_hotel,parent,false);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.item_hotel, parent, false);
         return new HotelViewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(HotelAdapter.HotelViewholder holder, int position) {
+    public void onBindViewHolder(HotelViewholder holder, int position) {
         holder.setData(hotelModels.get(position));
-
     }
+
 
     @Override
     public int getItemCount() {
@@ -52,14 +53,18 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
     }
 
     public class HotelViewholder extends RecyclerView.ViewHolder {
+        ImageView ivMenu, ivImage;
+        TextView tvName, tvPrice, tvAddress, tvEdit;
+        RatingBar rbStar;
         public HotelViewholder(View itemView) {
             super(itemView);
-            TextView tvName= itemView.findViewById(R.id.tv_name);
-            TextView tvPrice= itemView.findViewById(R.id.tv_price);
-            TextView tvAddress= itemView.findViewById(R.id.tv_address);
-            ImageView ivImage= itemView.findViewById(R.id.iv_image);
-            RatingBar rbStar= itemView.findViewById(R.id.rb_star);
-            TextView tvEdit= itemView.findViewById(R.id.tv_edit);
+             ivMenu = itemView.findViewById(R.id.iv_menu);
+            tvName = itemView.findViewById(R.id.tv_name);
+             tvPrice = itemView.findViewById(R.id.tv_price);
+            tvAddress = itemView.findViewById(R.id.tv_address);
+             ivImage = itemView.findViewById(R.id.iv_image);
+            rbStar = itemView.findViewById(R.id.rb_star);
+            tvEdit = itemView.findViewById(R.id.tv_edit);
             tvEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,9 +72,19 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
                 }
             });
 
+
         }
 
+
         public void setData(HotelModel hotelModel) {
+            tvName.setText(hotelModel.nameHotel);
+            tvAddress.setText(hotelModel.address);
+            rbStar.setRating(hotelModel.danhGiaTB);
+            tvPrice.setText(hotelModel.gia);
+
+
+
+
 
         }
     }

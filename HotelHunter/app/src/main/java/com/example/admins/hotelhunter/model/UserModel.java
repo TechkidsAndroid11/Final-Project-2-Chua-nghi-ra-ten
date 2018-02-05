@@ -14,6 +14,13 @@ public class UserModel {
     public String Huid;
     public boolean register;
 
+    public UserModel(String name, String uid, String uri, String huid, boolean register) {
+        this.name = name;
+        this.uid = uid;
+        this.uri = uri;
+        Huid = huid;
+        this.register = register;
+    }
 
     public UserModel(String name, String uri) {
         this.name = name;
