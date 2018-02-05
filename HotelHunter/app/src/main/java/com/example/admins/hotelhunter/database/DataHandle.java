@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.activities.MainActivity;
 import com.example.admins.hotelhunter.activities.TurnOnGPSActivity;
 import com.example.admins.hotelhunter.adapter.CustomInfoWindowAdapter;
@@ -16,6 +17,7 @@ import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -62,6 +64,7 @@ public class DataHandle {
                     markerOptions.position(sydney).title(hotelModel.nameHotel).snippet(String.valueOf(hotelModel.danhGiaTB)+"/"+hotelModel.gia);
                     Marker marker = mMap.addMarker(markerOptions);
                     marker.setTag(hotel);
+                    marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.icon_hotel));
                 }
 
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
