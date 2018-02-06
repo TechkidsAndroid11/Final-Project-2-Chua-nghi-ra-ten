@@ -38,8 +38,9 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     public View getInfoContents(Marker marker) {
         View view = LayoutInflater.from(context).inflate(R.layout.information_marker, null);
         RatingBar ratingBar = view.findViewById(R.id.rb_rating);
-        DataSnapshot dataSnapshot = (DataSnapshot) marker.getTag();
-        HotelModel hotelModel = dataSnapshot.getValue(HotelModel.class);
+//        DataSnapshot dataSnapshot = (DataSnapshot) marker.getTag();
+//        HotelModel hotelModel = dataSnapshot.getValue(HotelModel.class);
+        HotelModel hotelModel = (HotelModel) marker.getTag();
         TextView tvPrice = view.findViewById(R.id.tv_price);
         ImageView ivWifi = view.findViewById(R.id.iv_wifi);
         ImageView ivThangMay = view.findViewById(R.id.iv_elevator);

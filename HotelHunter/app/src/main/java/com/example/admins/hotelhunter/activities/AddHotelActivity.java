@@ -337,44 +337,44 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     private void setEnableService() {
         if (tiVi) {
             iv_tivi.setAlpha(255);
-            tv_tivi.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_tivi.setTextColor(Color.argb(255, 0, 0, 0));
         } else {
             iv_tivi.setAlpha(100);
-            tv_tivi.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_tivi.setTextColor(Color.argb(100, 0, 0, 0));
         }
         if (tuLanh) {
-            tv_tulanh.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_tulanh.setTextColor(Color.argb(255, 0, 0, 0));
             iv_tulanh.setAlpha(255);
         } else {
-            tv_tulanh.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_tulanh.setTextColor(Color.argb(100, 0, 0, 0));
             iv_tulanh.setAlpha(100);
         }
         if (thangMay) {
-            tv_thangmay.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_thangmay.setTextColor(Color.argb(255, 0, 0, 0));
             iv_thangmay.setAlpha(255);
         } else {
-            tv_thangmay.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_thangmay.setTextColor(Color.argb(100, 0, 0, 0));
             iv_thangmay.setAlpha(100);
         }
         if (nongLanh) {
             iv_nonglanh.setAlpha(255);
-            tv_nonglanh.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_nonglanh.setTextColor(Color.argb(255, 0, 0, 0));
         } else {
             iv_nonglanh.setAlpha(100);
-            tv_nonglanh.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_nonglanh.setTextColor(Color.argb(100, 0, 0, 0));
         }
         if (dieuHoa) {
-            tv_dieuhoa.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_dieuhoa.setTextColor(Color.argb(255, 0, 0, 0));
             iv_dieuhoa.setAlpha(255);
         } else {
-            tv_dieuhoa.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_dieuhoa.setTextColor(Color.argb(100, 0, 0, 0));
             iv_dieuhoa.setAlpha(100);
         }
         if (wifi) {
-            tv_wifi.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_wifi.setTextColor(Color.argb(255, 0, 0, 0));
             iv_wifi.setAlpha(255);
         } else {
-            tv_wifi.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_wifi.setTextColor(Color.argb(100, 0, 0, 0));
             iv_wifi.setAlpha(100);
         }
 

@@ -169,10 +169,9 @@
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
+                           android:layout_marginTop="16dp"
                            android:text="Điều hòa"
-                           android:textColor="@color/orange"
-                           android:textStyle="bold"
+                           android:textColor="@color/black"
                            android:id="@+id/tv_dieuhoaadd"/>
                    </LinearLayout>
 
@@ -192,10 +191,9 @@
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
+                           android:layout_marginTop="16dp"
                            android:text="Wifi"
-                           android:textColor="@color/orange"
-                           android:textStyle="bold"
+                           android:textColor="@color/black"
                            android:id="@+id/tv_wifiadd"/>
                    </LinearLayout>
                    <LinearLayout
@@ -214,11 +212,10 @@
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
+                           android:layout_marginTop="16dp"
                            android:text="Nóng lạnh"
-                           android:textColor="@color/orange"
-                           android:id="@+id/tv_nonglanhadd"
-                           android:textStyle="bold"/>
+                           android:textColor="@color/black"
+                           android:id="@+id/tv_nonglanhadd"/>
                    </LinearLayout>
 
 
@@ -248,10 +245,9 @@
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
+                           android:layout_marginTop="16dp"
                            android:text="Tivi"
-                           android:textColor="@color/orange"
-                           android:textStyle="bold"
+                           android:textColor="@color/black"
                            android:id="@+id/tv_tiviadd"
                            />
                    </LinearLayout>
@@ -271,10 +267,9 @@
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
+                           android:layout_marginTop="16dp"
                            android:text="Tủ lạnh"
-                           android:textColor="@color/orange"
-                           android:textStyle="bold"
+                           android:textColor="@color/black"
                            android:id="@+id/tv_tulanhadd"/>
                    </LinearLayout>
                    <LinearLayout
@@ -293,11 +288,10 @@
                        <TextView
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:layout_marginTop="18dp"
+                           android:layout_marginTop="16dp"
                            android:text="Thang máy"
-                           android:textColor="@color/orange"
-                           android:id="@+id/tv_thangmayadd"
-                           android:textStyle="bold"/>
+                           android:textColor="@color/black"
+                           android:id="@+id/tv_thangmayadd"/>
                    </LinearLayout>
                </LinearLayout>
                <TextView
