@@ -238,6 +238,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
             }
             case R.id.bt_danghotel: {
                 DangBai();
+                finish();
                 break;
             }
             case R.id.tv_vitribando: {
@@ -293,7 +294,9 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         hotelModel.address = etDiaChi.getText().toString();
         hotelModel.nameHotel = etTenNhaNghi.getText().toString();
         hotelModel.phone = etSDT1.getText().toString();
-        hotelModel.gia = etGiaGio.getText().toString() + "-" + etGiaGio.getText().toString();
+        int giadem = Integer.parseInt( etGiaDem.getText().toString().replace(",",""));
+        int giagio = Integer.parseInt( etGiaGio.getText().toString().replace(",",""));
+        hotelModel.gia = Integer.toString(giagio) + "-" + Integer.toString(giadem);
 //        hotelModel.kinhDo = Double.parseDouble(kinhdo.getText().toString());
 //        hotelModel.viDo = Double.parseDouble(vido.getText().toString());
 //        hotelModel.danhGiaTB = Float.parseFloat(rate.getText().toString());
@@ -332,6 +335,11 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void AddPhoto() {
+        if(lst_Image.size()==5)
+        {
+            Toast.makeText(this, "Không thể thêm quá 5 ảnh.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         final String[] item = {"Chụp ảnh", "Mở Bộ sưu tập", "Huỷ"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Thêm Ảnh");
