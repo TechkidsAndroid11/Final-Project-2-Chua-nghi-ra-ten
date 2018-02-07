@@ -35,6 +35,11 @@ import com.example.admins.hotelhunter.distance_matrix.DistanceResponse;
 import com.example.admins.hotelhunter.fragment.MyHotelFragment;
 import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
 import com.example.admins.hotelhunter.model.HotelModel;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceReport;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,11 +52,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import com.squareup.picasso.Picasso;
+
+import com.wang.avi.AVLoadingIndicatorView;
+
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,7 +82,7 @@ public class MainActivity extends AppCompatActivity
     public List<HotelModel> list = new ArrayList<>();
     RadioButton rd_cademnho100, rd_cademnho200, rd_cademlon200, rd_thegionho70, rd_theogionho100,
             rd_theogiolon100, rd_kc2km, rd_kc27km, rd_kclon7km;
-    ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh;
+    ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_filter;
     TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_loc, tv_huy;
     LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh;
     public boolean tiVi = false;
@@ -82,14 +93,22 @@ public class MainActivity extends AppCompatActivity
     public boolean nongLanh = false;
     AlertDialog alertDialog;
     List<DistanceResponse.Rows> rows;
+    AVLoadingIndicatorView avLoadingIndicatorView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        TextView tvFilter = findViewById(R.id.tv_filter);
-        tvFilter.setOnClickListener(this);
+       iv_filter = findViewById(R.id.iv_filter);
+        iv_filter.setOnClickListener(this);
+        avLoadingIndicatorView= findViewById(R.id.av_load);
+        avLoadingIndicatorView.show();
+
 
     }
 
@@ -170,8 +189,8 @@ public class MainActivity extends AppCompatActivity
             tvName.setVisibility(View.VISIBLE);
             ivAvata.setVisibility(View.VISIBLE);
             tvName.setText(firebaseAuth.getCurrentUser().getDisplayName());
-//            Picasso.with(this).load(R.drawable.ic_close_black_24dp).into(ivAvata);
-            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
+            Picasso.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(ivAvata);
+//            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
         }
         tvNavText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,20 +219,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -229,9 +234,8 @@ public class MainActivity extends AppCompatActivity
 //                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
 //                startActivity(intent);
             }
-        } else if (id == R.id.nav_favourite) {
-
-        } else if (id == R.id.nav_Logout) {
+        }
+       else if (id == R.id.nav_Logout) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             LayoutInflater layoutInflater = this.getLayoutInflater();
             View dialogView = layoutInflater.inflate(R.layout.sign_out, null);
@@ -263,15 +267,30 @@ public class MainActivity extends AppCompatActivity
             if (firebaseAuth.getCurrentUser() == null) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater layoutInflater = this.getLayoutInflater();
-                View dialogView = layoutInflater.inflate(R.layout.require, null);
+                final View dialogView = layoutInflater.inflate(R.layout.require, null);
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                Intent i2 = new Intent(this, LoginActivity.class);
-                startActivity(i2);
+                Button btYes = dialogView.findViewById(R.id.btn_yes);
+                btYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i2);
+
+                    }
+                });
+                Button btNo = dialogView.findViewById(R.id.btn_no);
+                btNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
 
             } else {
-                Intent i3 = new Intent(this, CodeActivity.class);
+                Intent i3 = new Intent(this, AddHotelActivity.class);
                 startActivity(i3);
             }
 
@@ -283,9 +302,22 @@ public class MainActivity extends AppCompatActivity
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                Intent i3 = new Intent(this, LoginActivity.class);
-                startActivity(i3);
+                Button btYes = dialogView.findViewById(R.id.btn_yes);
+                btYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i2);
 
+                    }
+                });
+                Button btNo = dialogView.findViewById(R.id.btn_no);
+                btNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
             } else {
                 ImageUtils.openFragment(getSupportFragmentManager(), R.id.rl_main, new MyHotelFragment());
             }
@@ -300,6 +332,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: ");
+        avLoadingIndicatorView.hide();
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
@@ -348,7 +381,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_filter: {
+            case R.id.iv_filter: {
                 tiVi = tuLanh = dieuHoa = nongLanh = thangMay = wifi = false;
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater layoutInflater = this.getLayoutInflater();
@@ -370,6 +403,8 @@ public class MainActivity extends AppCompatActivity
                         break;
                     }
                 }
+
+                break;
             }
             case R.id.ln_wififillter: {
                 wifi = wifi ? false : true;

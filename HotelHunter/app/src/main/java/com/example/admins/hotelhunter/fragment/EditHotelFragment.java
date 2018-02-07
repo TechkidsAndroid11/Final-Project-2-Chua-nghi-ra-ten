@@ -28,6 +28,7 @@ import com.example.admins.hotelhunter.Utils.ImageUtils;
 import com.example.admins.hotelhunter.activities.AddHotelActivity;
 import com.example.admins.hotelhunter.adapter.CustomImageView;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
+import com.example.admins.hotelhunter.database.onClickMyHotel;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -112,10 +113,12 @@ public class EditHotelFragment extends Fragment implements View.OnClickListener 
 
 
     }
-//    @Subscribe(sticky = true)
-//    public void getHotelModel(final OnClick) {}
+
+    @Subscribe(sticky = true)
+    public void getHotelModel(final onClickMyHotel onMyHotel) {
 
 
+    }
 
 
     private void setupUI(View view) {
@@ -160,8 +163,8 @@ public class EditHotelFragment extends Fragment implements View.OnClickListener 
 
         etTenNhaNghi.setText(hotelModel.nameHotel);
         etDiaChi.setText(hotelModel.address);
-        tvSDT1.setText(hotelModel.phone);
-        etSDT2.setText(hotelModel.phone1);
+
+        etSDT2.setText(hotelModel.phone);
         etGia.setText(hotelModel.gia);
         AlphaAnimation alpha = new AlphaAnimation(0.1F, 0.1F);
         alpha.setDuration(0);
@@ -198,7 +201,7 @@ public class EditHotelFragment extends Fragment implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.iv_addphoto: {
                 Log.d(TAG, "onClick: " + "addphoto");
-                AddPhoto();
+                ;
                 break;
             }
             case R.id.ln_wifi: {
@@ -293,45 +296,6 @@ public class EditHotelFragment extends Fragment implements View.OnClickListener 
     }
 
 
-    private void AddPhoto() {
-        final String[] item = {"Chụp ảnh", "Mở Bộ sưu tập", "Huỷ"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Thêm Ảnh");
-        builder.setItems(item, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (item[i].equals("Chụp ảnh")) {
-                    openCamera();
-                } else if (item[i].equals("Mở Bộ sưu tập")) {
-                    galleryIntent();
-                } else {
-                    dialogInterface.dismiss();
-                }
-            }
-        }).show();
-    }
-
-    private void galleryIntent() {
-        Intent intent = new Intent();
-        intent.setType("image/*"); // mở tất cả các folder lưa trữ ảnh
-        intent.setAction(Intent.ACTION_GET_CONTENT); // đi đến folder mình chọn
-        startActivityForResult(Intent.createChooser(intent, "Chọn Ảnh"), 1);
-
-    }
-
-    private void openCamera() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        Uri uri = ImageUtils.getUriFromImage(getActivity());
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            startActivityForResult(intent, 2);
-        }
-
-    }
-
 //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -362,53 +326,9 @@ public class EditHotelFragment extends Fragment implements View.OnClickListener 
 //    }
 
 
-    public void showPhoto(Bitmap bitmap) {
-        CustomImageView customImageView = new CustomImageView(getActivity());
-        customImageView.setLayoutParams(new ViewGroup.LayoutParams
-                (100, 100));
-        customImageView.setMaxHeight(100);
-        customImageView.setMaxWidth(100);
-        customImageView.setCropToPadding(true);
-        customImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        customImageView.setImageBitmap(bitmap);
 
 
-        ImageView abc = new ImageView(getActivity());
-        LinearLayout.LayoutParams layout = new LinearLayout.LayoutParams(iv_addphoto.getWidth(), iv_addphoto.getHeight());
-        //abc.setLayoutParams(new LinearLayout.LayoutParams(iv_addphoto.getWidth(),iv_addphoto.getHeight()));
-        layout.setMarginStart(25);
-        abc.setLayoutParams(layout);
-        abc.setCropToPadding(true);
-        abc.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        abc.setImageBitmap(bitmap);
-        ln_image.addView(abc);
-        String imamge = ImageUtils.encodeTobase64(bitmap);
-        lst_Image.add(imamge);
-        Log.e(TAG, "showPhoto: " + lst_Image.size());
-        //ln_image.addView(customImageView);
-        horizontalScrollView.fullScroll(View.FOCUS_RIGHT);
-    }
-
-    public class MyAsyncTask extends AsyncTask<Bitmap, Void, Bitmap> {
 
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Bitmap doInBackground(Bitmap... bitmaps) {
-            return bitmaps[0];
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            showPhoto(bitmap);
-        }
-
-
-    }
 }
 

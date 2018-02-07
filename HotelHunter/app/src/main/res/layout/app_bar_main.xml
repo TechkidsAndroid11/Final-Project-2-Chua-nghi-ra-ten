@@ -18,20 +18,19 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/yellow"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <TextView
+                <ImageView
+                    android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_filter"
-                    android:layout_marginTop="8dp"
-                    android:layout_alignParentEnd="true"
-                    android:text="filter"/>
+                    android:src="@drawable/ic_filter"
+                    android:padding="16dp"
+                    android:foregroundGravity="right"
+                    android:id="@+id/iv_filter"
+                    />
             </RelativeLayout>
-
-
         </android.support.v7.widget.Toolbar>
 
 

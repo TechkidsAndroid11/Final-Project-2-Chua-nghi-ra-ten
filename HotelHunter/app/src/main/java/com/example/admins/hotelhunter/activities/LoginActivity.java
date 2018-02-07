@@ -148,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!etMail.getText().toString().equals("") && !etPassword.getText().toString().equals("")) {
                     firebaseAuth.signInWithEmailAndPassword(etMail.getText().toString(), etPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -173,7 +174,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQ_CODEGOOGLE) {
