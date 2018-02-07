@@ -80,6 +80,10 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     EditText kinhdo, vido, rate;
     public LatLng latLng = null;
     String phone1;
+
+    HotelModel hotelModel;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -276,7 +280,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         if (!dk) {
             return;
         }
-        final HotelModel hotelModel = new HotelModel();
+        hotelModel = new HotelModel();
 //        hotelModel.kinhDo = 105.783303;
 //        hotelModel.viDo = 20.979135;
         hotelModel.images.addAll(lst_Image);
@@ -295,21 +299,19 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
 //        hotelModel.danhGiaTB = Float.parseFloat(rate.getText().toString());
         hotelModel.kinhDo = latLng.longitude;
         hotelModel.viDo = latLng.latitude;
-        databaseReference.push().setValue(hotelModel);
         hotelModel.key = databaseReference.push().getKey();
         databaseReference.child(hotelModel.key).setValue(hotelModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Log.d(TAG, "onComplete: push hotel" + firebaseAuth.getCurrentUser().getUid());
                 databaseReference = firebaseDatabase.getReference("users");
                 databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d(TAG, "onDataChange: " + dataSnapshot);
-                        UserModel userModel = new UserModel();
+                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
                         if (userModel.Huid == null) {
                             userModel.Huid = new ArrayList<>();
                         }
+                        Log.d("abc", "onDataChange: " + userModel.Huid);
                         userModel.Huid.add(hotelModel.key);
                         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
                         Log.d(TAG, "onDataChange: push hotel");
