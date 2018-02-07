@@ -13,6 +13,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,11 @@ import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.example.admins.hotelhunter.model.ReviewModel;
 import com.example.admins.hotelhunter.model.UserModel;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,17 +51,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AddHotelActivity extends AppCompatActivity implements View.OnClickListener {
     EditText etTenNhaNghi;
     EditText etDiaChi;
     EditText etSDT1;
     EditText etSDT2;
-    EditText etGia;
+    EditText etGiaDem, etGiaGio;
     ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_addphoto;
-    TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_sdt1, tv_vitribando, tv_thongbaoten, tv_thongbaodiachi, tv_thongbaogia;
+    TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_sdt1, tv_vitribando;
     LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh, ln_image;
     public static FirebaseDatabase firebaseDatabase;
     public static DatabaseReference databaseReference;
@@ -72,7 +83,8 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     HorizontalScrollView horizontalScrollView;
     MyAsyncTask myAsyncTask;
     List<HotelModel> lstModels = new ArrayList<>();
-    EditText kinhdo, vido,rate;
+    EditText kinhdo, vido, rate;
+    public LatLng latLng = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +100,8 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         etTenNhaNghi = findViewById(R.id.et_tenadd);
         etDiaChi = findViewById(R.id.et_diachiadd);
         etSDT1 = findViewById(R.id.et_sdt1add);
-        etSDT2 = findViewById(R.id.et_sdt2add);
-        etGia = findViewById(R.id.et_giaadd);
+        etGiaDem = findViewById(R.id.et_giademadd);
+        etGiaGio = findViewById(R.id.et_giagioadd);
         iv_wifi = findViewById(R.id.iv_wifiadd);
         iv_thangmay = findViewById(R.id.iv_thangmayadd);
         iv_dieuhoa = findViewById(R.id.iv_dieuhoaadd);
@@ -113,19 +125,57 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         ln_tulanh = findViewById(R.id.ln_tulanh);
         ln_tivi = findViewById(R.id.ln_tivi);
         ln_image = findViewById(R.id.ln_image);
-        tv_thongbaoten = findViewById(R.id.tv_thongbaoten);
-        tv_thongbaodiachi = findViewById(R.id.tv_thongbaodiachi);
-        tv_thongbaogia = findViewById(R.id.tv_thongbaogia);
-        tv_thongbaodiachi.setVisibility(View.GONE);
-        tv_thongbaogia.setVisibility(View.GONE);
-        tv_thongbaoten.setVisibility(View.GONE);
         horizontalScrollView = findViewById(R.id.sc_view);
         kinhdo = findViewById(R.id.et_kinhdoadd);
         vido = findViewById(R.id.et_vidoadd);
         rate = findViewById(R.id.et_rateadd);
+        kinhdo.setVisibility(View.GONE);
+        vido.setVisibility(View.GONE);
+        rate.setVisibility(View.GONE);
+        etGiaDem.addTextChangedListener(onTextChangedListener(etGiaDem));
+        etGiaGio.addTextChangedListener(onTextChangedListener(etGiaGio));
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("hotels");
 
+    }
+
+    private TextWatcher onTextChangedListener(final EditText editText) {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                editText.removeTextChangedListener(this);
+                try {
+                    String tmp = editable.toString();
+
+                    Long longVar;
+                    if (tmp.contains(",")) {
+                        tmp = tmp.replaceAll(",", "");
+                    }
+                    longVar = Long.parseLong(tmp);
+
+                    DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+                    decimalFormat.applyPattern("#,###,###");
+
+                    String formatTmp = decimalFormat.format(longVar);
+                    editText.setText(formatTmp);
+                    editText.setSelection(editText.getText().length());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                editText.addTextChangedListener(this);
+            }
+        };
     }
 
     private void addListtenners() {
@@ -189,17 +239,47 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
                 DangBai();
                 break;
             }
-            case R.id.et_giaadd: {
-                tv_thongbaogia.setVisibility(View.INVISIBLE);
+            case R.id.tv_vitribando: {
+                int PLACE_PICKER_REQUEST = 3;
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                try {
+                    startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
         }
     }
 
     private void DangBai() {
+        boolean dk = true;
+        if (TextUtils.isEmpty(etTenNhaNghi.getText())) {
+            etTenNhaNghi.setError("Tên nhà nghỉ không được để trống");
+            dk = false;
+        }
+        if (TextUtils.isEmpty(etDiaChi.getText())) {
+            etDiaChi.setError("Địa chỉ không được để trống");
+            dk = false;
+        }
+        if (TextUtils.isEmpty(etSDT1.getText())) {
+            etSDT1.setError("Số điện thoại chính không được để trống");
+            dk = false;
+        }
+        if (TextUtils.isEmpty(etGiaGio.getText())) {
+            etGiaGio.setError("Không được để trống");
+            dk = false;
+        }
+        if (TextUtils.isEmpty(etGiaDem.getText())) {
+            etGiaDem.setError("Không được để trống");
+            dk = false;
+        }
+        if (!dk) {
+            return;
+        }
         HotelModel hotelModel = new HotelModel();
-        hotelModel.kinhDo = 105.783303;
-        hotelModel.viDo = 20.979135;
         hotelModel.images.addAll(lst_Image);
         hotelModel.tulanh = tuLanh;
         hotelModel.tivi = tiVi;
@@ -207,19 +287,15 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         hotelModel.nongLanh = nongLanh;
         hotelModel.dieuHoa = dieuHoa;
         hotelModel.wifi = wifi;
-        if(etDiaChi.getText().toString()==null||etTenNhaNghi.getText().toString()==null||etGia.getText().toString()==null)
-        {
-            Toast.makeText(this, "Các thành phần có dấu * không được để trống", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        hotelModel.address= etDiaChi.getText().toString();
+        hotelModel.address = etDiaChi.getText().toString();
         hotelModel.nameHotel = etTenNhaNghi.getText().toString();
         hotelModel.phone = etSDT1.getText().toString();
-        hotelModel.phone1 = etSDT2.getText().toString();
-        hotelModel.gia = etGia.getText().toString();
-        hotelModel.kinhDo = Double.parseDouble(kinhdo.getText().toString());
-        hotelModel.viDo = Double.parseDouble(vido.getText().toString());
-        hotelModel.danhGiaTB = Float.parseFloat(rate.getText().toString());
+        hotelModel.gia = etGiaGio.getText().toString() + "-" + etGiaGio.getText().toString();
+//        hotelModel.kinhDo = Double.parseDouble(kinhdo.getText().toString());
+//        hotelModel.viDo = Double.parseDouble(vido.getText().toString());
+//        hotelModel.danhGiaTB = Float.parseFloat(rate.getText().toString());
+        hotelModel.kinhDo = latLng.longitude;
+        hotelModel.viDo = latLng.latitude;
         databaseReference.push().setValue(hotelModel);
     }
 
@@ -284,7 +360,11 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
 
             }
 
+        } else if (requestCode == 3) {
+            Place place = PlacePicker.getPlace(data, this);
+            latLng = place.getLatLng();
         }
+
     }
 
     public class MyAsyncTask extends AsyncTask<Bitmap, Void, Bitmap> {
