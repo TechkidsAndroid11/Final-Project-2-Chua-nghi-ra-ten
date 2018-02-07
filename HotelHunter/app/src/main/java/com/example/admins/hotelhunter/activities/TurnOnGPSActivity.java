@@ -1,6 +1,7 @@
 package com.example.admins.hotelhunter.activities;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -67,28 +68,43 @@ public class TurnOnGPSActivity extends AppCompatActivity {
         String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
         if (!provider.contains("gps")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            LayoutInflater layoutInflater = this.getLayoutInflater();
-            View dialogView = layoutInflater.inflate(R.layout.check_gps, null);
-            builder.setView(dialogView);
-            alertDialog = builder.create();
-            Button btYes = dialogView.findViewById(R.id.bt_yes);
-            Button btNo = dialogView.findViewById(R.id.bt_no);
-            alertDialog.show();
+//            LayoutInflater layoutInflater = this.getLayoutInflater();
+//            View dialogView = layoutInflater.inflate(R.layout.check_gps, null);
+//            builder.setView(dialogView);
+//            alertDialog = builder.create();
+//            Button btYes = dialogView.findViewById(R.id.bt_yes);
+//            Button btNo = dialogView.findViewById(R.id.bt_no);
+//            alertDialog.show();
+//
+//            btYes.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+//
+//                }
+//            });
+//
+//            btNo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    finish();
+//                }
+//            });
 
-            btYes.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
-
-                }
-            });
-
-            btNo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                }
-            });
+            builder.setMessage("Bạn có muốn bật GPS không?")
+                    .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+                        }
+                    })
+                    .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .show();
         }
     }
 

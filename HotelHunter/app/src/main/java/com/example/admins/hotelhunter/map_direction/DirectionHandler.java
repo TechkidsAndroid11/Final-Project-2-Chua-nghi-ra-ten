@@ -85,7 +85,7 @@ public class DirectionHandler {
         for (LatLng latLngPoint : lstLatLngRoute)
             boundsBuilder.include(latLngPoint);
 
-        int routePadding = 100;
+        int routePadding = 300;
         LatLngBounds latLngBounds = boundsBuilder.build();
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, routePadding));

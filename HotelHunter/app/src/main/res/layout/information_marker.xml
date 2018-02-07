@@ -23,8 +23,8 @@
         android:id="@+id/iv_wifi"
         android:layout_below="@id/rb_rating"
         android:src="@drawable/wifi"
-        android:layout_width="25dp"
-        android:layout_height="25dp" />
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
     <ImageView
         android:visibility="invisible"
         android:id="@+id/iv_air_condition"
@@ -32,8 +32,8 @@
         android:layout_toRightOf="@id/iv_wifi"
         android:layout_below="@id/rb_rating"
         android:src="@drawable/air_conditioner"
-        android:layout_width="25dp"
-        android:layout_height="25dp" />
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
 
     <ImageView
         android:visibility="invisible"
@@ -42,8 +42,8 @@
         android:layout_toRightOf="@id/iv_air_condition"
         android:id="@+id/iv_heater"
         android:layout_below="@id/rb_rating"
-        android:layout_width="25dp"
-        android:layout_height="25dp" />
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
 
     <ImageView
         android:visibility="invisible"
@@ -52,6 +52,6 @@
         android:layout_toRightOf="@id/iv_heater"
         android:id="@+id/iv_elevator"
         android:layout_below="@id/rb_rating"
-        android:layout_width="25dp"
-        android:layout_height="25dp" />
+        android:layout_width="15dp"
+        android:layout_height="15dp" />
 </RelativeLayout>

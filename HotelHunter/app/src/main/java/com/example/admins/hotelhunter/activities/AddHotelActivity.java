@@ -1,6 +1,5 @@
 package com.example.admins.hotelhunter.activities;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,15 +9,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -29,9 +25,7 @@ import android.widget.Toast;
 import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.Utils.ImageUtils;
 import com.example.admins.hotelhunter.adapter.CustomImageView;
-import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.model.HotelModel;
-import com.example.admins.hotelhunter.model.ReviewModel;
 import com.example.admins.hotelhunter.model.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,14 +43,14 @@ import java.util.List;
 public class AddHotelActivity extends AppCompatActivity implements View.OnClickListener {
     EditText etTenNhaNghi;
     EditText etDiaChi;
-    EditText etSDT1;
+    TextView tvSDT1;
     EditText etSDT2;
     EditText etGia;
     ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_addphoto;
     TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_sdt1, tv_vitribando, tv_thongbaoten, tv_thongbaodiachi, tv_thongbaogia;
     LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh, ln_image;
-    public static FirebaseDatabase firebaseDatabase;
-    public static DatabaseReference databaseReference;
+    public FirebaseDatabase firebaseDatabase;
+    public DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     public List<HotelModel> list = new ArrayList<>();
     public static String TAG = AddHotelActivity.class.toString();
@@ -72,7 +66,8 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     HorizontalScrollView horizontalScrollView;
     MyAsyncTask myAsyncTask;
     List<HotelModel> lstModels = new ArrayList<>();
-    EditText kinhdo, vido,rate;
+    EditText kinhdo, vido, rate;
+    String phone1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +76,16 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         setupUI();
         addListtenners();
         setEnableService();
-        final String phone1 = getIntent().getStringExtra("KEYPHONE");
+        phone1 = getIntent().getStringExtra("KEY_VERIFYEDPHONE");
+        tvSDT1.setText(phone1);
+        firebaseAuth = FirebaseAuth.getInstance();
+
     }
 
     private void setupUI() {
         etTenNhaNghi = findViewById(R.id.et_tenadd);
         etDiaChi = findViewById(R.id.et_diachiadd);
-        etSDT1 = findViewById(R.id.et_sdt1add);
+        tvSDT1 = findViewById(R.id.tv_sdt1add);
         etSDT2 = findViewById(R.id.et_sdt2add);
         etGia = findViewById(R.id.et_giaadd);
         iv_wifi = findViewById(R.id.iv_wifiadd);
@@ -197,7 +195,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void DangBai() {
-        HotelModel hotelModel = new HotelModel();
+        final HotelModel hotelModel = new HotelModel();
         hotelModel.kinhDo = 105.783303;
         hotelModel.viDo = 20.979135;
         hotelModel.images.addAll(lst_Image);
@@ -207,20 +205,52 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         hotelModel.nongLanh = nongLanh;
         hotelModel.dieuHoa = dieuHoa;
         hotelModel.wifi = wifi;
-        if(etDiaChi.getText().toString()==null||etTenNhaNghi.getText().toString()==null||etGia.getText().toString()==null)
-        {
+        if (etDiaChi.getText().toString() == null || etTenNhaNghi.getText().toString() == null || etGia.getText().toString() == null) {
             Toast.makeText(this, "Các thành phần có dấu * không được để trống", Toast.LENGTH_SHORT).show();
             return;
         }
-        hotelModel.address= etDiaChi.getText().toString();
+        hotelModel.address = etDiaChi.getText().toString();
         hotelModel.nameHotel = etTenNhaNghi.getText().toString();
-        hotelModel.phone = etSDT1.getText().toString();
+
+
+        hotelModel.phone = phone1;
         hotelModel.phone1 = etSDT2.getText().toString();
         hotelModel.gia = etGia.getText().toString();
         hotelModel.kinhDo = Double.parseDouble(kinhdo.getText().toString());
         hotelModel.viDo = Double.parseDouble(vido.getText().toString());
         hotelModel.danhGiaTB = Float.parseFloat(rate.getText().toString());
-        databaseReference.push().setValue(hotelModel);
+
+        hotelModel.key = databaseReference.push().getKey();
+        databaseReference.child(hotelModel.key).setValue(hotelModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "onComplete: push hotel" + firebaseAuth.getCurrentUser().getUid());
+                databaseReference = firebaseDatabase.getReference("users");
+                databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "onDataChange: " + dataSnapshot);
+                        UserModel userModel = new UserModel();
+                        if (userModel.Huid == null) {
+                            userModel.Huid = new ArrayList<>();
+                        }
+                        userModel.Huid.add(hotelModel.key);
+                        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
+                        Log.d(TAG, "onDataChange: push hotel");
+                        Toast.makeText(AddHotelActivity.this, "Thêm nhà nghỉ thành công", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(AddHotelActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
     }
 
     private void AddPhoto() {
@@ -337,46 +367,58 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     private void setEnableService() {
         if (tiVi) {
             iv_tivi.setAlpha(255);
-            tv_tivi.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_tivi.setTextColor(Color.argb(255, 0, 0, 0));
         } else {
             iv_tivi.setAlpha(100);
-            tv_tivi.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_tivi.setTextColor(Color.argb(100, 0, 0, 0));
         }
         if (tuLanh) {
-            tv_tulanh.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_tulanh.setTextColor(Color.argb(255, 0, 0, 0));
             iv_tulanh.setAlpha(255);
         } else {
-            tv_tulanh.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_tulanh.setTextColor(Color.argb(100, 0, 0, 0));
             iv_tulanh.setAlpha(100);
         }
         if (thangMay) {
-            tv_thangmay.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_thangmay.setTextColor(Color.argb(255, 0, 0, 0));
             iv_thangmay.setAlpha(255);
         } else {
-            tv_thangmay.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_thangmay.setTextColor(Color.argb(100, 0, 0, 0));
             iv_thangmay.setAlpha(100);
         }
         if (nongLanh) {
             iv_nonglanh.setAlpha(255);
-            tv_nonglanh.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_nonglanh.setTextColor(Color.argb(255, 0, 0, 0));
         } else {
             iv_nonglanh.setAlpha(100);
-            tv_nonglanh.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_nonglanh.setTextColor(Color.argb(100, 0, 0, 0));
         }
         if (dieuHoa) {
-            tv_dieuhoa.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_dieuhoa.setTextColor(Color.argb(255, 0, 0, 0));
             iv_dieuhoa.setAlpha(255);
         } else {
-            tv_dieuhoa.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_dieuhoa.setTextColor(Color.argb(100, 0, 0, 0));
             iv_dieuhoa.setAlpha(100);
         }
         if (wifi) {
-            tv_wifi.setTextColor(Color.argb(255, 252, 119, 3));
+            tv_wifi.setTextColor(Color.argb(255, 0, 0, 0));
             iv_wifi.setAlpha(255);
         } else {
-            tv_wifi.setTextColor(Color.argb(100, 252, 119, 3));
+            tv_wifi.setTextColor(Color.argb(100, 0, 0, 0));
             iv_wifi.setAlpha(100);
         }
 
     }
 }
+//        btAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final HotelModel hotelModel = new HotelModel(phone1, etTenNhaNghi.getText().toString(), etDiaChi.getText().toString(), etSDT2.getText().toString(),
+//                        Double.parseDouble(edt_kinhdo.getText().toString()), Double.parseDouble(edit_vido.getText().toString()),
+//                        Float.parseFloat(edit_rate.getText().toString()),
+//                        etGia.getText().toString(), lst_String, new ArrayList<ReviewModel>(),
+//                        cbWifi.isChecked(), cbDieuHoa.isChecked(), cbNongLanh.isChecked(),
+//                        cbThangMay.isChecked());
+//
+
+//                            }

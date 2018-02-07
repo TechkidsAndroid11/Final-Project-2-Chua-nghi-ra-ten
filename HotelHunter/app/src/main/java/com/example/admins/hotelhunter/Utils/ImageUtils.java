@@ -6,6 +6,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.util.Base64;
 import android.util.Log;
@@ -129,5 +132,11 @@ public class ImageUtils {
         }
 
 
+    }
+    public static void openFragment(FragmentManager fragmentManager, int layoutID, Fragment fragment) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(layoutID, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

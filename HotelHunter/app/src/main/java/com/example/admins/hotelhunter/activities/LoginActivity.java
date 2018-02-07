@@ -1,12 +1,12 @@
 package com.example.admins.hotelhunter.activities;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admins.hotelhunter.R;
-import com.example.admins.hotelhunter.model.ReviewModel;
 import com.example.admins.hotelhunter.model.UserModel;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -38,14 +37,14 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     public static final String TAG = "ABCXYZ";
     LoginButton btLoginFacebook;
     Button btLogin;
@@ -63,27 +62,35 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     AVLoadingIndicatorView av;
     ImageView ivClose;
     public static UserModel userModel;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupUI();
-    }
+        LoginManager.getInstance().logOut();
 
+        findViewById(R.id.tv_email).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
     public void setupUI() {
-        etMail=findViewById(R.id.et_email);
-        etPassword=findViewById(R.id.et_pass);
-        btLogin=findViewById(R.id.bt_Login);
+        etMail = findViewById(R.id.et_email);
+        etPassword = findViewById(R.id.et_pass);
+        btLogin = findViewById(R.id.bt_Login);
         btLoginFacebook = findViewById(R.id.bt_LoginFacebook);
         callbackManager = CallbackManager.Factory.create();
-        TextView tvRegister= findViewById(R.id.tv_register);
+        TextView tvRegister = findViewById(R.id.tv_register);
         ivLoginFacebook = findViewById(R.id.iv_login_facebook);
         ivLoginGoogle = findViewById(R.id.iv_login_google);
 
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(i);
             }
         });
@@ -116,10 +123,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null){
-                    Log.d(TAG, "onAuthStateChanged: "+user.toString());
-                }
-                else{
+                if (user != null) {
+                    Log.d(TAG, "onAuthStateChanged: " + user.toString());
+                } else {
                     Log.d(TAG, "onAuthStateChanged: ");
                 }
             }
@@ -132,7 +138,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
                 Toast.makeText(LoginActivity.this, "Somthing went wrong", Toast.LENGTH_SHORT).show();
             }
-        }).addApi(Auth.GOOGLE_SIGN_IN_API,googleSignInOptions).build();
+        }).addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();
         ivLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,16 +169,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         callbackManager.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQ_CODEGOOGLE)
-        {
+
+        if (requestCode == REQ_CODEGOOGLE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleResult(result);
-        }else {
-            Toast.makeText(this, "Auth went wrong", Toast.LENGTH_SHORT).show();
+        } else {
+//            Toast.makeText(this, "Auth went wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -198,12 +206,35 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            Log.e(TAG, "onComplete: "+user );
+                            final FirebaseUser user = firebaseAuth.getCurrentUser();
+                            databaseReference.orderByChild("uid").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.getChildrenCount() > 0) {
+
+                                    } else {
+
+                                        UserModel userModel = new UserModel();
+                                        userModel.name = user.getDisplayName();
+                                        userModel.uid = user.getUid();
+                                        userModel.uri = user.getPhotoUrl().toString();
+                                        Log.d(TAG, "onDataChange: " + userModel.uid);
+                                        databaseReference.child(userModel.uid).setValue(userModel);
+                                    }
+
+                                    finish();
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                            Log.e(TAG, "onComplete: " + user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Lỗi đăng nhập",
                                     Toast.LENGTH_SHORT).show();
                         }
 
@@ -211,9 +242,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     }
                 });
     }
+
     private void handleResult(GoogleSignInResult result) {
-        if(result.isSuccess())
-        {
+        if (result.isSuccess()) {
             GoogleSignInAccount account = result.getSignInAccount();
             AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
             firebaseAuth.signInWithCredential(credential)
@@ -222,12 +253,34 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
 
-                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                final FirebaseUser user = firebaseAuth.getCurrentUser();
+                                databaseReference.orderByChild("uid").equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.getChildrenCount() > 0) {
+
+                                        } else {
+
+                                            UserModel userModel = new UserModel();
+                                            userModel.name = user.getDisplayName();
+                                            userModel.uid = user.getUid();
+                                            userModel.uri = user.getPhotoUrl().toString();
+                                            Log.d(TAG, "onDataChange: " + userModel.uid);
+                                            databaseReference.child(userModel.uid).setValue(userModel);
+                                        }
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
 
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithCredential:failure", task.getException());
-
+                                Toast.makeText(LoginActivity.this, "Lỗi đăng nhập", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -235,15 +288,30 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     }
-    public void signIn()
-    {
+
+    public void signIn() {
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(intent,REQ_CODEGOOGLE);
+        startActivityForResult(intent, REQ_CODEGOOGLE);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed: ");
+    }
+    private void disableEnableControls(boolean enable, ViewGroup vg){
+
+        if (!enable){
+            av.show();
+        }else {
+            av.hide();
+        }
+        for (int i = 0; i < vg.getChildCount(); i++){
+            View child = vg.getChildAt(i);
+            child.setEnabled(enable);
+            if (child instanceof ViewGroup){
+                disableEnableControls(enable, (ViewGroup)child);
+            }
+        }
     }
 
 

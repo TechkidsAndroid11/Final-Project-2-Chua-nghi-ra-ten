@@ -9,9 +9,11 @@
     <ImageView
         android:id="@+id/iv_image"
         android:layout_width="0dp"
-        android:layout_height="159dp"
+        android:layout_height="190dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +117,7 @@
         app:layout_constraintVertical_bias="0.666" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_menu"
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginEnd="8dp"
@@ -124,7 +126,13 @@
         app:layout_constraintStart_toEndOf="@+id/tv_name"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_menu_black_24dp"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"/>
+    <item
+        android:id="@+id/main"
+        android:showAsAction="ifRoom"
+        android:actionViewClass="android.widget.ImageButton"
+        />
+    />
 
     <!--<ImageView-->
         <!--android:id="@+id/imageView3"-->
