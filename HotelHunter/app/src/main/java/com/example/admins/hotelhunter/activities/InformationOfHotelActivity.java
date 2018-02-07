@@ -40,6 +40,7 @@ public class InformationOfHotelActivity extends AppCompatActivity implements Bas
     TextView tvName;
     SliderLayout sliderLayout;
     PagerIndicator pagerIndicator;
+    ImageView iv_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class InformationOfHotelActivity extends AppCompatActivity implements Bas
         tab.addTab(tab.newTab().setText("Comment"));
         sliderLayout = findViewById(R.id.slide_hotel);
         pagerIndicator= findViewById(R.id.custom_indicator);
+        iv_back = findViewById(R.id.iv_backinfor);
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -74,6 +76,12 @@ public class InformationOfHotelActivity extends AppCompatActivity implements Bas
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());

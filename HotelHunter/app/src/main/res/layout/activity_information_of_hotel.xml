@@ -13,6 +13,13 @@
             android:background="@color/yellow"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                android:id="@+id/iv_backinfor"
+                android:padding="8dp"
+               />
             <TextView
                 android:textColor="#fff"
                 android:text="anh"
@@ -22,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal"/>
+
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
     <com.daimajia.slider.library.SliderLayout

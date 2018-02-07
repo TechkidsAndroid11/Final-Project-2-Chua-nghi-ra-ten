@@ -63,7 +63,7 @@ public class DataHandle {
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(sydney).title(hotelModel.nameHotel).snippet(String.valueOf(hotelModel.danhGiaTB)+"/"+hotelModel.gia);
                     Marker marker = mMap.addMarker(markerOptions);
-                    marker.setTag(hotel);
+                    marker.setTag(hotelModel);
                     marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.icon_hotel));
                 }
 
