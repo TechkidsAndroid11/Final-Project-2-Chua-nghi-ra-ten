@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.adapter.HotelAdapter;
@@ -18,9 +20,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +38,8 @@ public class MyHotelFragment extends Fragment {
     List<HotelModel> hotelModelList = new ArrayList<>();
     HotelAdapter hotelAdapter;
     RecyclerView rvHotel;
+    ImageView ivAvata;
+    TextView tvName;
 
 
     public MyHotelFragment() {
@@ -46,9 +53,13 @@ public class MyHotelFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_hotel, container, false);
         rvHotel = view.findViewById(R.id.rv_myHotel);
+        ivAvata= view.findViewById(R.id.iv_avatar);
+        tvName=view.findViewById(R.id.tv_name);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        Picasso.with(getContext()).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(ivAvata);
+        tvName.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         databaseReference = firebaseDatabase.getReference("users");
         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("Huid").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

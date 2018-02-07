@@ -45,15 +45,7 @@
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
                    android:id="@+id/et_tenadd"/>
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="16dp"
-                   android:layout_marginRight="16dp"
-                   android:text="Tên nhà nghỉ không được để trống"
-                   android:textSize="10sp"
-                   android:textColor="@color/orange"
-                   android:id="@+id/tv_thongbaoten"/>
+
                <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
@@ -70,15 +62,6 @@
                    android:layout_marginRight="16dp"
                    android:id="@+id/et_diachiadd"/>
                <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="16dp"
-                   android:layout_marginRight="16dp"
-                   android:text="Địa chỉ không được để trống"
-                   android:textSize="10sp"
-                   android:textColor="@color/orange"
-                   android:id="@+id/tv_thongbaodiachi"/>
-               <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:text="* Số điện thoại 1"
@@ -87,47 +70,47 @@
                    android:textStyle="bold"
                    android:id="@+id/tv_sdt1add1"
                    android:layout_marginTop="8dp"/>
-
-               <TextView
-                   android:id="@+id/tv_sdt1add"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:layout_marginLeft="16dp"
-                   android:layout_marginRight="16dp"
-                   android:inputType="phone" />
-               <TextView
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:text="Số điện thoại 2"
-                   android:textColor="@color/orange"
-                   android:layout_marginLeft="16dp"
-                   android:textStyle="bold"
-                   android:layout_marginTop="8dp"/>
-
                <EditText
-                   android:id="@+id/et_sdt2add"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:layout_marginLeft="16dp"
-                   android:layout_marginRight="16dp"
-                   android:inputType="phone" />
-               <TextView
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:text="* Giá"
-                   android:textColor="@color/orange"
-                   android:layout_marginLeft="16dp"
-                   android:textStyle="bold"
-                   android:layout_marginTop="8dp"/>
-
-               <EditText
-                   android:id="@+id/et_giaadd"
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:inputType="numberDecimal"
                    android:layout_marginRight="16dp"
-                   android:hint="" />
+                   android:id="@+id/et_sdt1add"/>
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:text="* Giá"
+
+                   android:textColor="@color/orange"
+                   android:layout_marginLeft="16dp"
+                   android:textStyle="bold"
+                   android:layout_marginTop="8dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp">
+                    <EditText
+                        android:id="@+id/et_giagioadd"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="theo giờ"
+                        android:layout_weight="1"
+                        android:layout_marginRight="8dp"
+                        android:inputType="number"/>
+                    <EditText
+                        android:id="@+id/et_giademadd"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="theo đêm"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:inputType="number"/>
+                </LinearLayout>
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -135,9 +118,7 @@
                    android:layout_marginRight="16dp"
                    android:text="10,000-20,000"
                    android:textSize="10sp"
-
                    android:textColor="@color/orange"
-
                    android:id="@+id/tv_thongbaogia"/>
                <TextView
                    android:layout_width="match_parent"
@@ -342,10 +323,6 @@
                    android:layout_marginBottom="16dp"/>
            </LinearLayout>
        </ScrollView>
-
-
-
-
 
 
 
