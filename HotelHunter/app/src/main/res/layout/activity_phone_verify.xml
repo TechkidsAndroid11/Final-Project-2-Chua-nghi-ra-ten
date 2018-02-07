@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Phone Verify"
+            android:text="XÁC THỰC"
 
             android:textSize="25sp"
             android:textStyle="bold"
@@ -37,7 +37,7 @@
             android:background="@android:color/transparent"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
-            android:hint="Number"
+            android:hint="Số điện thoại"
             android:padding="10dp"
             android:singleLine="true"
 
@@ -55,7 +55,7 @@
             android:background="@android:color/transparent"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
-            android:hint="Received Code"
+            android:hint="Mã xác nhận"
             android:inputType="numberDecimal"
             android:padding="10dp"
             android:singleLine="true"
@@ -81,7 +81,7 @@
             android:layout_weight="1"
 
             android:padding="3dp"
-            android:text="verify"
+            android:text="Xác nhận"
             android:textColor="#009688"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Did not receive the verification code?"
+            android:text="Chưa nhận được mã xác nhận?-Gửi lại"
 
             android:textSize="15sp" />
 

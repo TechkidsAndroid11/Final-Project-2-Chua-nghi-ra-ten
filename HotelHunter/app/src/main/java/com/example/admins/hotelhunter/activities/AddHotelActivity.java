@@ -49,8 +49,8 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_addphoto;
     TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_sdt1, tv_vitribando, tv_thongbaoten, tv_thongbaodiachi, tv_thongbaogia;
     LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh, ln_image;
-    public static FirebaseDatabase firebaseDatabase;
-    public static DatabaseReference databaseReference;
+    public FirebaseDatabase firebaseDatabase;
+    public DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     public List<HotelModel> list = new ArrayList<>();
     public static String TAG = AddHotelActivity.class.toString();
@@ -67,6 +67,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     MyAsyncTask myAsyncTask;
     List<HotelModel> lstModels = new ArrayList<>();
     EditText kinhdo, vido, rate;
+    String phone1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,9 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         setupUI();
         addListtenners();
         setEnableService();
+        phone1 = getIntent().getStringExtra("KEY_VERIFYEDPHONE");
+        tvSDT1.setText(phone1);
+        firebaseAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -207,8 +211,8 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         }
         hotelModel.address = etDiaChi.getText().toString();
         hotelModel.nameHotel = etTenNhaNghi.getText().toString();
-        final String phone1 = getIntent().getStringExtra("KEYPHONE");
-        tvSDT1.setText(phone1);
+
+
         hotelModel.phone = phone1;
         hotelModel.phone1 = etSDT2.getText().toString();
         hotelModel.gia = etGia.getText().toString();
@@ -216,18 +220,27 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         hotelModel.viDo = Double.parseDouble(vido.getText().toString());
         hotelModel.danhGiaTB = Float.parseFloat(rate.getText().toString());
 
-        databaseReference.child(hotelModel.address).setValue(hotelModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+        hotelModel.key = databaseReference.push().getKey();
+        databaseReference.child(hotelModel.key).setValue(hotelModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Log.d(TAG, "onComplete: push hotel");
+                Log.d(TAG, "onComplete: push hotel" + firebaseAuth.getCurrentUser().getUid());
                 databaseReference = firebaseDatabase.getReference("users");
                 databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "onDataChange: " + dataSnapshot);
                         UserModel userModel = new UserModel();
-                        userModel.Huid = hotelModel.address;
+                        if (userModel.Huid == null) {
+                            userModel.Huid = new ArrayList<>();
+                        }
+                        userModel.Huid.add(hotelModel.key);
                         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
                         Log.d(TAG, "onDataChange: push hotel");
+                        Toast.makeText(AddHotelActivity.this, "Thêm nhà nghỉ thành công", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(AddHotelActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
 
                     }
 

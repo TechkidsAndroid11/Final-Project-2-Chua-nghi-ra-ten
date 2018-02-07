@@ -40,8 +40,6 @@ public class InformationOfHotelActivity extends AppCompatActivity implements Bas
     TextView tvName;
     SliderLayout sliderLayout;
     PagerIndicator pagerIndicator;
-
-    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

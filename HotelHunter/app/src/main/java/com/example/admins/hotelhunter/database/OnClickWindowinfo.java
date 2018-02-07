@@ -8,7 +8,9 @@ import com.example.admins.hotelhunter.model.HotelModel;
 
 public class OnClickWindowinfo {
     public HotelModel hotelModel;
+
     public OnClickWindowinfo(HotelModel hotelModel) {
+
         this.hotelModel = hotelModel;
     }
 }

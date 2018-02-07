@@ -126,7 +126,13 @@
         app:layout_constraintStart_toEndOf="@+id/tv_name"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_menu_black_24dp"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="VectorDrawableCompat"/>
+    <item
+        android:id="@+id/main"
+        android:showAsAction="ifRoom"
+        android:actionViewClass="android.widget.ImageButton"
+        />
+    />
 
     <!--<ImageView-->
         <!--android:id="@+id/imageView3"-->

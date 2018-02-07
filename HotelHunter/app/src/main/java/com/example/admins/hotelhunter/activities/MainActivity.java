@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,8 +26,14 @@ import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.Utils.ImageUtils;
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
+
 import com.example.admins.hotelhunter.fragment.DetailFragment;
 import com.example.admins.hotelhunter.fragment.MyHotelFragment;
+
+import com.example.admins.hotelhunter.distance_matrix.DistanceInterface;
+import com.example.admins.hotelhunter.distance_matrix.DistanceResponse;
+import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
+
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,7 +46,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity
@@ -53,7 +63,7 @@ public class MainActivity extends AppCompatActivity
     ImageView ivAvata;
     RelativeLayout relativeLayout;
     public LatLng currentLocation;
-
+    public List<HotelModel> list = new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +153,6 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -200,8 +208,22 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i3);
             }
 
-        } else if (id == R.id.nav_myPost)
-            ImageUtils.openFragment(getSupportFragmentManager(), R.id.rl_main, new  MyHotelFragment());
+        } else if (id == R.id.nav_myPost){
+            if(firebaseAuth.getCurrentUser()==null){
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                LayoutInflater layoutInflater = this.getLayoutInflater();
+                View dialogView = layoutInflater.inflate(R.layout.require, null);
+                dialogBuilder.setView(dialogView);
+                final AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                Intent i3 = new Intent(this, LoginActivity.class);
+                startActivity(i3);
+
+            }else {
+                ImageUtils.openFragment(getSupportFragmentManager(), R.id.rl_main, new  MyHotelFragment());
+            }
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -230,7 +252,7 @@ public class MainActivity extends AppCompatActivity
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(TurnOnGPSActivity.currentLocation, 18);
         mMap.animateCamera(cameraUpdate);
         DataHandle.hotelModels(mMap, this);
-        final List<HotelModel> list = DataHandle.hotelModels(mMap, this);
+        list = DataHandle.hotelModels(mMap, this);
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -240,12 +262,14 @@ public class MainActivity extends AppCompatActivity
                         Log.d(TAG, "onInfoWindowClick: ");
                     }
                 }
-                Log.d(TAG, "onInfoWindowClick: ");
+                Log.d(TAG, "onInfoWindowClick: "+list.size());
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
             }
         });
+
+
     }
 
     @Override
@@ -274,7 +298,35 @@ public class MainActivity extends AppCompatActivity
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
 
+                currentLocation = TurnOnGPSActivity.currentLocation;
+                String current = Double.toString(currentLocation.latitude)+","+Double.toString(currentLocation.longitude);
+                String key = "AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0";
+                String listLocation = "";
+                for(int i=0; i<list.size(); i++)
+                {
+                    listLocation =listLocation+ Double.toString(list.get(i).viDo)+","+Double.toString(list.get(i).kinhDo);
+                    if(i+1<list.size())
+                    {
+                        listLocation=listLocation+"|";
+                    }
+                }
+                DistanceInterface distanceInterface = RetrofitInstance.getInstance().create(DistanceInterface.class);
+                distanceInterface.getDistance(current,listLocation,key).enqueue(new Callback<DistanceResponse>() {
+                    @Override
+                    public void onResponse(Call<DistanceResponse> call, Response<DistanceResponse> response) {
+                        Log.d(TAG, "onResponse: "+"0");
+                       List<DistanceResponse.Rows> rows = response.body().rows;
+                        for(int i=0; i<rows.get(0).elements.size(); i++)
+                        {
+                            Log.d(TAG, "onResponse: "+rows.get(0).elements.get(i).distance.value);
+                        }
+                    }
 
+                    @Override
+                    public void onFailure(Call<DistanceResponse> call, Throwable t) {
+                        Log.d(TAG, "onFailure: "+"response faile");
+                    }
+                });
         }
 
 

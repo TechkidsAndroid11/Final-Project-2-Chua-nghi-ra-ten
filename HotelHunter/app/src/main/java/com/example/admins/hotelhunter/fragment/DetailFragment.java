@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admins.hotelhunter.R;
+import com.example.admins.hotelhunter.activities.AddHotelActivity;
 import com.example.admins.hotelhunter.activities.LoginActivity;
 import com.example.admins.hotelhunter.adapter.FeedbackAdapter;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
@@ -119,8 +120,6 @@ public class DetailFragment extends Fragment  {
         loadData();
         return view;
     }
-
-    @SuppressLint("Range")
     private void loadData() {
         AlphaAnimation alpha = new AlphaAnimation(0.1F, 0.1F);
         alpha.setDuration(0);
@@ -232,4 +231,6 @@ public class DetailFragment extends Fragment  {
             }
         }
     }
+
+
 }
