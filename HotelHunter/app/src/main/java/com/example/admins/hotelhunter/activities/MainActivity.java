@@ -59,6 +59,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity
     public boolean nongLanh = false;
     AlertDialog alertDialog;
     List<DistanceResponse.Rows> rows;
+    AVLoadingIndicatorView avLoadingIndicatorView;
 
 
     @Override
@@ -102,6 +104,8 @@ public class MainActivity extends AppCompatActivity
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
        iv_filter = findViewById(R.id.iv_filter);
         iv_filter.setOnClickListener(this);
+        avLoadingIndicatorView= findViewById(R.id.av_load);
+        avLoadingIndicatorView.show();
 
 
     }
@@ -247,6 +251,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: ");
+        avLoadingIndicatorView.hide();
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
