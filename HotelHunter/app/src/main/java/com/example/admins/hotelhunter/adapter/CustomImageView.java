@@ -9,7 +9,8 @@ import android.widget.ImageView;
  * Created by vanph on 01/02/2018.
  */
 
-public class CustomImageView extends android.support.v7.widget.AppCompatImageView {
+public class
+CustomImageView extends android.support.v7.widget.AppCompatImageView {
     public CustomImageView(Context context) {
         super(context);
     }

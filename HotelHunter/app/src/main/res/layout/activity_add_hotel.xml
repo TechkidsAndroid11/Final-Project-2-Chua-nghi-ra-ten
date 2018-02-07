@@ -68,16 +68,14 @@
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
                    android:textStyle="bold"
-                   android:id="@+id/tv_sdt1add"
+                   android:id="@+id/tv_sdt1add1"
                    android:layout_marginTop="8dp"/>
-
                <EditText
-                   android:id="@+id/et_sdt1add"
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
                    android:layout_marginRight="16dp"
-                   android:inputType="phone" />
+                   android:id="@+id/et_sdt1add"/>
 
                <TextView
                    android:layout_width="match_parent"
@@ -111,7 +109,15 @@
                         android:layout_marginLeft="8dp"
                         android:inputType="number"/>
                 </LinearLayout>
-
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginRight="16dp"
+                   android:text="10,000-20,000"
+                   android:textSize="10sp"
+                   android:textColor="@color/orange"
+                   android:id="@+id/tv_thongbaogia"/>
                <TextView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
@@ -284,12 +290,14 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:hint="kinh do"
+                   android:inputType="number"
                    android:id="@+id/et_kinhdoadd"
                   />
                <EditText
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:hint="vi do"
+                   android:inputType="number"
                    android:id="@+id/et_vidoadd"
                    />
                <EditText
@@ -313,10 +321,6 @@
                    android:layout_marginBottom="16dp"/>
            </LinearLayout>
        </ScrollView>
-
-
-
-
 
 
 

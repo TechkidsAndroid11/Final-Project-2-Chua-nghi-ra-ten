@@ -26,12 +26,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
+
+import com.example.admins.hotelhunter.Utils.ImageUtils;
+
 import com.example.admins.hotelhunter.adapter.CustomInfoWindowAdapter;
+
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
+
+import com.example.admins.hotelhunter.fragment.DetailFragment;
+import com.example.admins.hotelhunter.fragment.MyHotelFragment;
+
 import com.example.admins.hotelhunter.distance_matrix.DistanceInterface;
 import com.example.admins.hotelhunter.distance_matrix.DistanceResponse;
 import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
+
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -73,7 +82,7 @@ public class MainActivity extends AppCompatActivity
     public List<HotelModel> list = new ArrayList<>();
     RadioButton rd_cademnho100, rd_cademnho200, rd_cademlon200, rd_thegionho70, rd_theogionho100,
             rd_theogiolon100, rd_kc2km, rd_kc27km, rd_kclon7km;
-    ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh;
+    ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_filter;
     TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_loc, tv_huy;
     LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh;
     public boolean tiVi = false;
@@ -91,8 +100,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-       // TextView tvFilter = findViewById(R.id.tv_filter);
-       // tvFilter.setOnClickListener(this);
+       iv_filter = findViewById(R.id.iv_filter);
+        iv_filter.setOnClickListener(this);
 
 
     }
@@ -213,10 +222,22 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i3);
             }
 
-        } else if (id == R.id.nav_myPost) {
+        } else if (id == R.id.nav_myPost){
+            if(firebaseAuth.getCurrentUser()==null){
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                LayoutInflater layoutInflater = this.getLayoutInflater();
+                View dialogView = layoutInflater.inflate(R.layout.require, null);
+                dialogBuilder.setView(dialogView);
+                final AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+                Intent i3 = new Intent(this, LoginActivity.class);
+                startActivity(i3);
 
-
+            }else {
+                ImageUtils.openFragment(getSupportFragmentManager(), R.id.rl_main, new  MyHotelFragment());
+            }
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -283,21 +304,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.tv_filter: {
-//                tiVi = tuLanh = dieuHoa = nongLanh = thangMay = wifi = false;
-//                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-//                LayoutInflater layoutInflater = this.getLayoutInflater();
-//                View dialogView = layoutInflater.inflate(R.layout.filter, null);
-//                setupUI(dialogView);
-//                setEnableService();
-//                addListtenners();
-//                dialogBuilder.setView(dialogView);
-//                alertDialog = dialogBuilder.create();
-//                alertDialog.show();
-//
-//
-//                break;
-//            }
+            case R.id.iv_filter: {
+                tiVi = tuLanh = dieuHoa = nongLanh = thangMay = wifi = false;
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+                LayoutInflater layoutInflater = this.getLayoutInflater();
+                View dialogView = layoutInflater.inflate(R.layout.filter, null);
+                setupUI(dialogView);
+                setEnableService();
+                addListtenners();
+                dialogBuilder.setView(dialogView);
+                alertDialog = dialogBuilder.create();
+                alertDialog.show();
+
+
+                break;
+            }
             case R.id.ln_wififillter: {
                 wifi = wifi ? false : true;
                 setEnableService();

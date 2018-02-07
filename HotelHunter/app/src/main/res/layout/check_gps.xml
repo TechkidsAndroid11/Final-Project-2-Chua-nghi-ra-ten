@@ -1,28 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="80dp"
+
+    android:orientation="vertical" >
+
     <TextView
+        android:id="@+id/txt_dia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BẬT ĐỊNH VỊ?"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:id="@+id/tv_ask"
-        android:layout_centerInParent="true"/>
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Có"
-        android:layout_below="@+id/tv_ask"
-        android:id="@+id/bt_yes"/>
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Không phải bây giờ"
-        android:id="@+id/bt_no"
-        android:layout_below="@+id/tv_ask"
-        android:layout_toRightOf="@+id/bt_yes"
-        />
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="Bật định vị để tiếp tục?"
+        android:textAlignment="center"
 
-</RelativeLayout>
+
+        android:textSize="15dp"
+        android:textStyle="bold"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/bt_yes"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="Đồng ý"
+            android:textColor="#5DBCD2"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/bt_no"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="Hủy"
+            android:textColor="#5DBCD2"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

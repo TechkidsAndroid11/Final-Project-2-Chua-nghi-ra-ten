@@ -1,6 +1,5 @@
 package com.example.admins.hotelhunter.activities;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -19,9 +17,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -32,9 +28,7 @@ import android.widget.Toast;
 import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.Utils.ImageUtils;
 import com.example.admins.hotelhunter.adapter.CustomImageView;
-import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.model.HotelModel;
-import com.example.admins.hotelhunter.model.ReviewModel;
 import com.example.admins.hotelhunter.model.UserModel;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -60,14 +54,14 @@ import java.util.Locale;
 public class AddHotelActivity extends AppCompatActivity implements View.OnClickListener {
     EditText etTenNhaNghi;
     EditText etDiaChi;
+    TextView tvSDT1;
     EditText etSDT1;
-    EditText etSDT2;
     EditText etGiaDem, etGiaGio;
     ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_addphoto;
     TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_sdt1, tv_vitribando;
     LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh, ln_image;
-    public static FirebaseDatabase firebaseDatabase;
-    public static DatabaseReference databaseReference;
+    public FirebaseDatabase firebaseDatabase;
+    public DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     public List<HotelModel> list = new ArrayList<>();
     public static String TAG = AddHotelActivity.class.toString();
@@ -85,7 +79,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
     List<HotelModel> lstModels = new ArrayList<>();
     EditText kinhdo, vido, rate;
     public LatLng latLng = null;
-
+    String phone1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +87,10 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         setupUI();
         addListtenners();
         setEnableService();
-        final String phone1 = getIntent().getStringExtra("KEYPHONE");
+        phone1 = getIntent().getStringExtra("KEY_VERIFYEDPHONE");
+        tvSDT1.setText(phone1);
+        firebaseAuth = FirebaseAuth.getInstance();
+
     }
 
     private void setupUI() {
@@ -102,6 +99,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         etSDT1 = findViewById(R.id.et_sdt1add);
         etGiaDem = findViewById(R.id.et_giademadd);
         etGiaGio = findViewById(R.id.et_giagioadd);
+        tvSDT1 = findViewById(R.id.tv_sdt1add);
         iv_wifi = findViewById(R.id.iv_wifiadd);
         iv_thangmay = findViewById(R.id.iv_thangmayadd);
         iv_dieuhoa = findViewById(R.id.iv_dieuhoaadd);
@@ -279,7 +277,9 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         if (!dk) {
             return;
         }
-        HotelModel hotelModel = new HotelModel();
+        final HotelModel hotelModel = new HotelModel();
+//        hotelModel.kinhDo = 105.783303;
+//        hotelModel.viDo = 20.979135;
         hotelModel.images.addAll(lst_Image);
         hotelModel.tulanh = tuLanh;
         hotelModel.tivi = tiVi;
@@ -297,6 +297,37 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         hotelModel.kinhDo = latLng.longitude;
         hotelModel.viDo = latLng.latitude;
         databaseReference.push().setValue(hotelModel);
+        hotelModel.key = databaseReference.push().getKey();
+        databaseReference.child(hotelModel.key).setValue(hotelModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d(TAG, "onComplete: push hotel" + firebaseAuth.getCurrentUser().getUid());
+                databaseReference = firebaseDatabase.getReference("users");
+                databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d(TAG, "onDataChange: " + dataSnapshot);
+                        UserModel userModel = new UserModel();
+                        if (userModel.Huid == null) {
+                            userModel.Huid = new ArrayList<>();
+                        }
+                        userModel.Huid.add(hotelModel.key);
+                        databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
+                        Log.d(TAG, "onDataChange: push hotel");
+                        Toast.makeText(AddHotelActivity.this, "Thêm nhà nghỉ thành công", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(AddHotelActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
     }
 
     private void AddPhoto() {

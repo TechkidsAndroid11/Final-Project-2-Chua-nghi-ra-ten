@@ -36,7 +36,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="verify"
+        android:text="Tiếp theo"
         android:id="@+id/bt_phone_veri"
         android:layout_gravity="center"/>
 

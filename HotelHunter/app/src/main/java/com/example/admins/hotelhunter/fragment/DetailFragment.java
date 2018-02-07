@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admins.hotelhunter.R;
+import com.example.admins.hotelhunter.activities.AddHotelActivity;
 import com.example.admins.hotelhunter.activities.LoginActivity;
 import com.example.admins.hotelhunter.adapter.FeedbackAdapter;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
@@ -230,4 +231,6 @@ public class DetailFragment extends Fragment  {
             }
         }
     }
+
+
 }
