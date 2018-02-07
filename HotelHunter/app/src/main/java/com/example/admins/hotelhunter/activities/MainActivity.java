@@ -26,21 +26,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
-
 import com.example.admins.hotelhunter.Utils.ImageUtils;
-
 import com.example.admins.hotelhunter.adapter.CustomInfoWindowAdapter;
-
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
-
-import com.example.admins.hotelhunter.fragment.DetailFragment;
-import com.example.admins.hotelhunter.fragment.MyHotelFragment;
-
 import com.example.admins.hotelhunter.distance_matrix.DistanceInterface;
 import com.example.admins.hotelhunter.distance_matrix.DistanceResponse;
+import com.example.admins.hotelhunter.fragment.MyHotelFragment;
 import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
-
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -52,14 +45,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -93,7 +87,7 @@ public class MainActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         TextView tvFilter = findViewById(R.id.tv_filter);
         tvFilter.setOnClickListener(this);
 
@@ -144,8 +138,8 @@ public class MainActivity extends AppCompatActivity
             tvName.setVisibility(View.VISIBLE);
             ivAvata.setVisibility(View.VISIBLE);
             tvName.setText(firebaseAuth.getCurrentUser().getDisplayName());
-//            Picasso.with(this).load(R.drawable.ic_close_black_24dp).into(ivAvata);
-            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
+            Picasso.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(ivAvata);
+//            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
         }
         tvNavText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,31 +218,60 @@ public class MainActivity extends AppCompatActivity
             if (firebaseAuth.getCurrentUser() == null) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater layoutInflater = this.getLayoutInflater();
-                View dialogView = layoutInflater.inflate(R.layout.require, null);
+                final View dialogView = layoutInflater.inflate(R.layout.require, null);
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                Intent i2 = new Intent(this, LoginActivity.class);
-                startActivity(i2);
+                Button btYes = dialogView.findViewById(R.id.btn_yes);
+                btYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i2);
+
+                    }
+                });
+                Button btNo = dialogView.findViewById(R.id.btn_no);
+                btNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
 
             } else {
-                Intent i3 = new Intent(this, CodeActivity.class);
+                Intent i3 = new Intent(this, AddHotelActivity.class);
                 startActivity(i3);
             }
 
-        } else if (id == R.id.nav_myPost){
-            if(firebaseAuth.getCurrentUser()==null){
+        } else if (id == R.id.nav_myPost) {
+            if (firebaseAuth.getCurrentUser() == null) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater layoutInflater = this.getLayoutInflater();
                 View dialogView = layoutInflater.inflate(R.layout.require, null);
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                Intent i3 = new Intent(this, LoginActivity.class);
-                startActivity(i3);
+                Button btYes = dialogView.findViewById(R.id.btn_yes);
+                btYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i2);
 
-            }else {
-                ImageUtils.openFragment(getSupportFragmentManager(), R.id.rl_main, new  MyHotelFragment());
+                    }
+                });
+                Button btNo = dialogView.findViewById(R.id.btn_no);
+                btNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+            } else {
+                ImageUtils.openFragment(getSupportFragmentManager(), R.id.rl_main, new MyHotelFragment());
             }
         }
 
@@ -485,10 +508,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<DistanceResponse> call, Response<DistanceResponse> response) {
                 Log.d(TAG, "onResponse: " + "0");
-                 rows = response.body().rows;
+                rows = response.body().rows;
                 if (rows.size() != 0) {
                     for (int i = 0; i < rows.get(0).elements.size(); i++) {
-                        Log.d(TAG, "onResponse: "+rows.get(0).elements.get(i).distance.value);
+                        Log.d(TAG, "onResponse: " + rows.get(0).elements.get(i).distance.value);
                     }
                 }
 

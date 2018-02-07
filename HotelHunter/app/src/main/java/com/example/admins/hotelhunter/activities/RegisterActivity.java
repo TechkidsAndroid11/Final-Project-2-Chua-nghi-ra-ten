@@ -2,6 +2,7 @@ package com.example.admins.hotelhunter.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -105,13 +106,15 @@ public class RegisterActivity extends AppCompatActivity {
                                                     databaseReference = firebaseDatabase.getReference("users");
                                                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                                                     final UserModel userModel = new UserModel(firebaseUser.getDisplayName());
-                                                    UserProfileChangeRequest user = new UserProfileChangeRequest.Builder().setDisplayName(etName.getText().toString()).build();
+                                                    UserProfileChangeRequest user = new UserProfileChangeRequest.Builder()
+                                                            .setDisplayName(etName.getText().toString())
+                                                            .setPhotoUri(Uri.parse("https://scontent.xx.fbcdn.net/v/t1.0-1/c29.0.100.100/p100x100/10354686_10150004552801856_220367501106153455_n.jpg?oh=049ecfece14dfe681a2cc083eeaabc6f&oe=5AA0FC77")).build();
 
                                                     firebaseAuth.getCurrentUser().updateProfile(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
-                                                                Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getDisplayName());
+
                                                                 databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
                                                                 Intent ii = new Intent(RegisterActivity.this, MainActivity.class);
                                                                 Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser().getDisplayName());
@@ -166,7 +169,7 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "pushData: ");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = firebaseDatabase.getReference("users");
-        userModel = new UserModel(firebaseUser.getDisplayName(), firebaseUser.getUid(), "");
+        userModel = new UserModel(firebaseUser.getDisplayName(), firebaseUser.getUid(), "https://scontent.xx.fbcdn.net/v/t1.0-1/c29.0.100.100/p100x100/10354686_10150004552801856_220367501106153455_n.jpg?oh=049ecfece14dfe681a2cc083eeaabc6f&oe=5AA0FC77");
         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
 
 

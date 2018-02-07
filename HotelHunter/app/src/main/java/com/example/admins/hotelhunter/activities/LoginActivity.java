@@ -141,6 +141,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!etMail.getText().toString().equals("") && !etPassword.getText().toString().equals("")) {
                     firebaseAuth.signInWithEmailAndPassword(etMail.getText().toString(), etPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
