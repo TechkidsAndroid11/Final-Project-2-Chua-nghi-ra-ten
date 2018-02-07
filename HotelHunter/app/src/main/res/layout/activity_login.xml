@@ -3,7 +3,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/nen_dang_nhap"
     android:padding="16dp">
-
     <LinearLayout
         android:layout_centerVertical="true"
         android:id="@+id/ll_login"
@@ -18,6 +17,7 @@
             android:padding="16dp">
 
             <TextView
+                android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -66,7 +66,7 @@
                 android:drawablePadding="8dp"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:textColorHint="#fff"
+                android:textColor="#fff"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -128,7 +128,7 @@
                 android:layout_height="40dp"
                 android:layout_below="@id/rl_facebook"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp">
+                android:layout_marginTop="20dp">
 
                 <ImageView
                     android:id="@+id/iv_login_google"

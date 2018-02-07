@@ -54,11 +54,11 @@ import java.util.Locale;
 public class AddHotelActivity extends AppCompatActivity implements View.OnClickListener {
     EditText etTenNhaNghi;
     EditText etDiaChi;
-    TextView tvSDT1;
+
     EditText etSDT1;
     EditText etGiaDem, etGiaGio;
     ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_addphoto;
-    TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_sdt1, tv_vitribando;
+    TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_vitribando, tv_dt1;
     LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh, ln_image;
     public FirebaseDatabase firebaseDatabase;
     public DatabaseReference databaseReference;
@@ -87,8 +87,8 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         setupUI();
         addListtenners();
         setEnableService();
-        phone1 = getIntent().getStringExtra("KEY_VERIFYEDPHONE");
-        tvSDT1.setText(phone1);
+
+
         firebaseAuth = FirebaseAuth.getInstance();
 
     }
@@ -99,7 +99,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         etSDT1 = findViewById(R.id.et_sdt1add);
         etGiaDem = findViewById(R.id.et_giademadd);
         etGiaGio = findViewById(R.id.et_giagioadd);
-        tvSDT1 = findViewById(R.id.tv_sdt1add);
+
         iv_wifi = findViewById(R.id.iv_wifiadd);
         iv_thangmay = findViewById(R.id.iv_thangmayadd);
         iv_dieuhoa = findViewById(R.id.iv_dieuhoaadd);
@@ -113,7 +113,6 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         tv_nonglanh = findViewById(R.id.tv_nonglanhadd);
         tv_tivi = findViewById(R.id.tv_tiviadd);
         tv_tulanh = findViewById(R.id.tv_tulanhadd);
-        tv_sdt1 = findViewById(R.id.tv_sdt1add);
         tv_vitribando = findViewById(R.id.tv_vitribando);
         bt_dangBai = findViewById(R.id.bt_danghotel);
         ln_dieuhoa = findViewById(R.id.ln_dieuhoa);
@@ -394,8 +393,12 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
             }
 
         } else if (requestCode == 3) {
-            Place place = PlacePicker.getPlace(data, this);
-            latLng = place.getLatLng();
+            if(resultCode==RESULT_OK)
+            {
+                Place place = PlacePicker.getPlace(data, this);
+                latLng = place.getLatLng();
+                Log.d(TAG, "onActivityResult: "+latLng);
+            }
         }
 
     }

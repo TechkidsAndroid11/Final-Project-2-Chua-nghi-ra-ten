@@ -74,6 +74,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
+                   android:inputType="numberDecimal"
                    android:layout_marginRight="16dp"
                    android:id="@+id/et_sdt1add"/>
 
@@ -81,6 +82,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:text="* Giá"
+
                    android:textColor="@color/orange"
                    android:layout_marginLeft="16dp"
                    android:textStyle="bold"

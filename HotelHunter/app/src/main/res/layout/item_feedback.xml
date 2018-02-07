@@ -12,8 +12,7 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        />
+        android:layout_marginLeft="8dp"/>
 
     <TextView
         android:id="@+id/tv_date"
@@ -23,6 +22,7 @@
         android:layout_alignTop="@+id/tv_name"
         android:text="Thoi gian" />
     <RatingBar
+        android:theme="@style/RatingBar"
         android:id="@+id/rb_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

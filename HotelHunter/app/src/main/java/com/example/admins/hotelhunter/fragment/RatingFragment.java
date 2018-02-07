@@ -132,13 +132,13 @@ public class RatingFragment extends Fragment implements View.OnClickListener {
                     Log.d(TAG, "onClick: " + etComment.getText().toString());
                     TextView tvGui = dialogView.findViewById(R.id.bt_post);
                     TextView tvHuy = dialogView.findViewById(R.id.tv_huy);
-                    rbRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                        @Override
-                        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                            rbRate.setRating(v);
-                            Log.d(TAG, "onRatingChanged: ");
-                        }
-                    });
+//                    rbRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//                        @Override
+//                        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+//                            rbRate.setRating(v);
+//                            Log.d(TAG, "onRatingChanged: ");
+//                        }
+//                    });
                     databaseReference = firebaseDatabase.getReference("users");
                     databaseReference.child(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

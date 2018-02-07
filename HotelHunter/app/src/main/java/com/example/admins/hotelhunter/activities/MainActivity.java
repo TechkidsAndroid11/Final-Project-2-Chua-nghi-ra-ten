@@ -26,21 +26,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
-
 import com.example.admins.hotelhunter.Utils.ImageUtils;
-
 import com.example.admins.hotelhunter.adapter.CustomInfoWindowAdapter;
-
 import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
-
-import com.example.admins.hotelhunter.fragment.DetailFragment;
-import com.example.admins.hotelhunter.fragment.MyHotelFragment;
-
 import com.example.admins.hotelhunter.distance_matrix.DistanceInterface;
 import com.example.admins.hotelhunter.distance_matrix.DistanceResponse;
+import com.example.admins.hotelhunter.fragment.MyHotelFragment;
 import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
-
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -57,15 +50,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
+
+import com.squareup.picasso.Picasso;
+
 import com.wang.avi.AVLoadingIndicatorView;
+
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,6 +76,8 @@ public class MainActivity extends AppCompatActivity
     TextView tvName, tvNavText;
     ImageView ivAvata;
     RelativeLayout relativeLayout;
+    HotelModel hotelModel;
+    public static boolean first = true;
     public LatLng currentLocation;
     public List<HotelModel> list = new ArrayList<>();
     RadioButton rd_cademnho100, rd_cademnho200, rd_cademlon200, rd_thegionho70, rd_theogionho100,
@@ -101,6 +100,9 @@ public class MainActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
        iv_filter = findViewById(R.id.iv_filter);
         iv_filter.setOnClickListener(this);
@@ -119,17 +121,50 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: ");
+//    @Subscribe(sticky = true)
+//    public void chiDuong(OnClickWindowinfo onClickWindowinfo) {
+//        if (onClickWindowinfo.hotelModel != null) {
+//            hotelModel = onClickWindowinfo.hotelModel;
+//            final PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED).width(16);
+//            for (int i = 0; i < polylines.size(); i++) {
+//                polylines.get(i).remove();
+//            }
+//            RetrofitService retrofitService = RetrofitInstance.getInstance().create(RetrofitService.class);
+//            Log.d(TAG, "onMarkerClick: " + TurnOnGPSActivity.currentLocation);
+//            retrofitService.getDirection(String.valueOf(TurnOnGPSActivity.currentLocation.latitude)
+//                            + "," + String.valueOf(TurnOnGPSActivity.currentLocation.longitude),
+//                    String.valueOf(hotelModel.viDo)
+//                            + "," + String.valueOf(hotelModel.kinhDo),
+//                    "AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0").enqueue(new Callback<DirectionResponse>() {
+//                @Override
+//                public void onResponse(Call<DirectionResponse> call, Response<DirectionResponse> response) {
+//                    RouteModel routeModel = DirectionHandler.getListRoute(response.body()).get(0);
+//                    Log.d(TAG, "onResponse: " + routeModel.duration);
+//                    Log.d(TAG, "onResponse: " + routeModel.distance);
+////                                PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED).width(16);
+//                    for (int i = 0; i < routeModel.points.size(); i++) {
+//                        polylineOptions.add(routeModel.points.get(i));
+//                    }
+//                    Polyline polyline = mMap.addPolyline(polylineOptions);
+//                    polylines.add(polyline);
+//                }
+//
+//                @Override
+//                public void onFailure(Call<DirectionResponse> call, Throwable t) {
+//                    Log.d(TAG, "onFailure: ");
+//                }
+//            });
+//        }
+//    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -147,13 +182,13 @@ public class MainActivity extends AppCompatActivity
         if (firebaseAuth.getCurrentUser() == null) {
 
         } else {
-            Log.d(TAG, "onResume: " + firebaseAuth.getCurrentUser() + firebaseAuth.getCurrentUser().getDisplayName());
+            Log.d(TAG, "onCreate: " + firebaseAuth.getCurrentUser() + firebaseAuth.getCurrentUser().getDisplayName());
             tvNavText.setVisibility(View.GONE);
             tvName.setVisibility(View.VISIBLE);
             ivAvata.setVisibility(View.VISIBLE);
             tvName.setText(firebaseAuth.getCurrentUser().getDisplayName());
-//            Picasso.with(this).load(R.drawable.ic_close_black_24dp).into(ivAvata);
-            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
+            Picasso.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(ivAvata);
+//            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
         }
         tvNavText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +202,20 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
 
     @Override
@@ -176,11 +225,15 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_favourite) {
-
-        } else if (id == R.id.nav_Logout) {
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            } else {
+//                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+//                startActivity(intent);
+            }
+        }
+       else if (id == R.id.nav_Logout) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             LayoutInflater layoutInflater = this.getLayoutInflater();
             View dialogView = layoutInflater.inflate(R.layout.sign_out, null);
@@ -212,31 +265,59 @@ public class MainActivity extends AppCompatActivity
             if (firebaseAuth.getCurrentUser() == null) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater layoutInflater = this.getLayoutInflater();
-                View dialogView = layoutInflater.inflate(R.layout.require, null);
+                final View dialogView = layoutInflater.inflate(R.layout.require, null);
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                Intent i2 = new Intent(this, LoginActivity.class);
-                startActivity(i2);
+                Button btYes = dialogView.findViewById(R.id.btn_yes);
+                btYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i2);
+
+                    }
+                });
+                Button btNo = dialogView.findViewById(R.id.btn_no);
+                btNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+
 
             } else {
-                Intent i3 = new Intent(this, CodeActivity.class);
+                Intent i3 = new Intent(this, AddHotelActivity.class);
                 startActivity(i3);
             }
 
-        } else if (id == R.id.nav_myPost){
-            if(firebaseAuth.getCurrentUser()==null){
+        } else if (id == R.id.nav_myPost) {
+            if (firebaseAuth.getCurrentUser() == null) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater layoutInflater = this.getLayoutInflater();
                 View dialogView = layoutInflater.inflate(R.layout.require, null);
                 dialogBuilder.setView(dialogView);
                 final AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                Intent i3 = new Intent(this, LoginActivity.class);
-                startActivity(i3);
+                Button btYes = dialogView.findViewById(R.id.btn_yes);
+                btYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i2 = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(i2);
 
-            }else {
-                ImageUtils.openFragment(getSupportFragmentManager(), R.id.rl_main, new  MyHotelFragment());
+                    }
+                });
+                Button btNo = dialogView.findViewById(R.id.btn_no);
+                btNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+            } else {
+                ImageUtils.openFragment(getSupportFragmentManager(), R.id.rl_main, new MyHotelFragment());
             }
         }
 
@@ -265,9 +346,13 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         mMap.setMyLocationEnabled(true);
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(TurnOnGPSActivity.currentLocation, 18);
-        mMap.animateCamera(cameraUpdate);
+        DataHandle.hotelModels(mMap, this);
         list = DataHandle.hotelModels(mMap, this);
+        if (first == true) {
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(TurnOnGPSActivity.currentLocation, 18);
+            mMap.animateCamera(cameraUpdate);
+            first = false;
+        }
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -280,21 +365,10 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "onInfoWindowClick: " + list.size());
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
+//                overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
             }
         });
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        Log.d(TAG, "onStart: ");
-        for (int i = 0; i < DataHandle.polylines.size(); i++) {
-            DataHandle.polylines.get(i).remove();
-        }
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -315,7 +389,17 @@ public class MainActivity extends AppCompatActivity
                 dialogBuilder.setView(dialogView);
                 alertDialog = dialogBuilder.create();
                 alertDialog.show();
-
+                currentLocation = TurnOnGPSActivity.currentLocation;
+                String current = Double.toString(currentLocation.latitude) + "," + Double.toString(currentLocation.longitude);
+                String key = "AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0";
+                String listLocation = "";
+                for (int i = 0; i < list.size(); i++) {
+                    listLocation = listLocation + Double.toString(list.get(i).viDo) + "," + Double.toString(list.get(i).kinhDo);
+                    if (i + 1 < list.size()) {
+                        listLocation = listLocation + "|";
+                        break;
+                    }
+                }
 
                 break;
             }
@@ -473,10 +557,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<DistanceResponse> call, Response<DistanceResponse> response) {
                 Log.d(TAG, "onResponse: " + "0");
-                 rows = response.body().rows;
+                rows = response.body().rows;
                 if (rows.size() != 0) {
                     for (int i = 0; i < rows.get(0).elements.size(); i++) {
-                        Log.d(TAG, "onResponse: "+rows.get(0).elements.get(i).distance.value);
+                        Log.d(TAG, "onResponse: " + rows.get(0).elements.get(i).distance.value);
                     }
                 }
 

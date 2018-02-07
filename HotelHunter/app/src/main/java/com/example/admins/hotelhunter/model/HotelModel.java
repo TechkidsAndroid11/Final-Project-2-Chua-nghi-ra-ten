@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class HotelModel {
-    public String phone1;
+
     public String nameHotel;
     public String address;
     public String phone;
@@ -29,9 +29,9 @@ public class HotelModel {
     public HotelModel() {
     }
 
-    public HotelModel(String phone1, String nameHotel, String address, String phone, double kinhDo, double viDo, float danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels,
+    public HotelModel( String nameHotel, String address, String phone, double kinhDo, double viDo, float danhGiaTB, String gia, List<String> images, List<ReviewModel> reviewModels,
                       boolean wifi, boolean dieuHoa, boolean nongLanh, boolean thangMay, boolean tivi, boolean tulanh) {
-        this.phone1 = phone1;
+
         this.nameHotel = nameHotel;
         this.address = address;
         this.phone = phone;

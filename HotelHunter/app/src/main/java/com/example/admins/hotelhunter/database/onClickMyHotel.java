@@ -11,6 +11,5 @@ public class onClickMyHotel {
 
     public onClickMyHotel(HotelModel hotelModel) {
         this.hotelModel=hotelModel;
-
     }
 }

@@ -68,8 +68,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupUI();
-    }
+        LoginManager.getInstance().logOut();
 
+        findViewById(R.id.tv_email).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
     public void setupUI() {
         etMail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_pass);
@@ -141,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!etMail.getText().toString().equals("") && !etPassword.getText().toString().equals("")) {
                     firebaseAuth.signInWithEmailAndPassword(etMail.getText().toString(), etPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -165,13 +173,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQ_CODEGOOGLE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleResult(result);
         } else {
-            Toast.makeText(this, "Auth went wrong", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Auth went wrong", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -189,7 +198,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     public void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
-
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -213,6 +221,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                         Log.d(TAG, "onDataChange: " + userModel.uid);
                                         databaseReference.child(userModel.uid).setValue(userModel);
                                     }
+
+                                    finish();
                                 }
 
                                 @Override
@@ -258,6 +268,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             Log.d(TAG, "onDataChange: " + userModel.uid);
                                             databaseReference.child(userModel.uid).setValue(userModel);
                                         }
+                                        finish();
                                     }
 
                                     @Override

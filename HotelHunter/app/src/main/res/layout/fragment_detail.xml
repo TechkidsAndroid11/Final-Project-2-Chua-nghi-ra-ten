@@ -280,7 +280,7 @@
                 android:src="@drawable/star" />
 
             <TextView
-                android:textColor="#036ae9"
+                android:textColor="#000"
                 android:layout_centerVertical="true"
                 android:id="@+id/tv_rating"
                 android:layout_width="match_parent"
