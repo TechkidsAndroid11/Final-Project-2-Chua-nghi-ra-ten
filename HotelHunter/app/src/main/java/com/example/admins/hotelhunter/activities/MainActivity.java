@@ -3,6 +3,7 @@ package com.example.admins.hotelhunter.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -27,7 +28,11 @@ import com.example.admins.hotelhunter.database.DataHandle;
 import com.example.admins.hotelhunter.database.OnClickWindowinfo;
 import com.example.admins.hotelhunter.distance_matrix.DistanceInterface;
 import com.example.admins.hotelhunter.distance_matrix.DistanceResponse;
+import com.example.admins.hotelhunter.map_direction.DirectionHandler;
+import com.example.admins.hotelhunter.map_direction.DirectionResponse;
 import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
+import com.example.admins.hotelhunter.map_direction.RetrofitService;
+import com.example.admins.hotelhunter.map_direction.RouteModel;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,9 +41,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +63,10 @@ public class MainActivity extends AppCompatActivity
     private GoogleMap mMap;
     TextView tvName, tvNavText;
     ImageView ivAvata;
+    public static final List<Polyline> polylines = new ArrayList<>();
     RelativeLayout relativeLayout;
+    HotelModel hotelModel;
+    public static boolean first = true;
     public LatLng currentLocation;
     public List<HotelModel> list = new ArrayList<>();
     @Override
@@ -77,7 +88,41 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+    @Subscribe(sticky = true)
+    public void chiDuong(OnClickWindowinfo onClickWindowinfo){
+        if (onClickWindowinfo.hotelModel != null){
+            hotelModel = onClickWindowinfo.hotelModel;
+            final PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED).width(16);
+            for (int i = 0; i < polylines.size(); i++){
+                polylines.get(i).remove();
+            }
+            RetrofitService retrofitService = RetrofitInstance.getInstance().create(RetrofitService.class);
+            Log.d(TAG, "onMarkerClick: " + TurnOnGPSActivity.currentLocation);
+            retrofitService.getDirection(String.valueOf(TurnOnGPSActivity.currentLocation.latitude)
+                            +","+String.valueOf(TurnOnGPSActivity.currentLocation.longitude),
+                    String.valueOf(hotelModel.viDo)
+                            +","+String.valueOf(hotelModel.kinhDo),
+                    "AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0").enqueue(new Callback<DirectionResponse>() {
+                @Override
+                public void onResponse(Call<DirectionResponse> call, Response<DirectionResponse> response) {
+                    RouteModel routeModel = DirectionHandler.getListRoute(response.body()).get(0);
+                    Log.d(TAG, "onResponse: " + routeModel.duration);
+                    Log.d(TAG, "onResponse: " + routeModel.distance);
+//                                PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED).width(16);
+                    for (int i = 0; i < routeModel.points.size(); i++){
+                        polylineOptions.add(routeModel.points.get(i));
+                    }
+                    Polyline polyline = mMap.addPolyline(polylineOptions);
+                    polylines.add(polyline);
+                }
 
+                @Override
+                public void onFailure(Call<DirectionResponse> call, Throwable t) {
+                    Log.d(TAG, "onFailure: ");
+                }
+            });
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -147,6 +192,7 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -237,10 +283,14 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         mMap.setMyLocationEnabled(true);
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(TurnOnGPSActivity.currentLocation, 18);
-        mMap.animateCamera(cameraUpdate);
+
         DataHandle.hotelModels(mMap, this);
         list = DataHandle.hotelModels(mMap, this);
+        if (first == true){
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(TurnOnGPSActivity.currentLocation, 18);
+            mMap.animateCamera(cameraUpdate);
+            first = false;
+        }
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -253,20 +303,24 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "onInfoWindowClick: "+list.size());
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
+//                overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
             }
         });
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        for (int i = 0; i < DataHandle.polylines.size(); i++) {
-            DataHandle.polylines.get(i).remove();
+        for (int i = 0; i < polylines.size(); i++) {
+            polylines.get(i).remove();
         }
+        if (hotelModel != null){
+            LatLng latLng = new LatLng(hotelModel.viDo, hotelModel.kinhDo);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 20);
+            mMap.animateCamera(cameraUpdate);
+        }
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -285,7 +339,6 @@ public class MainActivity extends AppCompatActivity
                 dialogBuilder.setView(dialogView);
                 AlertDialog alertDialog = dialogBuilder.create();
                 alertDialog.show();
-
                 currentLocation = TurnOnGPSActivity.currentLocation;
                 String current = Double.toString(currentLocation.latitude)+","+Double.toString(currentLocation.longitude);
                 String key = "AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0";
