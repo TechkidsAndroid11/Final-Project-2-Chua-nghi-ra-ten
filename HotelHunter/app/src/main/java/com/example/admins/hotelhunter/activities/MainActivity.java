@@ -104,8 +104,6 @@ public class MainActivity extends AppCompatActivity
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
        iv_filter = findViewById(R.id.iv_filter);
         iv_filter.setOnClickListener(this);
-        avLoadingIndicatorView= findViewById(R.id.av_load);
-        avLoadingIndicatorView.show();
 
 
     }
@@ -251,7 +249,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: ");
-        avLoadingIndicatorView.hide();
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
@@ -286,8 +283,6 @@ public class MainActivity extends AppCompatActivity
                 overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);
             }
         });
-
-
     }
 
     @Override

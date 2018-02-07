@@ -290,7 +290,9 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
         hotelModel.address = etDiaChi.getText().toString();
         hotelModel.nameHotel = etTenNhaNghi.getText().toString();
         hotelModel.phone = etSDT1.getText().toString();
-        hotelModel.gia = etGiaGio.getText().toString() + "-" + etGiaGio.getText().toString();
+        int giadem = Integer.parseInt( etGiaGio.getText().toString().replace(",",""));
+        int giagio = Integer.parseInt( etGiaGio.getText().toString().replace(",",""));
+        hotelModel.gia = Integer.toString(giagio) + "-" + Integer.toString(giadem);
 //        hotelModel.kinhDo = Double.parseDouble(kinhdo.getText().toString());
 //        hotelModel.viDo = Double.parseDouble(vido.getText().toString());
 //        hotelModel.danhGiaTB = Float.parseFloat(rate.getText().toString());
