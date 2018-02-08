@@ -194,8 +194,6 @@ public class MainActivity extends AppCompatActivity
         tvNavText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
 
@@ -242,7 +240,7 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View v) {
                     firebaseAuth.signOut();
                     tvNavText.setVisibility(View.VISIBLE);
-                    ivAvata.setImageResource(R.mipmap.ic_launcher_round);
+                    ivAvata.setImageResource(R.drawable.avatar_offline);
                     tvName.setVisibility(View.GONE);
                     alertDialog.dismiss();
 
