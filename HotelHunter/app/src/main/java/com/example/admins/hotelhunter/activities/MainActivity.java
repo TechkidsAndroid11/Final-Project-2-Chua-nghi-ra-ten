@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         iv_filter = findViewById(R.id.iv_filter);
         iv_filter.setOnClickListener(this);
@@ -298,16 +299,16 @@ public class MainActivity extends AppCompatActivity
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-<<<<<<< HEAD
+
                 for (int i = 0; i < list.size(); i++) {
                     if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo) {
                         EventBus.getDefault().postSticky(new OnClickWindowinfo(list.get(i)));
                         Log.d(TAG, "onInfoWindowClick: " + list.get(i));
                     }
                 }
-=======
+
                 EventBus.getDefault().postSticky(marker.getTag());
->>>>>>> 8e4c04fb01aa4d34bd3a663734909472b870838a
+
                 Log.d(TAG, "onInfoWindowClick: " + list.size());
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);

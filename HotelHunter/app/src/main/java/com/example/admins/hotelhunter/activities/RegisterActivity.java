@@ -60,6 +60,14 @@ public class RegisterActivity extends AppCompatActivity {
         tvCheckName = findViewById(R.id.tv_checkName);
         tvCheckPass = findViewById(R.id.tv_checkPass);
         tvCheckConPass = findViewById(R.id.tv_checkConPass);
+        TextView tvLogin4= findViewById(R.id.tv_login4);
+        tvLogin4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 //        if (etName.getText().toString().equals("")) {

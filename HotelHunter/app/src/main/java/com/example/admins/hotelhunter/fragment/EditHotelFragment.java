@@ -1,6 +1,7 @@
 package com.example.admins.hotelhunter.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -157,19 +158,20 @@ public class EditHotelFragment extends Fragment implements View.OnClickListener 
         ln_dieuhoa = view.findViewById(R.id.ln_dieuhoa);
         ln_wifi = view.findViewById(R.id.ln_wifi);
         ln_nonglanh = view.findViewById(R.id.ln_nonglanh);
+        horizontalScrollView = view.findViewById(R.id.sc_view);
+        kinhdo = view.findViewById(R.id.et_kinhdoadd);
+        vido = view.findViewById(R.id.et_vidoadd);
         ln_thangmay = view.findViewById(R.id.ln_thangmay);
         ln_tulanh = view.findViewById(R.id.ln_tulanh);
         ln_tivi = view.findViewById(R.id.ln_tivi);
         ln_image = view.findViewById(R.id.ln_image);
-        horizontalScrollView = view.findViewById(R.id.sc_view);
-        kinhdo = view.findViewById(R.id.et_kinhdoadd);
-        vido = view.findViewById(R.id.et_vidoadd);
         rate = view.findViewById(R.id.et_rateadd);
         kinhdo.setVisibility(View.GONE);
         vido.setVisibility(View.GONE);
         rate.setVisibility(View.GONE);
-        etGiaDem.addTextChangedListener(onTextChangedListener(etGiaDem));
-        etGiaGio.addTextChangedListener(onTextChangedListener(etGiaGio));
+//        etGiaDem.addTextChangedListener(onTextChangedListener(etGiaDem));
+//        etGiaGio.addTextChangedListener(onTextChangedListener(etGiaGio));
+//        etGiaDem.setText(hotelModel.);
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         AlphaAnimation alpha = new AlphaAnimation(0.1F, 0.1F);
@@ -362,7 +364,7 @@ public class EditHotelFragment extends Fragment implements View.OnClickListener 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-        if(resultCode==0)
+        if(resultCode== Activity.RESULT_OK)
         {
             Place place = PlacePicker.getPlace(data, getContext());
             latLng = place.getLatLng();

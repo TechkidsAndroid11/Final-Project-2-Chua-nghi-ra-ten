@@ -154,7 +154,7 @@ public class DetailFragment extends Fragment  {
         String giaDon = hotelModel.gia.substring(0, hotelModel.gia.indexOf("-"));
         String giaDoi = hotelModel.gia.substring(hotelModel.gia.indexOf("-")+1);
         Log.d(TAG, "loadData: " + giaDon + "   " + giaDoi);
-        tvGia.setText(NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDon))+" VNĐ" +"-" + NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDoi))+ " VNĐ");
+        tvGia.setText(NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDon))+" VNĐ" +"-  " + NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDoi))+ " VNĐ");
 
         tvRate.setText(hotelModel.danhGiaTB*2 + "/10");
     }
