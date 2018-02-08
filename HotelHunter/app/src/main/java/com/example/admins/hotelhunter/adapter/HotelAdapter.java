@@ -2,31 +2,27 @@ package com.example.admins.hotelhunter.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.support.v4.app.SupportActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
 import com.example.admins.hotelhunter.Utils.ImageUtils;
-import com.example.admins.hotelhunter.database.onClickMyHotel;
+import com.example.admins.hotelhunter.fragment.EditHotelFragment;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -41,6 +37,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    RelativeLayout rlMain;
 
 
     public HotelAdapter(Context context, List<HotelModel> hotelModels) {
@@ -77,12 +74,13 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
 
         public HotelViewholder(final View itemView) {
             super(itemView);
-//            ivMenu = itemView.findViewById(R.id.iv_menu);
+            ivMenu = itemView.findViewById(R.id.iv_menu);
             tvName = itemView.findViewById(R.id.tv_name);
             tvPrice = itemView.findViewById(R.id.tv_price);
             tvAddress = itemView.findViewById(R.id.tv_address);
             ivImage = itemView.findViewById(R.id.iv_image);
             rbStar = itemView.findViewById(R.id.rb_star);
+            rlMain=itemView.findViewById(R.id.rl_main);
 //            ivMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
 //                    @Override
 //                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -96,37 +94,9 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
 //            tvEdit.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
-//                    firebaseAuth = FirebaseAuth.getInstance();
-//                    firebaseDatabase = FirebaseDatabase.getInstance();
-//                    databaseReference = firebaseDatabase.getReference("users");
-//                    databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("Huid").addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            if (dataSnapshot.getChildrenCount() > 0) {
-//                                for (DataSnapshot d : dataSnapshot.getChildren()) {
-//                                    String huid = d.getValue().toString();
-//
-//                                    databaseReference = firebaseDatabase.getReference("hotels");
-//                                    databaseReference.orderByChild("key").equalTo(huid).addListenerForSingleValueEvent(new ValueEventListener() {
-//                                        @Override
-//                                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                                            Log.d(TAG, "onDataChange: ");
-//                                            if (dataSnapshot.getChildrenCount() > 0) {
-//                                                for (DataSnapshot d : dataSnapshot.getChildren()) {
-//                                                    HotelModel hotelModel = d.getValue(HotelModel.class);
-//                                                    EventBus.getDefault().post(new onClickMyHotel(hotelModel));
-//
-//
-//                                                }
-//                                            }
-//                                            ;
-//                                        }
-//
-//                                        @Override
-//                                        public void onCancelled(DatabaseError databaseError) {
-//
-//                                        }
-//                                    });
+            firebaseAuth = FirebaseAuth.getInstance();
+            firebaseDatabase = FirebaseDatabase.getInstance();
+
 //                                }
 //                            }
 //                        }
@@ -141,42 +111,98 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
 //
 //
 //            });
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            PopupMenu popupMenu = new PopupMenu(context, ivMenu);
+            popupMenu.inflate(R.menu.main);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
-                public boolean onLongClick(View view) {
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-                    dialogBuilder.setMessage("Bạn chắc chắn muốn xóa?")
-                            .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    firebaseAuth = FirebaseAuth.getInstance();
-                                    firebaseDatabase = FirebaseDatabase.getInstance();
-                                    firebaseDatabase.getReference("hotels");
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    switch (menuItem.getItemId()) {
+                        case R.id.action_settings:
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                            dialogBuilder.setMessage("Bạn chắc chắn muốn xóa?")
+                                    .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
 
 
-                                }
-                            })
-                            .setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    })
+                                    .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
 
 
-                                }
-                            })
-                            .show();
+                                        }
+                                    })
+                                    .show();
+                            break;
+
+
+                        case R.id.action_edit:
+                            ImageUtils.openFragment(,R.id.rl_main, );
+                            break;
+                    }
                     return false;
                 }
             });
+            popupMenu.show();
         }
 
+
         public void setData(HotelModel hotelModel) {
-            Log.d(TAG, "setData: ");
             tvName.setText(hotelModel.nameHotel);
             tvAddress.setText(hotelModel.address);
             rbStar.setRating(hotelModel.danhGiaTB);
             tvPrice.setText(hotelModel.gia);
 
+
             ivImage.setImageBitmap(ImageUtils.base64ToImage(hotelModel.images.get(0)));
         }
     }
 }
+//            itemView.setOnLongClickListener(new View.OnLongClickListener()
+//
+//    {
+//        @Override
+//        public boolean onLongClick (View view){
+//        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+//        dialogBuilder.setMessage("Bạn chắc chắn muốn xóa?")
+//                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        firebaseAuth = FirebaseAuth.getInstance();
+//                        firebaseDatabase = FirebaseDatabase.getInstance();
+//                        firebaseDatabase.getReference("hotels").addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot dataSnapshot) {
+//                                for (DataSnapshot bookSnapShot : dataSnapshot.getChildren()) {
+//
+//
+//                                    databaseReference.child(bookSnapShot.getKey()).removeValue();
+//                                }
+//
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(DatabaseError databaseError) {
+//
+//                            }
+//                        });
+//
+//
+//                    }
+//                })
+//                .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//
+//                    }
+//                })
+//                .show();
+//        return false;
+//    }
+//    });
+//}
+
+

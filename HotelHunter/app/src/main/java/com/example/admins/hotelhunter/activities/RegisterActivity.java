@@ -121,6 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                                 pushData();
                                                                 startActivity(ii);
                                                             }
+                                                            FirebaseAuth.getInstance().signOut();
                                                         }
                                                     });
 

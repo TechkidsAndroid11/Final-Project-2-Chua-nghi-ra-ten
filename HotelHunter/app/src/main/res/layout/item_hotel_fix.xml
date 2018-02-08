@@ -1,69 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:id="@+id/rl_main"
     android:padding="16dp">
-
-    <ImageView
-        android:background="@drawable/anh_nen"
-        android:id="@+id/iv_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
-
-    <TextView
-        android:padding="3dp"
-        android:textStyle="italic"
-        android:textColor="#000"
-        android:text="QK Lahpita"
-        android:id="@+id/tv_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_toRightOf="@id/iv_image"
-        android:textSize="16sp" />
-    <android.support.v7.widget.MenuPopupWindow.MenuDropDownListView
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/ic_menu_black_24dp"
-        android:id="@+id/iv_menu"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-         />
-    <RatingBar
-        android:theme="@style/RatingBar"
-        android:id="@+id/rb_star"
-        style="@style/Widget.AppCompat.RatingBar.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_name"
-        android:layout_marginStart="5dp"
-        android:layout_toRightOf="@id/iv_image"
-        android:numStars="5"
-        android:padding="3dp"
-        android:rating="4" />
+        android:layout_height="wrap_content">
+        <ImageView
 
-    <TextView
-        android:padding="3dp"
-        android:textColor="#000"
-        android:text="Thành Công"
-        android:id="@+id/tv_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rb_star"
-        android:layout_marginStart="5dp"
-        android:layout_toRightOf="@id/iv_image" />
+            android:id="@+id/iv_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
-    <TextView
-        android:padding="3dp"
-        android:textColor="#000"
-        android:textStyle="bold"
-        android:text="70000-160000VNĐ"
-        android:id="@+id/tv_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_address"
-        android:layout_marginStart="5dp"
-        android:layout_toRightOf="@id/iv_image" />
+        <TextView
+            android:padding="3dp"
+            android:textStyle="italic"
+            android:textColor="#000"
+            android:text="QK Lahpita"
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/iv_image"
+            android:textSize="16sp" />
+        <android.support.v7.widget.MenuPopupWindow.MenuDropDownListView
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_menu_black_24dp"
+            android:id="@+id/iv_menu"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="4dp"
+            />
+        <RatingBar
+            android:theme="@style/RatingBar"
+            android:id="@+id/rb_star"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/iv_image"
+            android:numStars="5"
+            android:padding="3dp"
+            android:rating="4" />
+
+        <TextView
+            android:padding="3dp"
+            android:textColor="#000"
+            android:text="Thành Công"
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rb_star"
+            android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/iv_image" />
+
+        <TextView
+            android:padding="3dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:text="70000-160000VNĐ"
+            android:id="@+id/tv_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_address"
+            android:layout_marginStart="5dp"
+            android:layout_toRightOf="@id/iv_image" />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

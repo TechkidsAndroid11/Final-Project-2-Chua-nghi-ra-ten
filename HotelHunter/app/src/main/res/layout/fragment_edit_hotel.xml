@@ -81,36 +81,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="* Số điện thoại 1"
+                android:text="* Số điện thoại"
                 android:textColor="@color/orange"
                 android:layout_marginLeft="16dp"
                 android:textStyle="bold"
                 android:id="@+id/tv_sdt1add1"
                 android:layout_marginTop="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_sdt1add"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:inputType="phone" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Số điện thoại 2"
-                android:textColor="@color/orange"
-                android:layout_marginLeft="16dp"
-                android:textStyle="bold"
-                android:layout_marginTop="8dp"/>
-
             <EditText
-                android:id="@+id/et_sdt2add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
+                android:inputType="phone"
                 android:layout_marginRight="16dp"
-                android:inputType="phone" />
+                android:id="@+id/et_sdt1add"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -339,12 +322,12 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Đăng nhà nghỉ"
+                android:text="Sửa nhà nghỉ"
                 android:textColor="#fff"
                 android:textStyle="bold"
                 android:textAllCaps="false"
                 android:id="@+id/bt_danghotel"
-                android:background="@drawable/login"
+                android:background="@drawable/dk"
                 android:layout_marginBottom="16dp"/>
         </LinearLayout>
     </ScrollView>
