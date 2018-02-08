@@ -71,28 +71,6 @@ public class TurnOnGPSActivity extends AppCompatActivity {
         String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
         if (!provider.contains("gps")) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            LayoutInflater layoutInflater = this.getLayoutInflater();
-//            View dialogView = layoutInflater.inflate(R.layout.check_gps, null);
-//            builder.setView(dialogView);
-//            alertDialog = builder.create();
-//            Button btYes = dialogView.findViewById(R.id.bt_yes);
-//            Button btNo = dialogView.findViewById(R.id.bt_no);
-//            alertDialog.show();
-//
-//            btYes.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
-//
-//                }
-//            });
-//
-//            btNo.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    finish();
-//                }
-//            });
 
             builder.setMessage("Bạn có muốn bật GPS không?")
                     .setPositiveButton("Có", new DialogInterface.OnClickListener() {
@@ -120,6 +98,7 @@ public class TurnOnGPSActivity extends AppCompatActivity {
                 Intent intent = new Intent(TurnOnGPSActivity.this, MainActivity.class);
                 startActivity(intent);
                 Log.d(TAG, "onLocationChanged: " +currentLocation);
+                finish();
             }
 
             @Override
@@ -148,7 +127,7 @@ public class TurnOnGPSActivity extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 100, locationListener);
-        finish();
+
     }
 
     private void setupPermission() {
