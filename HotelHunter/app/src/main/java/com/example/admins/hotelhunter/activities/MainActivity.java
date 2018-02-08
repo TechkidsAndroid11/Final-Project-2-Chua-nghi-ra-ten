@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity
 
                 }
             });
+
             Button btNo = dialogView.findViewById(R.id.btn_no);
             btNo.setOnClickListener(new View.OnClickListener() {
                 @Override
