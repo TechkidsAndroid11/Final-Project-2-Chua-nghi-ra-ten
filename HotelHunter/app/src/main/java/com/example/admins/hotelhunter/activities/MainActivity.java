@@ -208,7 +208,6 @@ public class MainActivity extends AppCompatActivity
                     Picasso.with(MainActivity.this).load(R.drawable.avatar_offline).transform(new CropCircleTransformation()).into(ivAvata);
                     tvName.setVisibility(View.GONE);
                     alertDialog.dismiss();
-
                 }
             });
 
