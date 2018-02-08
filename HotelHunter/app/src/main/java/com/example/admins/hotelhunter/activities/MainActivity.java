@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
     HotelModel hotelModel;
     public static boolean first = true;
     public LatLng currentLocation;
-    public List<HotelModel> list = new ArrayList<>();
+    public static List<HotelModel> list = new ArrayList<>();
     RadioButton rd_cademnho100, rd_cademnho200, rd_cademlon200, rd_thegionho70, rd_theogionho100,
             rd_theogiolon100, rd_kc2km, rd_kc27km, rd_kclon7km;
     ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_filter;
@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity
                 for (int i = 0; i < list.size(); i++) {
                     if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo) {
                         EventBus.getDefault().postSticky(new OnClickWindowinfo(list.get(i)));
-                        Log.d(TAG, "onInfoWindowClick: ");
+                        Log.d(TAG, "onInfoWindowClick: "+list.get(i));
                     }
                 }
                 Log.d(TAG, "onInfoWindowClick: " + list.size());
