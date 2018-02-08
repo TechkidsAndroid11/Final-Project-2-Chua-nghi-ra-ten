@@ -108,41 +108,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-//    @Subscribe(sticky = true)
-//    public void chiDuong(OnClickWindowinfo onClickWindowinfo) {
-//        if (onClickWindowinfo.hotelModel != null) {
-//            hotelModel = onClickWindowinfo.hotelModel;
-//            final PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED).width(16);
-//            for (int i = 0; i < polylines.size(); i++) {
-//                polylines.get(i).remove();
-//            }
-//            RetrofitService retrofitService = RetrofitInstance.getInstance().create(RetrofitService.class);
-//            Log.d(TAG, "onMarkerClick: " + TurnOnGPSActivity.currentLocation);
-//            retrofitService.getDirection(String.valueOf(TurnOnGPSActivity.currentLocation.latitude)
-//                            + "," + String.valueOf(TurnOnGPSActivity.currentLocation.longitude),
-//                    String.valueOf(hotelModel.viDo)
-//                            + "," + String.valueOf(hotelModel.kinhDo),
-//                    "AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0").enqueue(new Callback<DirectionResponse>() {
-//                @Override
-//                public void onResponse(Call<DirectionResponse> call, Response<DirectionResponse> response) {
-//                    RouteModel routeModel = DirectionHandler.getListRoute(response.body()).get(0);
-//                    Log.d(TAG, "onResponse: " + routeModel.duration);
-//                    Log.d(TAG, "onResponse: " + routeModel.distance);
-////                                PolylineOptions polylineOptions = new PolylineOptions().color(Color.RED).width(16);
-//                    for (int i = 0; i < routeModel.points.size(); i++) {
-//                        polylineOptions.add(routeModel.points.get(i));
-//                    }
-//                    Polyline polyline = mMap.addPolyline(polylineOptions);
-//                    polylines.add(polyline);
-//                }
-//
-//                @Override
-//                public void onFailure(Call<DirectionResponse> call, Throwable t) {
-//                    Log.d(TAG, "onFailure: ");
-//                }
-//            });
-//        }
-//    }
 
     @Override
     protected void onStart() {
@@ -223,10 +188,9 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View v) {
                     firebaseAuth.signOut();
                     tvNavText.setVisibility(View.VISIBLE);
-                    ivAvata.setImageResource(R.drawable.avatar_offline);
+                    Picasso.with(MainActivity.this).load(R.drawable.avatar_offline).transform(new CropCircleTransformation()).into(ivAvata);
                     tvName.setVisibility(View.GONE);
                     alertDialog.dismiss();
-
                 }
             });
 
@@ -334,12 +298,16 @@ public class MainActivity extends AppCompatActivity
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+<<<<<<< HEAD
                 for (int i = 0; i < list.size(); i++) {
                     if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo) {
                         EventBus.getDefault().postSticky(new OnClickWindowinfo(list.get(i)));
                         Log.d(TAG, "onInfoWindowClick: " + list.get(i));
                     }
                 }
+=======
+                EventBus.getDefault().postSticky(marker.getTag());
+>>>>>>> 8e4c04fb01aa4d34bd3a663734909472b870838a
                 Log.d(TAG, "onInfoWindowClick: " + list.size());
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);

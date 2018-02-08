@@ -46,6 +46,8 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         ImageView ivThangMay = view.findViewById(R.id.iv_elevator);
         ImageView ivNongLanh = view.findViewById(R.id.iv_heater);
         ImageView ivDieuHoa = view.findViewById(R.id.iv_air_condition);
+        ImageView ivTivi = view.findViewById(R.id.iv_tivi);
+        ImageView ivTuLanh = view.findViewById(R.id.iv_tu_lanh);
         String giaDon = hotelModel.gia.substring(0, hotelModel.gia.indexOf("-"));
         String giaDoi = hotelModel.gia.substring(hotelModel.gia.indexOf("-")+1);
         Log.d(TAG, "loadData: " + giaDon + "   " + giaDoi);
@@ -66,6 +68,14 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         if (hotelModel.wifi){
             ivWifi.setVisibility(View.VISIBLE);
+        }
+
+        if (hotelModel.tivi){
+            ivTivi.setVisibility(View.VISIBLE);
+        }
+
+        if (hotelModel.tulanh){
+            ivTuLanh.setVisibility(View.VISIBLE);
         }
         return view;
     }
