@@ -38,10 +38,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
+        android:theme="@style/RatingBar"
         android:id="@+id/rb_star"
         style="@style/Widget.AppCompat.RatingBar.Small"
-        android:layout_width="177dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:numStars="5"
         android:padding="3dp"

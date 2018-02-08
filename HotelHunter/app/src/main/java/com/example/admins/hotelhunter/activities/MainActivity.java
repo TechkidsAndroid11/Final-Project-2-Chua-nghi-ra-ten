@@ -50,6 +50,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.squareup.picasso.Picasso;
@@ -177,7 +178,7 @@ public class MainActivity extends AppCompatActivity
         ivAvata = view.findViewById(R.id.iv_avatar);
 //        Log.d(TAG, "onCreate: "+firebaseAuth.getCurrentUser().getDisplayName());
         if (firebaseAuth.getCurrentUser() == null) {
-
+            Picasso.with(this).load(R.drawable.avatar_offline).transform(new CropCircleTransformation()).into(ivAvata);
         } else {
             Log.d(TAG, "onCreate: " + firebaseAuth.getCurrentUser() + firebaseAuth.getCurrentUser().getDisplayName());
             tvNavText.setVisibility(View.GONE);
@@ -186,12 +187,13 @@ public class MainActivity extends AppCompatActivity
             tvName.setText(firebaseAuth.getCurrentUser().getDisplayName());
             Picasso.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(ivAvata);
 //            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
+            if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() == null){
+                Picasso.with(this).load(R.drawable.avatar_mac_dinh).transform(new CropCircleTransformation()).into(ivAvata);
+            }
         }
         tvNavText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
 
@@ -238,12 +240,13 @@ public class MainActivity extends AppCompatActivity
                 public void onClick(View v) {
                     firebaseAuth.signOut();
                     tvNavText.setVisibility(View.VISIBLE);
-                    ivAvata.setImageResource(R.mipmap.ic_launcher_round);
+                    ivAvata.setImageResource(R.drawable.avatar_offline);
                     tvName.setVisibility(View.GONE);
                     alertDialog.dismiss();
 
                 }
             });
+
             Button btNo = dialogView.findViewById(R.id.btn_no);
             btNo.setOnClickListener(new View.OnClickListener() {
                 @Override

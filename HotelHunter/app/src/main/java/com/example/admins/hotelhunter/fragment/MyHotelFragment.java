@@ -68,7 +68,6 @@ public class MyHotelFragment extends Fragment {
                 if (dataSnapshot.getChildrenCount() > 0) {
                     for (DataSnapshot d : dataSnapshot.getChildren()) {
                         String huid = d.getValue().toString();
-
                         databaseReference = firebaseDatabase.getReference("hotels");
                         databaseReference.orderByChild("key").equalTo(huid).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
