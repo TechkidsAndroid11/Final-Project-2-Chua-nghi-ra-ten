@@ -67,15 +67,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
         setupUI();
         LoginManager.getInstance().logOut();
 
-        findViewById(R.id.tv_email).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
     }
     public void setupUI() {
         etMail = findViewById(R.id.et_email);

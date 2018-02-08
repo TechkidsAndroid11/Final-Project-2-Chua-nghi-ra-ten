@@ -50,6 +50,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.squareup.picasso.Picasso;
@@ -100,14 +101,9 @@ public class MainActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
-
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+       // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
        iv_filter = findViewById(R.id.iv_filter);
         iv_filter.setOnClickListener(this);
-        avLoadingIndicatorView= findViewById(R.id.av_load);
-        avLoadingIndicatorView.show();
 
 
     }
@@ -182,7 +178,7 @@ public class MainActivity extends AppCompatActivity
         ivAvata = view.findViewById(R.id.iv_avatar);
 //        Log.d(TAG, "onCreate: "+firebaseAuth.getCurrentUser().getDisplayName());
         if (firebaseAuth.getCurrentUser() == null) {
-
+            Picasso.with(this).load(R.drawable.avatar_offline).transform(new CropCircleTransformation()).into(ivAvata);
         } else {
             Log.d(TAG, "onCreate: " + firebaseAuth.getCurrentUser() + firebaseAuth.getCurrentUser().getDisplayName());
             tvNavText.setVisibility(View.GONE);
@@ -191,6 +187,9 @@ public class MainActivity extends AppCompatActivity
             tvName.setText(firebaseAuth.getCurrentUser().getDisplayName());
             Picasso.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(ivAvata);
 //            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
+            if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() == null){
+                Picasso.with(this).load(R.drawable.avatar_mac_dinh).transform(new CropCircleTransformation()).into(ivAvata);
+            }
         }
         tvNavText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,17 +207,12 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
-
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
 
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -333,7 +327,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: ");
-        avLoadingIndicatorView.hide();
         mMap = googleMap;
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);

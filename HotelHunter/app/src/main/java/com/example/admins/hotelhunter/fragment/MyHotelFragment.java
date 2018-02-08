@@ -3,6 +3,7 @@ package com.example.admins.hotelhunter.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,7 +68,6 @@ public class MyHotelFragment extends Fragment {
                 if (dataSnapshot.getChildrenCount() > 0) {
                     for (DataSnapshot d : dataSnapshot.getChildren()) {
                         String huid = d.getValue().toString();
-
                         databaseReference = firebaseDatabase.getReference("hotels");
                         databaseReference.orderByChild("key").equalTo(huid).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -78,10 +78,14 @@ public class MyHotelFragment extends Fragment {
                                         HotelModel hotelModel = d.getValue(HotelModel.class);
 
                                         hotelModelList.add(hotelModel);
-                                        rvHotel.setAdapter(new HotelAdapter(getContext(), hotelModelList));
+
                                         Log.d(TAG, "onDataChange: "+hotelModelList);
 
                                     }
+                                    hotelAdapter = new HotelAdapter(getContext(), hotelModelList);
+                                    Log.d(TAG, "onDataChange: " + hotelAdapter);
+                                    rvHotel.setAdapter(hotelAdapter);
+                                    rvHotel.setLayoutManager(new LinearLayoutManager(getContext()));
                                 }
                             }
 

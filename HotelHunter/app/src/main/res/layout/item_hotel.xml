@@ -48,8 +48,8 @@
         android:padding="3dp"
         android:rating="4"
         app:layout_constraintStart_toEndOf="@+id/iv_image"
-        tools:layout_editor_absoluteY="40dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="40dp" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -92,8 +92,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="4dp"
         android:layout_marginTop="8dp"
-        android:text="Chỉnh sửa"
         android:padding="6dp"
+        android:text="Chỉnh sửa"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -127,27 +127,22 @@
         app:layout_constraintStart_toEndOf="@+id/tv_name"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_menu_black_24dp"
-        tools:ignore="VectorDrawableCompat"/>
-    <item
-        android:id="@+id/main"
-        android:showAsAction="ifRoom"
-        android:actionViewClass="android.widget.ImageButton"
-        />
-    />
+        tools:ignore="VectorDrawableCompat" />
+
 
     <!--<ImageView-->
-        <!--android:id="@+id/imageView3"-->
-        <!--android:layout_width="19dp"-->
-        <!--android:layout_height="42dp"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:layout_marginEnd="28dp"-->
-        <!--android:padding="3dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toStartOf="@+id/tv_price"-->
-        <!--app:layout_constraintHorizontal_bias="0.0"-->
-        <!--app:layout_constraintStart_toStartOf="@+id/guideline"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/textView3"-->
-        <!--app:layout_constraintVertical_bias="0.636"-->
-        <!--app:srcCompat="@drawable/call" />-->
+    <!--android:id="@+id/imageView3"-->
+    <!--android:layout_width="19dp"-->
+    <!--android:layout_height="42dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="28dp"-->
+    <!--android:padding="3dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toStartOf="@+id/tv_price"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="@+id/guideline"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/textView3"-->
+    <!--app:layout_constraintVertical_bias="0.636"-->
+    <!--app:srcCompat="@drawable/call" />-->
 </android.support.constraint.ConstraintLayout>
