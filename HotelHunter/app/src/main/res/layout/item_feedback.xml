@@ -19,8 +19,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/tv_feedback"
-        android:layout_alignTop="@+id/tv_name"
-        android:text="Thoi gian" />
+        android:layout_below="@id/tv_name"
+        android:text="Thoi gian"
+        android:layout_marginTop="8dp"/>
     <RatingBar
         android:theme="@style/RatingBar"
         android:id="@+id/rb_rating"
