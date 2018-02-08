@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+
     }
 
     @Override
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        iv_filter.setVisibility(View.VISIBLE);
+//        iv_filter.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -318,6 +319,7 @@ public class MainActivity extends AppCompatActivity
             public void onInfoWindowClick(Marker marker) {
                 EventBus.getDefault().postSticky(marker.getTag());
                 Log.d(TAG, "onInfoWindowClick: " + list.size());
+                Log.d(TAG, "onInfoWindowClick: "+marker.getTag());
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
                 startActivity(intent);
 //                overridePendingTransition(R.anim.right_to_left, R.anim.left_to_right);

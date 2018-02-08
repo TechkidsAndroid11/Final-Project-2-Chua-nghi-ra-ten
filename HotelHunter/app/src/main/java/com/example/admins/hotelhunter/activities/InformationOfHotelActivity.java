@@ -48,6 +48,7 @@ public class InformationOfHotelActivity extends AppCompatActivity implements Bas
         setContentView(R.layout.activity_information_of_hotel);
         Log.d(TAG, "onCreate: ");
         EventBus.getDefault().register(this);
+        Log.d(TAG, "onCreate: register hotel"+hotelModel);
         setupUI();
         ShowImage();
     }

@@ -109,4 +109,9 @@ public class MyHotelFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        MainActivity.iv_filter.setVisibility(View.VISIBLE);
+    }
 }
