@@ -139,7 +139,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
 
 
                         case R.id.action_edit:
-                            ImageUtils.openFragment(,R.id.rl_main, );
+//                            ImageUtils.openFragment(,R.id.rl_main, );
                             break;
                     }
                     return false;

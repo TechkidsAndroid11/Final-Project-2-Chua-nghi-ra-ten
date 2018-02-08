@@ -251,7 +251,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             if (task.isSuccessful()) {
 
                                 final FirebaseUser user = firebaseAuth.getCurrentUser();
-                                databaseReference.orderByChild("uid").equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                databaseReference.orderByChild("uid").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.getChildrenCount() > 0) {

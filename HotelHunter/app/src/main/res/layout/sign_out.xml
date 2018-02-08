@@ -31,7 +31,7 @@
             android:background="@android:color/white"
             android:clickable="true"
             android:text="Đăng xuất"
-            android:textColor="#5DBCD2"
+            android:textColor="#d2995d"
             android:textStyle="bold" />
 
         <Button
@@ -42,7 +42,7 @@
             android:background="@android:color/white"
             android:clickable="true"
             android:text="hủy"
-            android:textColor="#5DBCD2"
+            android:textColor="#d2995d"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

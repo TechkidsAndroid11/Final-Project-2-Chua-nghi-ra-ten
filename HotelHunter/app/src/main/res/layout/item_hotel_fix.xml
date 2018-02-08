@@ -24,7 +24,7 @@
             android:layout_marginStart="5dp"
             android:layout_toRightOf="@id/iv_image"
             android:textSize="16sp" />
-        <android.support.v7.widget.MenuPopupWindow.MenuDropDownListView
+        <ImageView
             android:layout_alignParentEnd="true"
             android:background="@drawable/ic_menu_black_24dp"
             android:id="@+id/iv_menu"
