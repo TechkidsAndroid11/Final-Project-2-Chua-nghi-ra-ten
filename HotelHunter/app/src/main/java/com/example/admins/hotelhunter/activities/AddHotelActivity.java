@@ -319,6 +319,7 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
                         databaseReference.child(firebaseAuth.getCurrentUser().getUid()).setValue(userModel);
                         Log.d(TAG, "onDataChange: push hotel");
                         Toast.makeText(AddHotelActivity.this, "Thêm nhà nghỉ thành công", Toast.LENGTH_SHORT).show();
+                        MainActivity.list.add(hotelModel);
                         Intent i = new Intent(AddHotelActivity.this, MainActivity.class);
                         startActivity(i);
                         finish();

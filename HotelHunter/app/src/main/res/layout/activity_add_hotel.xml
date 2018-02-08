@@ -95,22 +95,26 @@
                     android:weightSum="2"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp">
+
                     <EditText
                         android:id="@+id/et_giagioadd"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:hint="theo giờ"
-                        android:layout_weight="1"
                         android:layout_marginRight="8dp"
-                        android:inputType="number"/>
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:hint="theo giờ"
+                        android:inputType="number" />
+
                     <EditText
                         android:id="@+id/et_giademadd"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:hint="theo đêm"
-                        android:layout_weight="1"
                         android:layout_marginLeft="8dp"
-                        android:inputType="number"/>
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:hint="theo đêm"
+                        android:inputType="number" />
                 </LinearLayout>
 
                <TextView
