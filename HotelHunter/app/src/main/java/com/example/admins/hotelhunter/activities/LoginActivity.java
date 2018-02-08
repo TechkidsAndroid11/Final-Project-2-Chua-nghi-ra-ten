@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int REQ_CODEGOOGLE = 2;
     public FirebaseUser firebaseUser;
     EditText etMail, etPassword;
+
     AVLoadingIndicatorView av;
     ImageView ivClose;
     public static UserModel userModel;
@@ -83,6 +84,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         TextView tvRegister = findViewById(R.id.tv_register);
         ivLoginFacebook = findViewById(R.id.iv_login_facebook);
         ivLoginGoogle = findViewById(R.id.iv_login_google);
+
+
 
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,7 +254,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             if (task.isSuccessful()) {
 
                                 final FirebaseUser user = firebaseAuth.getCurrentUser();
-                                databaseReference.orderByChild("uid").equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                databaseReference.orderByChild("uid").equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         if (dataSnapshot.getChildrenCount() > 0) {
@@ -264,7 +267,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             userModel.uri = user.getPhotoUrl().toString();
                                             Log.d(TAG, "onDataChange: " + userModel.uid);
                                             databaseReference.child(userModel.uid).setValue(userModel);
+
+
                                         }
+                                        Toast.makeText(LoginActivity.this,"Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                         finish();
                                     }
 

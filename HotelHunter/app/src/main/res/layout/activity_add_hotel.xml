@@ -70,13 +70,14 @@
                    android:textStyle="bold"
                    android:id="@+id/tv_sdt1add1"
                    android:layout_marginTop="8dp"/>
+
                <EditText
+                   android:id="@+id/et_sdt1add"
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:layout_marginLeft="16dp"
-                   android:inputType="numberDecimal"
                    android:layout_marginRight="16dp"
-                   android:id="@+id/et_sdt1add"/>
+                   android:inputType="phone" />
 
                <TextView
                    android:layout_width="match_parent"

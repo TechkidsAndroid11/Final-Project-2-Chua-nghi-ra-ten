@@ -3,6 +3,7 @@ package com.example.admins.hotelhunter.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,7 @@ public class MyHotelFragment extends Fragment {
     RecyclerView rvHotel;
     ImageView ivAvata;
     TextView tvName;
+    AVLoadingIndicatorView avLoadingIndicatorView;
 
 
     public MyHotelFragment() {
@@ -57,7 +60,13 @@ public class MyHotelFragment extends Fragment {
         rvHotel = view.findViewById(R.id.rv_myHotel);
         ivAvata= view.findViewById(R.id.iv_avatar);
         tvName=view.findViewById(R.id.tv_name);
+
+        avLoadingIndicatorView = view.findViewById(R.id.iv_loading);
+        avLoadingIndicatorView.show();
+
+
         MainActivity.iv_filter.setVisibility(View.INVISIBLE);
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         Picasso.with(getContext()).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(ivAvata);
@@ -83,10 +92,12 @@ public class MyHotelFragment extends Fragment {
                                         Log.d(TAG, "onDataChange: "+hotelModelList);
 
                                     }
-                                    hotelAdapter = new HotelAdapter(getContext(), hotelModelList);
+                                    hotelAdapter = new HotelAdapter(getFragmentManager(), getContext(), hotelModelList);
                                     Log.d(TAG, "onDataChange: " + hotelAdapter);
                                     rvHotel.setAdapter(hotelAdapter);
                                     rvHotel.setLayoutManager(new LinearLayoutManager(getContext()));
+                                    rvHotel.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+//                                    avLoadingIndicatorView.hide();
                                 }
                             }
 

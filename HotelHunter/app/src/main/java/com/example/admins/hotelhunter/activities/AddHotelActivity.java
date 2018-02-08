@@ -238,7 +238,6 @@ public class AddHotelActivity extends AppCompatActivity implements View.OnClickL
             }
             case R.id.bt_danghotel: {
                 DangBai();
-                finish();
                 break;
             }
             case R.id.tv_vitribando: {

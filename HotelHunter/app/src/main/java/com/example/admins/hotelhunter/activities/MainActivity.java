@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -35,11 +34,6 @@ import com.example.admins.hotelhunter.distance_matrix.DistanceResponse;
 import com.example.admins.hotelhunter.fragment.MyHotelFragment;
 import com.example.admins.hotelhunter.map_direction.RetrofitInstance;
 import com.example.admins.hotelhunter.model.HotelModel;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceReport;
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -50,13 +44,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-
 import com.squareup.picasso.Picasso;
-
 import com.wang.avi.AVLoadingIndicatorView;
-
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -102,8 +91,9 @@ public class MainActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-       iv_filter = findViewById(R.id.iv_filter);
+
+        // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        iv_filter = findViewById(R.id.iv_filter);
         iv_filter.setOnClickListener(this);
 
 
@@ -153,7 +143,7 @@ public class MainActivity extends AppCompatActivity
             tvName.setText(firebaseAuth.getCurrentUser().getDisplayName());
             Picasso.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(ivAvata);
 //            ivAvata.setImageResource(R.drawable.ic_close_black_24dp);
-            if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() == null){
+            if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() == null) {
                 Picasso.with(this).load(R.drawable.avatar_mac_dinh).transform(new CropCircleTransformation()).into(ivAvata);
             }
         }
@@ -186,15 +176,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-            } else {
-//                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-//                startActivity(intent);
-            }
-        }
-       else if (id == R.id.nav_Logout) {
+            onBackPressed();
+
+        } else if (id == R.id.nav_Logout) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             LayoutInflater layoutInflater = this.getLayoutInflater();
             View dialogView = layoutInflater.inflate(R.layout.sign_out, null);
@@ -317,7 +301,16 @@ public class MainActivity extends AppCompatActivity
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+
+                for (int i = 0; i < list.size(); i++) {
+                    if (marker.getPosition().latitude == list.get(i).viDo && marker.getPosition().longitude == list.get(i).kinhDo) {
+                        EventBus.getDefault().postSticky(new OnClickWindowinfo(list.get(i)));
+                        Log.d(TAG, "onInfoWindowClick: " + list.get(i));
+                    }
+                }
+
                 EventBus.getDefault().postSticky(marker.getTag());
+
                 Log.d(TAG, "onInfoWindowClick: " + list.size());
                 Log.d(TAG, "onInfoWindowClick: "+marker.getTag());
                 Intent intent = new Intent(MainActivity.this, InformationOfHotelActivity.class);
@@ -326,6 +319,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
     @Override
     protected void onPause() {
         super.onPause();
