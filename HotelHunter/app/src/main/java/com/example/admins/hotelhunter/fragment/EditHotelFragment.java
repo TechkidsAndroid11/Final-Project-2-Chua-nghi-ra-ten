@@ -137,7 +137,7 @@ public class EditHotelFragment extends Fragment implements View.OnClickListener 
         etTenNhaNghi = view.findViewById(R.id.et_tenadd);
         etDiaChi = view.findViewById(R.id.et_diachiadd);
         etSDT1 = view.findViewById(R.id.et_sdt1add);
-        etGiaDem = view.findViewById(R.id.et_giademadd);
+        etGiaDem = view.findViewById(R.id.et_giaadd);
         etGiaGio = view.findViewById(R.id.et_giagioadd);
 
         iv_wifi = view.findViewById(R.id.iv_wifiadd);
@@ -169,9 +169,12 @@ public class EditHotelFragment extends Fragment implements View.OnClickListener 
         kinhdo.setVisibility(View.GONE);
         vido.setVisibility(View.GONE);
         rate.setVisibility(View.GONE);
+        etTenNhaNghi.setText((hotelModel.nameHotel));
+        etDiaChi.setText(hotelModel.address);
+        etSDT1.setText(hotelModel.phone);
 //        etGiaDem.addTextChangedListener(onTextChangedListener(etGiaDem));
 //        etGiaGio.addTextChangedListener(onTextChangedListener(etGiaGio));
-//        etGiaDem.setText(hotelModel.);
+        etGiaDem.setText(hotelModel.gia);
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         AlphaAnimation alpha = new AlphaAnimation(0.1F, 0.1F);

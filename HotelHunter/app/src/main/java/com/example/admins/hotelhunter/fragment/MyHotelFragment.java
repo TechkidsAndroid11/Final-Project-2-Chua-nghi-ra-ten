@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
+import com.example.admins.hotelhunter.activities.MainActivity;
 import com.example.admins.hotelhunter.adapter.HotelAdapter;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,8 +60,12 @@ public class MyHotelFragment extends Fragment {
         rvHotel = view.findViewById(R.id.rv_myHotel);
         ivAvata= view.findViewById(R.id.iv_avatar);
         tvName=view.findViewById(R.id.tv_name);
+
         avLoadingIndicatorView = view.findViewById(R.id.iv_loading);
         avLoadingIndicatorView.show();
+
+
+        MainActivity.iv_filter.setVisibility(View.INVISIBLE);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();

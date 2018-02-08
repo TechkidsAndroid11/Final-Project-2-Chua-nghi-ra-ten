@@ -51,7 +51,7 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         String giaDon = hotelModel.gia.substring(0, hotelModel.gia.indexOf("-"));
         String giaDoi = hotelModel.gia.substring(hotelModel.gia.indexOf("-")+1);
         Log.d(TAG, "loadData: " + giaDon + "   " + giaDoi);
-        tvPrice.setText(NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDon))+"-" + NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDoi))+ " VNĐ");
+        tvPrice.setText(NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDon))+" - " + NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDoi))+ " VNĐ");
 
         ratingBar.setRating(hotelModel.danhGiaTB);
         if (hotelModel.dieuHoa){

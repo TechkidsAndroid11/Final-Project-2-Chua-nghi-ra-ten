@@ -4,7 +4,7 @@
     android:id="@+id/ll_myhotel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="ne"
     android:orientation="vertical"
     tools:context="com.example.admins.hotelhunter.fragment.MyHotelFragment">
 
