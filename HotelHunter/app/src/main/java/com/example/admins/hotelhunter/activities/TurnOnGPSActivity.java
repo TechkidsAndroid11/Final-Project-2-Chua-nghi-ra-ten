@@ -58,7 +58,7 @@ public class TurnOnGPSActivity extends AppCompatActivity {
                                 currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
                                 Intent intent = new Intent(TurnOnGPSActivity.this, MainActivity.class);
                                 startActivity(intent);
-                                finish();
+
                             }
                         }
                     });
@@ -148,7 +148,7 @@ public class TurnOnGPSActivity extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 100, locationListener);
-        finish();
+
     }
 
     private void setupPermission() {
@@ -181,7 +181,7 @@ public class TurnOnGPSActivity extends AppCompatActivity {
                             currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
                             Intent intent = new Intent(TurnOnGPSActivity.this, MainActivity.class);
                             startActivity(intent);
-                            finish();
+
                         }
                     }
                 });

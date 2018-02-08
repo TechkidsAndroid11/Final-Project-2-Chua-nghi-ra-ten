@@ -25,7 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Admins on 1/31/2018.
@@ -93,7 +95,9 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
             tvName.setText(hotelModel.nameHotel);
             tvAddress.setText(hotelModel.address);
             rbStar.setRating(hotelModel.danhGiaTB);
-            tvPrice.setText(hotelModel.gia);
+            String giaDon = hotelModel.gia.substring(0, hotelModel.gia.indexOf("-"));
+            String giaDoi = hotelModel.gia.substring(hotelModel.gia.indexOf("-")+1);
+            tvPrice.setText(NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDon))+"VNĐ" +" -  " + NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(giaDoi))+ "VNĐ");
             ivImage.setImageBitmap(ImageUtils.base64ToImage(hotelModel.images.get(0)));
 
 //            PopupMenu popupMenu = new PopupMenu(context, ivMenu);

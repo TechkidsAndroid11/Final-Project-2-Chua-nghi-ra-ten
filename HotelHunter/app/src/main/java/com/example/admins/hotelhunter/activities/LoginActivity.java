@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
             @Override
             public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                Toast.makeText(LoginActivity.this, "Somthing went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Không thể kết nối", Toast.LENGTH_SHORT).show();
             }
         }).addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();
         ivLoginGoogle.setOnClickListener(new View.OnClickListener() {
@@ -175,7 +175,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == REQ_CODEGOOGLE) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleResult(result);

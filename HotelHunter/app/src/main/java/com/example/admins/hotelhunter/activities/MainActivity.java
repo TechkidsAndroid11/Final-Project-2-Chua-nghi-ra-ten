@@ -1,6 +1,7 @@
 package com.example.admins.hotelhunter.activities;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -44,6 +45,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, View.OnClickListener {
     private static final String TAG = MainActivity.class.toString();
     FirebaseAuth firebaseAuth;
-    private GoogleMap mMap;
+    public static GoogleMap mMap;
     TextView tvName, tvNavText;
     ImageView ivAvata;
     RelativeLayout relativeLayout;
@@ -85,17 +87,16 @@ public class MainActivity extends AppCompatActivity
     List<DistanceResponse.Rows> rows;
     AVLoadingIndicatorView avLoadingIndicatorView;
     public static ImageView iv_filter;
+    public static Context Main;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         iv_filter = findViewById(R.id.iv_filter);
         iv_filter.setOnClickListener(this);
-
+        Main = MainActivity.this;
 
     }
 
