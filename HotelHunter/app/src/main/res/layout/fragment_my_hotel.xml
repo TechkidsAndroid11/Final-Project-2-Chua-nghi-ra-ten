@@ -4,8 +4,8 @@
     android:id="@+id/ll_myhotel"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="ne"
     android:orientation="vertical"
+    android:background="@drawable/nen_dang_nhap"
     tools:context="com.example.admins.hotelhunter.fragment.MyHotelFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -66,6 +66,8 @@
         android:id="@+id/rv_myHotel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"></android.support.v7.widget.RecyclerView>
+        android:layout_margin="8dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
