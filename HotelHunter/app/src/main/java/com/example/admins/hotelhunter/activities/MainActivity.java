@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
     public boolean wifi = false;
     public boolean nongLanh = false;
     AlertDialog alertDialog;
-    List<DistanceResponse.Rows> rows;
+
     AVLoadingIndicatorView avLoadingIndicatorView;
     public static ImageView iv_filter;
     public static Context Main;
@@ -493,36 +493,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void Fillter() {
-        currentLocation = TurnOnGPSActivity.currentLocation;
-        String current = Double.toString(currentLocation.latitude) + "," + Double.toString(currentLocation.longitude);
-        String key = "AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0";
-        String listLocation = "";
 
-        for (int i = 0; i < list.size(); i++) {
-            listLocation = listLocation + Double.toString(list.get(i).viDo) + "," + Double.toString(list.get(i).kinhDo);
-            if (i + 1 < list.size()) {
-                listLocation = listLocation + "|";
-            }
-        }
-        DistanceInterface distanceInterface = RetrofitInstance.getInstance().create(DistanceInterface.class);
-        distanceInterface.getDistance(current, listLocation, key).enqueue(new Callback<DistanceResponse>() {
-            @Override
-            public void onResponse(Call<DistanceResponse> call, Response<DistanceResponse> response) {
-                Log.d(TAG, "onResponse: " + "0");
-                rows = response.body().rows;
-                if (rows.size() != 0) {
-                    for (int i = 0; i < rows.get(0).elements.size(); i++) {
-                        Log.d(TAG, "onResponse: " + rows.get(0).elements.get(i).distance.value);
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<DistanceResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + "response faile");
-            }
-        });
         mMap.clear();
         for (int i = 0; i < list.size(); i++) {
             if (tiVi) {
@@ -671,30 +642,37 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean xetKhoangCach(int position) {
-        if (rows != null) {
-            if (rows.get(0).elements.get(position).status.equals("OK")) {
-                if (rd_kc2km.isChecked()) {
-                    if (rows.get(0).elements.get(position).distance.value < 2000) {
-                        return true;
+        if (DataHandle.rows != null&&DataHandle.rows.size()>0) {
+            if(DataHandle.rows.get(0).elements.size()>position)
+            {
+                if (DataHandle.rows.get(0).elements.get(position).status.equals("OK")) {
+                    if (rd_kc2km.isChecked()) {
+                        if (DataHandle.rows.get(0).elements.get(position).distance.value < 2000) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else if (rd_kc27km.isChecked()) {
+                        if (DataHandle.rows.get(0).elements.get(position).distance.value <= 7000 && DataHandle.rows.get(0).elements.get(position).distance.value >= 2000) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else if ((rd_kclon7km.isChecked())) {
+                        if (DataHandle.rows.get(0).elements.get(position).distance.value > 7000) {
+                            return true;
+                        } else {
+                            return false;
+                        }
                     } else {
-                        return false;
-                    }
-                } else if (rd_kc27km.isChecked()) {
-                    if (rows.get(0).elements.get(position).distance.value <= 7000 && rows.get(0).elements.get(position).distance.value >= 2000) {
                         return true;
-                    } else {
-                        return false;
                     }
-                } else if ((rd_kclon7km.isChecked())) {
-                    if (rows.get(0).elements.get(position).distance.value > 7000) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return true;
                 }
             }
+            else {
+                return false;
+            }
+
 
         }
         return false;

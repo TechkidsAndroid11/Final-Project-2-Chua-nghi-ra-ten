@@ -86,6 +86,7 @@ public class MyHotelFragment extends Fragment {
                                 if (dataSnapshot.getChildrenCount() > 0) {
                                     for (DataSnapshot d : dataSnapshot.getChildren()) {
                                         HotelModel hotelModel = d.getValue(HotelModel.class);
+
                                         hotelModelList.add(hotelModel);
 
                                         Log.d(TAG, "onDataChange: "+hotelModelList);
@@ -96,7 +97,7 @@ public class MyHotelFragment extends Fragment {
                                     rvHotel.setAdapter(hotelAdapter);
                                     rvHotel.setLayoutManager(new LinearLayoutManager(getContext()));
                                     rvHotel.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-                                    avLoadingIndicatorView.hide();
+//                                    avLoadingIndicatorView.hide();
                                 }
                             }
 
@@ -121,8 +122,7 @@ public class MyHotelFragment extends Fragment {
 
     @Override
     public void onStop() {
-        MainActivity.iv_filter.setVisibility(View.VISIBLE);
         super.onStop();
-
+        MainActivity.iv_filter.setVisibility(View.VISIBLE);
     }
 }
