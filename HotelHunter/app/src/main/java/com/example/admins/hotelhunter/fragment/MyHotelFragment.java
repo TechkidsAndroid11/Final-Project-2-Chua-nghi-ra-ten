@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admins.hotelhunter.R;
+import com.example.admins.hotelhunter.activities.MainActivity;
 import com.example.admins.hotelhunter.adapter.HotelAdapter;
 import com.example.admins.hotelhunter.model.HotelModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,7 +57,7 @@ public class MyHotelFragment extends Fragment {
         rvHotel = view.findViewById(R.id.rv_myHotel);
         ivAvata= view.findViewById(R.id.iv_avatar);
         tvName=view.findViewById(R.id.tv_name);
-
+        MainActivity.iv_filter.setVisibility(View.INVISIBLE);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         Picasso.with(getContext()).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).transform(new CropCircleTransformation()).into(ivAvata);

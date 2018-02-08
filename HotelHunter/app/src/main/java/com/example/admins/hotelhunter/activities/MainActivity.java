@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
     public static List<HotelModel> list = new ArrayList<>();
     RadioButton rd_cademnho100, rd_cademnho200, rd_cademlon200, rd_thegionho70, rd_theogionho100,
             rd_theogiolon100, rd_kc2km, rd_kc27km, rd_kclon7km;
-    ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh, iv_filter;
+    ImageView iv_wifi, iv_thangmay, iv_dieuhoa, iv_nonglanh, iv_tivi, iv_tulanh;
     TextView tv_wifi, tv_thangmay, tv_dieuhoa, tv_nonglanh, tv_tivi, tv_tulanh, tv_loc, tv_huy;
     LinearLayout ln_wifi, ln_thangmay, ln_dieuhoa, ln_nonglanh, ln_tivi, ln_tulanh;
     public boolean tiVi = false;
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity
     AlertDialog alertDialog;
     List<DistanceResponse.Rows> rows;
     AVLoadingIndicatorView avLoadingIndicatorView;
+    public static ImageView iv_filter;
 
 
     @Override
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-
+        iv_filter.setVisibility(View.VISIBLE);
     }
 
     @Override
