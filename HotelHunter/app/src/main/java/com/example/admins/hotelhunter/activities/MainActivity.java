@@ -341,18 +341,6 @@ public class MainActivity extends AppCompatActivity
                 dialogBuilder.setView(dialogView);
                 alertDialog = dialogBuilder.create();
                 alertDialog.show();
-                currentLocation = TurnOnGPSActivity.currentLocation;
-                String current = Double.toString(currentLocation.latitude) + "," + Double.toString(currentLocation.longitude);
-                String key = "AIzaSyCPHUVwzFXx1bfLxZx9b8QYlZD_HMJza_0";
-                String listLocation = "";
-                for (int i = 0; i < list.size(); i++) {
-                    listLocation = listLocation + Double.toString(list.get(i).viDo) + "," + Double.toString(list.get(i).kinhDo);
-                    if (i + 1 < list.size()) {
-                        listLocation = listLocation + "|";
-                        break;
-                    }
-                }
-
                 break;
             }
             case R.id.ln_wififillter: {
