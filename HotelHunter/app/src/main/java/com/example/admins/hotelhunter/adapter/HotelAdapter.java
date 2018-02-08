@@ -46,14 +46,16 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
     public HotelAdapter(Context context, List<HotelModel> hotelModels) {
         this.context = context;
         this.hotelModels = hotelModels;
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        Log.d(TAG, "HotelAdapter: ");
     }
 
     @Override
     public HotelAdapter.HotelViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_hotel, parent, false);
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View view = layoutInflater.inflate(R.layout.item_hotel_fix, parent, false);
         return new HotelViewholder(view);
     }
 
@@ -75,105 +77,100 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewhol
 
         public HotelViewholder(final View itemView) {
             super(itemView);
-            ivMenu = itemView.findViewById(R.id.iv_menu);
+//            ivMenu = itemView.findViewById(R.id.iv_menu);
             tvName = itemView.findViewById(R.id.tv_name);
             tvPrice = itemView.findViewById(R.id.tv_price);
             tvAddress = itemView.findViewById(R.id.tv_address);
             ivImage = itemView.findViewById(R.id.iv_image);
             rbStar = itemView.findViewById(R.id.rb_star);
-            ivMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+//            ivMenu.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+//                    @Override
+//                    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+////                    menu.setHeaderTitle("Select The Action");
+
+//
+//                    }
+//            });
+//            itemView.setOnCreateContextMenuListener(this);
+//            tvEdit = itemView.findViewById(R.id.tv_edit);
+//            tvEdit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    firebaseAuth = FirebaseAuth.getInstance();
+//                    firebaseDatabase = FirebaseDatabase.getInstance();
+//                    databaseReference = firebaseDatabase.getReference("users");
+//                    databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("Huid").addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            if (dataSnapshot.getChildrenCount() > 0) {
+//                                for (DataSnapshot d : dataSnapshot.getChildren()) {
+//                                    String huid = d.getValue().toString();
+//
+//                                    databaseReference = firebaseDatabase.getReference("hotels");
+//                                    databaseReference.orderByChild("key").equalTo(huid).addListenerForSingleValueEvent(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                                            Log.d(TAG, "onDataChange: ");
+//                                            if (dataSnapshot.getChildrenCount() > 0) {
+//                                                for (DataSnapshot d : dataSnapshot.getChildren()) {
+//                                                    HotelModel hotelModel = d.getValue(HotelModel.class);
+//                                                    EventBus.getDefault().post(new onClickMyHotel(hotelModel));
+//
+//
+//                                                }
+//                                            }
+//                                            ;
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(DatabaseError databaseError) {
+//
+//                                        }
+//                                    });
+//                                }
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//
+//                }
+//
+//
+//            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//                    menu.setHeaderTitle("Select The Action");
-                    menu.add(0, R.id.main, 0, "Xóa").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.action_settings:
-                                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-                                    dialogBuilder.setMessage("Bạn chắc chắn muốn xóa?")
-                                            .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    firebaseAuth = FirebaseAuth.getInstance();
-                                                    firebaseDatabase = FirebaseDatabase.getInstance();
-                                                    firebaseDatabase.getReference("hotels");
+                public boolean onLongClick(View view) {
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+                    dialogBuilder.setMessage("Bạn chắc chắn muốn xóa?")
+                            .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    firebaseAuth = FirebaseAuth.getInstance();
+                                    firebaseDatabase = FirebaseDatabase.getInstance();
+                                    firebaseDatabase.getReference("hotels");
 
 
-                                                }
-                                            })
-                                            .setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-
-
-                                                }
-                                            })
-                                            .show();
-
-
-                            }
-                            return true;
-                        }
-                    });//groupId, itemId, order, title
-
-                }
-            });
-
-            tvEdit = itemView.findViewById(R.id.tv_edit);
-            tvEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    firebaseAuth = FirebaseAuth.getInstance();
-                    firebaseDatabase = FirebaseDatabase.getInstance();
-                    databaseReference = firebaseDatabase.getReference("users");
-                    databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("Huid").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.getChildrenCount() > 0) {
-                                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                                    String huid = d.getValue().toString();
-
-                                    databaseReference = firebaseDatabase.getReference("hotels");
-                                    databaseReference.orderByChild("key").equalTo(huid).addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            Log.d(TAG, "onDataChange: ");
-                                            if (dataSnapshot.getChildrenCount() > 0) {
-                                                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                                                    HotelModel hotelModel = d.getValue(HotelModel.class);
-                                                    EventBus.getDefault().post(new onClickMyHotel(hotelModel));
-
-
-
-                                                }
-                                            }
-                                            ;
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
                                 }
-                            }
-                        }
+                            })
+                            .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
-
+                                }
+                            })
+                            .show();
+                    return false;
                 }
-
-
-
             });
         }
 
         public void setData(HotelModel hotelModel) {
+            Log.d(TAG, "setData: ");
             tvName.setText(hotelModel.nameHotel);
             tvAddress.setText(hotelModel.address);
             rbStar.setRating(hotelModel.danhGiaTB);

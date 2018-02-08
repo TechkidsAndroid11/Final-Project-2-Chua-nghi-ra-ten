@@ -203,7 +203,10 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
-
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
 
     }
 
